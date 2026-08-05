@@ -1,0 +1,229 @@
+---
+title: "4. Correcting for multiple testing"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{4. Correcting for multiple testing}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>",
+                      fig.width = 6, fig.height = 4.5)
+```
+
+```{r setup, include = FALSE}
+library(sptrends)
+r <- terra::rast(
+  sort(list.files(
+    example_data("vhp_ndvi"),
+    pattern = "\\.tif$",
+    full.names = TRUE
+  ))
+)
+```
+
+## Why this matters
+
+Consider a trend test applied to a single environmental time series at a
+significance level of *α* = 0.05. If the null hypothesis is true, there is a 5%
+probability of committing a Type I error: rejecting the null hypothesis when
+no genuine trend exists.
+
+The situation changes dramatically with gridded data, where a separate trend
+test is performed for every valid raster cell. Thousands of trend tests may
+therefore be evaluated simultaneously. Even if the Type I error rate remains
+at 5% for each test, the total number of false positives can become large,
+allowing random variation to produce apparently meaningful spatial patterns.
+
+Three general responses are possible. The first is to ignore multiplicity and
+report cells with raw *p* < *α*. This produces selective inference
+([Gutiérrez-Hernández and García,
+2025](https://doi.org/10.1016/j.scitotenv.2024.177832)) because the
+apparently significant results are interpreted without considering the
+complete family of trend tests. The second is to control the family-wise error
+rate (FWER), limiting the probability of making even one false discovery
+across the entire family. This provides strict control but can substantially
+reduce statistical power when thousands of cells are tested. The third is to
+control the false discovery rate (FDR), accepting that some false positives
+may occur while limiting their expected proportion among all results declared
+significant. FDR therefore provides a more flexible balance between error
+control and the ability to detect genuine trends.
+
+## What `fdr_correction()` does
+
+`fdr_correction()` implements three procedures for controlling the false
+discovery rate. [Benjamini-Hochberg (`BH`)](https://doi.org/10.1111/j.2517-6161.1995.tb02031.x)
+is the standard step-up procedure and is appropriate under independence or
+recognised forms of positive dependence among tests.
+[Benjamini-Krieger-Yekutieli (`BKY`)](https://doi.org/10.1093/biomet/93.3.491)
+is an adaptive two-stage procedure that estimates how many null hypotheses are
+likely to be true and may provide greater power under comparable dependence
+assumptions ([Gutiérrez-Hernández and García,
+2025](https://doi.org/10.3390/math13223630)). [Benjamini-Yekutieli
+(`BY`)](https://doi.org/10.1214/aos/1013699998)
+controls FDR under arbitrary dependence but is generally more conservative.
+
+The function receives a raster or vector of *p*-values and applies BH, BKY, BY
+or any requested subset. For raster inputs, missing cells are preserved and
+only valid *p*-values are included in the family of simultaneous tests.
+
+## Basic workflow
+
+```{r}
+trend <- trend_test(r, method = "CMK", report = FALSE, verbose = FALSE)
+fdr <- fdr_correction(
+  trend$stats$p,
+  method = c("BH", "BKY", "BY"),
+  q = 0.05,
+  report = FALSE,
+  verbose = FALSE
+)
+fdr
+summary(fdr)
+```
+
+The summary compares all three procedures. The maps below first show the raw
+CMK decisions and then the results that remain significant after BKY correction.
+
+```{r}
+bky <- fdr_correction(
+  trend$stats$p,
+  method = "BKY",
+  q = 0.05,
+  report = FALSE,
+  verbose = FALSE
+)
+```
+
+```{r, fig.alt = "Raw uncorrected CMK significance map"}
+plot(
+  trend,
+  which = "maps",
+  panels = "significance",
+  alpha = 0.05
+)
+```
+
+```{r, fig.alt = "FDR-BKY significance map"}
+plot(bky)
+```
+
+The threshold plot arranges all valid *p*-values from smallest to largest. Each
+point represents one trend test. Points near the beginning provide stronger
+evidence against the hypothesis of no trend, whereas points farther to the
+right provide weaker evidence.
+
+The BH panel applies a standard threshold based on the total number of trend
+tests. The BKY panel adds an adaptive step: it estimates what proportion of the
+tested cells is likely to have no genuine trend and uses that information to
+refine the threshold.
+
+If BKY estimates that almost all null hypotheses are true, its result will be
+similar to BH. If it estimates that some cells contain genuine trends, its
+adaptive threshold may become less restrictive and retain more significant
+results, thereby increasing statistical power.
+
+The vertical line marks the final cutoff. Every trend test before or at that
+cutoff is declared significant, whereas every test after it is not. Comparing
+both panels therefore shows whether the adaptive BKY procedure retains more
+discoveries than BH and why.
+
+```{r, fig.alt = "Ordered p-values and BH and BKY rejection thresholds"}
+plot(fdr, which = "threshold")
+```
+
+## Understanding the results
+
+The unadjusted *α* is appropriate for interpreting a single trend test but is
+not appropriate for raster-wide inference. Applying the same raw threshold
+separately to thousands of cells ignores the accumulation of Type I errors
+across the complete family of trend tests. Consequently, a map based only on
+raw *p* < *α* may substantially overstate the amount of evidence for spatially
+distributed trends. Multiple-testing correction is therefore required when
+the results are interpreted collectively.
+
+The target *q* defines the false discovery rate that the procedure aims to
+control. For example, *q* = 0.05 means that false discoveries are expected to
+represent no more than 5% of all cells declared significant, on average, under
+the assumptions of the selected procedure. It is not an adjusted *α*: *α*
+describes the Type I error rate of an individual unadjusted test, whereas *q*
+describes the expected proportion of false discoveries across the complete
+set of significant results. An adjusted threshold derived by a
+multiple-testing procedure is therefore neither the original unadjusted *α*
+nor the target *q*.
+
+A cell rejected after FDR correction belongs to a family of discoveries whose
+expected proportion of false discoveries is controlled. It does not receive a
+separate local error guarantee. For convenience, FDR-corrected maps are often
+described as showing "significant pixels", by analogy with cells satisfying an
+unadjusted significance level *α*. This shorthand is useful, but it does not
+mean that each highlighted pixel is individually significant at level *α* or
+has an error probability equal to *q*.
+
+## Choosing the main options
+
+| Method | Main property | Guidance |
+| --- | --- | --- |
+| `BH` ([Benjamini & Hochberg, 1995](https://doi.org/10.1111/j.2517-6161.1995.tb02031.x)) | FDR control under independence or positive dependence | Recommended general starting point |
+| `BKY` ([Benjamini, Krieger & Yekutieli, 2006](https://doi.org/10.1093/biomet/93.3.491)) | Adaptive FDR control under independence or positive dependence | Recommended when adaptation is expected to increase power |
+| `BY` ([Benjamini & Yekutieli, 2001](https://doi.org/10.1214/aos/1013699998)) | FDR control under arbitrary dependence | Usually discard; retain only when required |
+
+BH and BKY assume that the trend tests are independent or positively
+dependent. Positive spatial dependence is often expected in gridded
+environmental data because neighbouring cells tend to share similar
+conditions, but it should be examined rather than assumed.
+`spatial_autocorrelation()` can be used to assess whether the spatial pattern
+is consistent with positive dependence. BH and BKY are the recommended
+procedures: BH provides a standard and reliable starting point ([Gutiérrez-Hernández
+and García, 2025](https://doi.org/10.1080/2150704X.2025.2478664)), whereas BKY is
+particularly attractive when its adaptive estimation is expected to increase
+statistical power ([Gutiérrez-Hernández and García,
+2025](https://doi.org/10.3390/math13223630)). BY accommodates arbitrary dependence but is highly
+conservative and can substantially reduce power; it would therefore be
+discarded in most applications and retained only when arbitrary dependence
+must be explicitly accommodated. FDR correction itself is usually very fast
+relative to trend testing.
+
+## Common mistakes
+
+- Do not call *q* an adjusted *α*; they describe different error rates.
+- Do not include missing or invalid cells in the number of tests.
+- Interpreting FDR rejection as local significance.
+- Redefining the testing domain after inspecting the results.
+
+## Next steps
+
+Continue to [`vignette("g-workflow-trends")`](g-workflow-trends.html) to
+combine preprocessing, trend testing, slope estimation and FDR in one
+workflow.
+
+## Further details
+
+See `?fdr_correction`, `?fdr_bh`, `?fdr_bky` and `?fdr_by` for
+assumptions, algorithms, diagnostics, limitations and references.
+
+## References
+
+- Benjamini, Y. and Hochberg, Y. (1995) Controlling the False
+  Discovery Rate. *Journal of the Royal Statistical Society: Series
+  B*, 57, 289-300. https://doi.org/10.1111/j.2517-6161.1995.tb02031.x
+- Benjamini, Y., Krieger, A.M. and Yekutieli, D. (2006) Adaptive
+  Linear Step-Up Procedures That Control the False Discovery Rate.
+  *Biometrika*, 93(3), 491-507.
+  https://doi.org/10.1093/biomet/93.3.491
+- Benjamini, Y. and Yekutieli, D. (2001) The Control of the False
+  Discovery Rate in Multiple Testing Under Dependency. *Annals of
+  Statistics*, 29(4), 1165-1188.
+  https://doi.org/10.1214/aos/1013699998
+- Gutiérrez-Hernández, O. and García, L.V. (2025) The Ghost of
+  Selective Inference in Spatiotemporal Trend Analysis. *Science of
+  The Total Environment*, 958, 177832.
+  https://doi.org/10.1016/j.scitotenv.2024.177832
+- Gutiérrez-Hernández, O. and García, L.V. (2025) Implementing the
+  Linear Adaptive False Discovery Rate Procedure for Spatiotemporal
+  Trend Testing. *Mathematics*, 13(22), 3630.
+  https://doi.org/10.3390/math13223630
+- Gutiérrez-Hernández, O. and García, L.V. (2025) False Discovery Rate
+  Estimation and Control in Remote Sensing. *Remote Sensing Letters*,
+  16(5), 537-548. https://doi.org/10.1080/2150704X.2025.2478664
