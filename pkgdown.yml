@@ -1,0 +1,14 @@
+pandoc: 3.8.3
+pkgdown: 2.2.1
+pkgdown_sha: ~
+articles:
+  a-getting-started: a-getting-started.html
+  b-prewhitening: b-prewhitening.html
+  c-trend-test: c-trend-test.html
+  d-slope-estimation: d-slope-estimation.html
+  e-fdr-correction: e-fdr-correction.html
+  g-workflow-trends: g-workflow-trends.html
+last_built: 2026-08-05T21:30Z
+urls:
+  reference: https://olive-r.github.io/sptrends/reference
+  article: https://olive-r.github.io/sptrends/articles
