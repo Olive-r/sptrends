@@ -1,89 +1,41 @@
-url: https://olivergh.github.io/sptrends/
-
+url: https://olive-r.github.io/sptrends/
 template:
   bootstrap: 5
-
 reference:
 - title: Published workflows
-  desc: >
-    sptrends is not a collection of individual statistical functions --
-    it is a platform for **published workflows**. Each one below is a
-    complete, citable, peer-reviewed method with its own paper, not an
-    ad hoc combination this package invented: Robust Trend Analysis
-    (RTA, Gutiérrez-Hernández & García, 2024) and True Significant
-    Trends (TST, Gutiérrez-Hernández & García, 2025). See `?workflow_tst` and
-    `?workflow_rta` for how the two differ and why both are offered, rather than
-    one superseding the other. `print()`/`summary()`/`plot()` work the
-    same way on every classed object this package returns -- one shared
-    entry point per generic (the same convention `terra` itself uses),
-    not a differently-named function to remember for each result type.
+  desc: |
+    sptrends is not a collection of individual statistical functions -- it is a platform for **published workflows**. Each one below is a complete, citable, peer-reviewed method with its own paper, not an ad hoc combination this package invented: Robust Trend Analysis (RTA, Gutiérrez-Hernández & García, 2024) and True Significant Trends (TST, Gutiérrez-Hernández & García, 2025). See `?workflow_tst` and `?workflow_rta` for how the two differ and why both are offered, rather than one superseding the other. `print()`/`summary()`/`plot()` work the same way on every classed object this package returns -- one shared entry point per generic (the same convention `terra` itself uses), not a differently-named function to remember for each result type.
   contents:
   - workflow_tst
   - workflow_rta
   - print.sptrends
   - summary.sptrends
   - plot.sptrends
-
 - title: Configurable trend workflow
-  desc: >
-    `workflow_trends()` is not itself a published method -- it lets
-    you assemble your own combination of the same prewhitening, trend
-    testing, slope estimation and multiple-testing correction methods
-    the two published workflows above are built from, for the case
-    where neither matches what a given analysis needs. Returns the
-    same kind of object `print()`/`summary()`/`plot()` recognise --
-    see "Published workflows" above.
-  contents:
-  - workflow_trends
-
+  desc: |
+    `workflow_trends()` is not itself a published method -- it lets you assemble your own combination of the same prewhitening, trend testing, slope estimation and multiple-testing correction methods the two published workflows above are built from, for the case where neither matches what a given analysis needs. Returns the same kind of object `print()`/`summary()`/`plot()` recognise -- see "Published workflows" above.
+  contents: workflow_trends
 - title: Preprocessing
-  desc: >
-    Steps applied to the raw raster time series *before* trend
-    estimation or significance testing -- removing serial
-    autocorrelation or seasonality that would otherwise distort the
-    steps that come after. Neither is one of the core trend-analysis
-    pillars itself; both prepare the input for them. Both also return an
-    object `print()`/`summary()`/`plot()` recognise -- see "Published
-    workflows" above.
+  desc: |
+    Steps applied to the raw raster time series *before* trend estimation or significance testing -- removing serial autocorrelation or seasonality that would otherwise distort the steps that come after. Neither is one of the core trend-analysis pillars itself; both prepare the input for them. Both also return an object `print()`/`summary()`/`plot()` recognise -- see "Published workflows" above.
   contents:
   - prewhiten
   - compute_anomalies
-
 - title: Core methods
-  desc: >
-    The classical, individually citable statistical techniques each
-    published workflow above is built from -- every one of them usable
-    standalone, not only as a step inside `workflow_tst()`/`workflow_rta()`. Each
-    function's own help page traces it back to its original
-    publication. All four also return an object `print()`/`summary()`/
-    `plot()` recognise -- see "Published workflows" above.
+  desc: |
+    The classical, individually citable statistical techniques each published workflow above is built from -- every one of them usable standalone, not only as a step inside `workflow_tst()`/`workflow_rta()`. Each function's own help page traces it back to its original publication. All four also return an object `print()`/`summary()`/ `plot()` recognise -- see "Published workflows" above.
   contents:
   - trend_test
   - slope_estimator
   - fdr_correction
   - spatial_autocorrelation
-
 - title: Diagnostics
-  desc: >
-    What remains standalone after the redesign: the interactive
-    single-cell inspector. Every other diagnostic previously listed
-    here (trend/Theil-Sen/prewhitening/FDR/Moran's I summaries,
-    histograms, maps, category labels, and the FDR-masked direction
-    map) is now reached via `print()`/`summary()`/`plot()` on the
-    relevant object -- see "Published workflows" and "Core methods"
-    above.
-  contents:
-  - inspect_ts_cell
-
+  desc: |
+    What remains standalone after the redesign: the interactive single-cell inspector. Every other diagnostic previously listed here (trend/Theil-Sen/prewhitening/FDR/Moran's I summaries, histograms, maps, category labels, and the FDR-masked direction map) is now reached via `print()`/`summary()`/`plot()` on the relevant object -- see "Published workflows" and "Core methods" above.
+  contents: inspect_ts_cell
 - title: Utilities
-  desc: >
-    Everything else this platform needs around the science: reading
-    gridded time series in, simulating synthetic ground truth,
-    benchmarking detection methods against it, and the bundled
-    real-world example dataset. `compare_detections()` also returns an
-    object `print()`/`summary()`/`plot()` recognise -- see "Published
-    workflows" above -- while remaining an ordinary data frame
-    underneath (indexing, `$`, and so on all still work).
+  desc: |
+    Everything else this platform needs around the science: reading gridded time series in, simulating synthetic ground truth, benchmarking detection methods against it, and the bundled real-world example dataset. `compare_detections()` also returns an object `print()`/`summary()`/`plot()` recognise -- see "Published workflows" above -- while remaining an ordinary data frame underneath (indexing, `$`, and so on all still work).
   contents:
   - read_ordered_stack
   - read_netcdf_stack
@@ -93,17 +45,22 @@ reference:
   - compare_detections
   - benchmark_methods
   - benchmark_summary
-
 navbar:
   structure:
-    left: [intro, reference, articles, news]
-    right: [r-project, search, github]
+    left:
+    - intro
+    - reference
+    - articles
+    - news
+    right:
+    - r-project
+    - search
+    - github
   components:
     r-project:
       icon: fab fa-r-project fa-lg
       href: https://www.r-project.org/
       aria-label: The R Project for Statistical Computing
-
 articles:
 - title: Vignettes
   navbar: ~
@@ -114,3 +71,4 @@ articles:
   - d-slope-estimation
   - e-fdr-correction
   - g-workflow-trends
+

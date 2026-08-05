@@ -332,6 +332,7 @@ Decline. Remote Sensing, 16(20), 3886. \doi{10.3390/rs16203886}
 Useful links:
 \itemize{
   \item \url{https://github.com/Olive-r/sptrends}
+  \item \url{https://olive-r.github.io/sptrends/}
   \item Report bugs at \url{https://github.com/Olive-r/sptrends/issues}
 }
 

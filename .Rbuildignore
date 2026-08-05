@@ -12,3 +12,4 @@
 ^manual-pdf-error-.*\.txt$
 ^.*_results$
 \.lnk$
+^docs$
