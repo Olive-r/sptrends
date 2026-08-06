@@ -510,7 +510,7 @@ Other example data functions:
 # 12x12 grid. terra::global(..., "range") shows the true slope's
 # minimum and maximum across all cells.
 sim <- sim_trend_stack(nrow = 12, ncol = 12, n_time = 8, seed = 42)
-#> >> [sim_trend_stack()] elapsed: 0.03 s
+#> >> [sim_trend_stack()] elapsed: 0.04 s
 terra::nlyr(sim$series)
 #> [1] 8
 terra::global(sim$true_slope, "range", na.rm = TRUE)
@@ -520,7 +520,7 @@ terra::global(sim$true_slope, "range", na.rm = TRUE)
 # A complete null field: every true slope is exactly zero.
 sim_null <- sim_trend_stack(nrow = 12, ncol = 12, n_time = 8,
                              trend_fraction = 0, seed = 1)
-#> >> [sim_trend_stack()] elapsed: 0.03 s
+#> >> [sim_trend_stack()] elapsed: 0.05 s
 terra::global(sim_null$true_slope, "range", na.rm = TRUE)
 #>            min max
 #> true_slope   0   0
@@ -530,7 +530,7 @@ terra::global(sim_null$true_slope, "range", na.rm = TRUE)
 sim_break <- sim_trend_stack(nrow = 12, ncol = 12, n_time = 10,
                               trend_fraction = 0, break_type = "mean",
                               break_fraction = 0.3, seed = 2)
-#> >> [sim_trend_stack()] elapsed: 0.03 s
+#> >> [sim_trend_stack()] elapsed: 0.05 s
 sim_break$break_time
 #> [1] 5
 terra::global(sim_break$true_break, "sum", na.rm = TRUE)
@@ -544,11 +544,11 @@ terra::global(sim_break$true_break, "sum", na.rm = TRUE)
 r0 <- sim_trend_stack(nrow = 20, ncol = 20, n_time = 1,
                        smooth_radius = 3, spatial_rho = 0,
                        seed = 1)$series[[1]]
-#> >> [sim_trend_stack()] elapsed: 0.01 s
+#> >> [sim_trend_stack()] elapsed: 0.02 s
 r1 <- sim_trend_stack(nrow = 20, ncol = 20, n_time = 1,
                        smooth_radius = 3, spatial_rho = 1,
                        seed = 1)$series[[1]]
-#> >> [sim_trend_stack()] elapsed: 0.02 s
+#> >> [sim_trend_stack()] elapsed: 0.03 s
 spatial_autocorrelation(r0, nperm = 99, seed = 1, verbose = FALSE,
                          report = FALSE)$statistic
 #> [1] 0.07156812
@@ -561,7 +561,7 @@ spatial_autocorrelation(r1, nperm = 99, seed = 1, verbose = FALSE,
 # standard deviation -- for comparing a rank-based method against OLS.
 sim_heavy <- sim_trend_stack(nrow = 10, ncol = 10, n_time = 10,
                               noise_dist = "t", t_df = 3, seed = 1)
-#> >> [sim_trend_stack()] elapsed: 0.04 s
+#> >> [sim_trend_stack()] elapsed: 0.06 s
 terra::nlyr(sim_heavy$series)
 #> [1] 10
 ```

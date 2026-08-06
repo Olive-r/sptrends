@@ -61,7 +61,7 @@ Other validation functions:
 
 ``` r
 sim <- sim_trend_stack(nrow = 12, ncol = 12, n_time = 12, seed = 1)
-#> >> [sim_trend_stack()] elapsed: 0.04 s
+#> >> [sim_trend_stack()] elapsed: 0.06 s
 trend_mk  <- trend_test(sim$series, method = "MK",
                          report = FALSE, verbose = FALSE)
 trend_cmk <- trend_test(sim$series, method = "CMK",
