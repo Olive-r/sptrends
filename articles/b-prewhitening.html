@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,7 +64,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>1. Dealing with serial correlation</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v1.0/vignettes/b-prewhitening.Rmd" class="external-link"><code>vignettes/b-prewhitening.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/vignettes/b-prewhitening.Rmd" class="external-link"><code>vignettes/b-prewhitening.Rmd</code></a></small>
       <div class="d-none name"><code>b-prewhitening.Rmd</code></div>
     </div>
 
@@ -118,28 +118,6 @@ autocorrelation.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pw</span><span class="op">)</span></span></code></pre></div>
 <p><img src="b-prewhitening_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="Spatial diagnostics from selective trend-free prewhitening" width="576"><img src="b-prewhitening_files/figure-html/unnamed-chunk-3-2.png" class="r-plt" alt="Spatial diagnostics from selective trend-free prewhitening" width="576"><img src="b-prewhitening_files/figure-html/unnamed-chunk-3-3.png" class="r-plt" alt="Spatial diagnostics from selective trend-free prewhitening" width="576"></p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">dw</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/values.html" class="external-link">values</a></span><span class="op">(</span><span class="va">pw</span><span class="op">$</span><span class="va">diagnostics</span><span class="op">$</span><span class="va">DW_initial</span>, mat <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="va">dw_valid</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/is.finite.html" class="external-link">is.finite</a></span><span class="op">(</span><span class="va">dw</span><span class="op">)</span></span>
-<span><span class="va">dw_counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>  positive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">dw_valid</span> <span class="op">&amp;</span> <span class="va">dw</span> <span class="op">&lt;</span> <span class="fl">1.4</span><span class="op">)</span>,</span>
-<span>  no_relevant <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">dw_valid</span> <span class="op">&amp;</span> <span class="va">dw</span> <span class="op">&gt;=</span> <span class="fl">1.4</span> <span class="op">&amp;</span> <span class="va">dw</span> <span class="op">&lt;=</span> <span class="fl">2.6</span><span class="op">)</span>,</span>
-<span>  negative <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">dw_valid</span> <span class="op">&amp;</span> <span class="va">dw</span> <span class="op">&gt;</span> <span class="fl">2.6</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  interpretation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    <span class="st">"Relevant positive autocorrelation"</span>,</span>
-<span>    <span class="st">"No relevant autocorrelation"</span>,</span>
-<span>    <span class="st">"Relevant negative autocorrelation"</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  criterion <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"DW &lt; 1.4"</span>, <span class="st">"1.4 &lt;= DW &lt;= 2.6"</span>, <span class="st">"DW &gt; 2.6"</span><span class="op">)</span>,</span>
-<span>  cells <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unname.html" class="external-link">unname</a></span><span class="op">(</span><span class="va">dw_counts</span><span class="op">)</span>,</span>
-<span>  percentage <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">100</span> <span class="op">*</span> <span class="va">dw_counts</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">dw_counts</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt;                                interpretation        criterion cells percentage</span></span>
-<span><span class="co">#&gt; positive    Relevant positive autocorrelation         DW &lt; 1.4  5975       38.1</span></span>
-<span><span class="co">#&gt; no_relevant       No relevant autocorrelation 1.4 &lt;= DW &lt;= 2.6  9688       61.8</span></span>
-<span><span class="co">#&gt; negative    Relevant negative autocorrelation         DW &gt; 2.6    12        0.1</span></span></code></pre></div>
 <p>The diagnostic maps show the initial Durbin-Watson statistic, the
 estimated lag-1 autocorrelation and the consequence of the selective
 decision. Only cells crossing the diagnostic criterion and completing
@@ -210,23 +188,22 @@ raw series can attenuate the trend that the analysis seeks to detect (<a href="h
 <h2 id="common-mistakes">Common mistakes<a class="anchor" aria-label="anchor" href="#common-mistakes"></a>
 </h2>
 <ul>
-<li>Do not assume that every time series requires prewhitening. Examine
-the diagnostics and apply treatment only when serial correlation and the
-analytical context justify it.</li>
+<li>Do not assume that every time series requires prewhitening; examine
+the diagnostics first and apply treatment only when serial correlation
+and the analytical context justify it.</li>
 <li>Do not interpret the default Durbin-Watson thresholds as a formal
-significance test. Use <code>dw_method = "test"</code> when formal
+significance test; use <code>dw_method = "test"</code> when formal
 critical-value-based inference is required.</li>
-<li>Do not treat prewhitening procedures as interchangeable. Inspect the
+<li>Do not treat prewhitening procedures as interchangeable; inspect the
 original and transformed series, compare their diagnostic maps and, when
 several methods are scientifically plausible, evaluate them as a
 sensitivity analysis before selecting one.</li>
 <li>Do not combine prewhitening with modified Mann-Kendall
-(<code>MMK</code>) without a clear methodological justification, because
-both approaches address temporal autocorrelation.</li>
-<li>
-<code>TFPW_Y</code> returns one fewer temporal observation than the
-input series. Always verify the output dimensions before proceeding to
-later analytical stages.</li>
+(<code>MMK</code>) without a clear methodological justification; both
+approaches address temporal autocorrelation (see <a href="c-trend-test.html">trend-test vignette</a>).</li>
+<li>Do not assume <code>TFPW_Y</code> preserves the input series length;
+it returns one fewer temporal observation, so verify the output
+dimensions before proceeding to later analytical stages.</li>
 </ul>
 </div>
 <div class="section level2">

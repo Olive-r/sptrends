@@ -3,7 +3,7 @@
 The detailed textual report behind
 [`print()`](https://rdrr.io/r/base/print.html)'s own one-line overview –
 see
-[`print.sptrends()`](https://olive-r.github.io/sptrends/reference/print.sptrends.md)
+[`print.sptrends()`](https://olivergh.github.io/sptrends/reference/print.sptrends.md)
 for the full class list and the rationale for one shared entry point per
 generic. Each class here calls its own underlying reporting function
 directly, listed below, rather than duplicating what
@@ -25,19 +25,19 @@ summary(object, ...)
   `"fdr"`, `"spatial_autocorrelation"`, `"compare_detections"`,
   `"sptrends_simulation"`, `"sptrends_simulation_design"`, or
   `"sptrends_benchmark"`), from
-  [`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md),
-  [`workflow_rta()`](https://olive-r.github.io/sptrends/reference/workflow_rta.md),
-  [`workflow_trends()`](https://olive-r.github.io/sptrends/reference/workflow_trends.md),
-  [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md),
-  [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md),
-  [`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md),
-  [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md),
-  [`spatial_autocorrelation()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation.md),
-  [`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md),
-  [`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md),
-  [`simulation_design()`](https://olive-r.github.io/sptrends/reference/simulation_design.md),
+  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md),
+  [`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md),
+  [`workflow_trends()`](https://olivergh.github.io/sptrends/reference/workflow_trends.md),
+  [`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md),
+  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md),
+  [`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md),
+  [`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md),
+  [`spatial_autocorrelation()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation.md),
+  [`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md),
+  [`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md),
+  [`simulation_design()`](https://olivergh.github.io/sptrends/reference/simulation_design.md),
   or
-  [`benchmark_methods()`](https://olive-r.github.io/sptrends/reference/benchmark_methods.md).
+  [`benchmark_methods()`](https://olivergh.github.io/sptrends/reference/benchmark_methods.md).
 
 - ...:
 
@@ -63,28 +63,28 @@ report.
 
 **Published workflow: `"tst"`.** The full detail behind the `"tst"` case
 of
-[`print.sptrends()`](https://olive-r.github.io/sptrends/reference/print.sptrends.md):
+[`print.sptrends()`](https://olivergh.github.io/sptrends/reference/print.sptrends.md):
 the uncorrected trend summary table and, if FDR correction was run, the
 FDR summary. Returns a list with `trend` and `fdr` (or `NULL`).
 **Published workflow: `"rta"`.** The full detail behind the `"rta"` case
 of
-[`print.sptrends()`](https://olive-r.github.io/sptrends/reference/print.sptrends.md):
+[`print.sptrends()`](https://olivergh.github.io/sptrends/reference/print.sptrends.md):
 the uncorrected trend summary table, the Theil-Sen slope summary, and
 the FDR-BH summary. Returns a list with `trend` and `fdr`.
 **Configurable workflow: `"workflow_trends"`.** The uncorrected trend
 table, optional slope summary and selected FDR summary. **Trend
 estimation: `"trend_test"`.** Cell counts and
 increase/decrease/no-change breakdown at multiple alpha levels; calls
-[`trend_summary()`](https://olive-r.github.io/sptrends/reference/trend_summary.md)
+[`trend_summary()`](https://olivergh.github.io/sptrends/reference/trend_summary.md)
 internally. **Trend estimation: `"slope"`.** Valid cells, range, median,
 mean, and the increasing/decreasing/flat breakdown; calls
-[`slope_summary()`](https://olive-r.github.io/sptrends/reference/slope_summary.md)
+[`slope_summary()`](https://olivergh.github.io/sptrends/reference/slope_summary.md)
 internally. **Diagnostic: `"prewhiten"`.** Valid cells, cells
 prewhitened, mean rho among them, and median Durbin-Watson; calls
-[`prewhiten_summary()`](https://olive-r.github.io/sptrends/reference/prewhiten_summary.md)
+[`prewhiten_summary()`](https://olivergh.github.io/sptrends/reference/prewhiten_summary.md)
 internally. **Diagnostic: `"fdr"`.** Significant/not-significant counts
 and percentages for every method requested; calls
-[`fdr_summary()`](https://olive-r.github.io/sptrends/reference/fdr_summary.md)
+[`fdr_summary()`](https://olivergh.github.io/sptrends/reference/fdr_summary.md)
 internally. **Diagnostic: `"spatial_autocorrelation"`.** Global results
 report the observed statistic, permutation distribution and empirical
 summary statistics. Local results report the statistic range, minimum
@@ -92,7 +92,7 @@ permutation p-value and exploratory raw-significance count.
 **Validation: `"compare_detections"`.** Which method scores best on each
 numeric metric in the table – a small table of its own,
 `metric`/`best_method`, not part of what
-[`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md)
+[`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md)
 itself computes. **Simulation and benchmarking.** Simulation summaries
 quantify the true signal, true-null proportion and slope range. Design
 summaries count levels per factor. Benchmark summaries retain scenario
@@ -101,9 +101,9 @@ replicates, including empirical FDR and FWER where available.
 
 ## See also
 
-[`print.sptrends()`](https://olive-r.github.io/sptrends/reference/print.sptrends.md)
+[`print.sptrends()`](https://olivergh.github.io/sptrends/reference/print.sptrends.md)
 for a concise overview and
-[`plot.sptrends()`](https://olive-r.github.io/sptrends/reference/plot.sptrends.md)
+[`plot.sptrends()`](https://olivergh.github.io/sptrends/reference/plot.sptrends.md)
 for graphical exploration.
 
 ## Examples

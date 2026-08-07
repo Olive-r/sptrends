@@ -16,7 +16,7 @@ trend_histograms(trend, path = NULL)
 - trend:
 
   The `$stats` field of
-  [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)'s
+  [`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)'s
   output.
 
 - path:
@@ -38,9 +38,9 @@ trend_histograms(trend, path = NULL)
 ## See also
 
 Other Contextual Mann-Kendall functions:
-[`prepare_cmk_neighbourhood()`](https://olive-r.github.io/sptrends/reference/prepare_cmk_neighbourhood.md),
-[`trend_maps()`](https://olive-r.github.io/sptrends/reference/trend_maps.md),
-[`trend_summary()`](https://olive-r.github.io/sptrends/reference/trend_summary.md)
+[`prepare_cmk_neighbourhood()`](https://olivergh.github.io/sptrends/reference/prepare_cmk_neighbourhood.md),
+[`trend_maps()`](https://olivergh.github.io/sptrends/reference/trend_maps.md),
+[`trend_summary()`](https://olivergh.github.io/sptrends/reference/trend_summary.md)
 
 ## Examples
 

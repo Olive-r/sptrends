@@ -9,7 +9,7 @@ showing the sorted p-values against their step-up rejection threshold.
 Following Benjamini &amp;amp; Hochberg (1995), p-values are shown in increasing
 order as p_(i): the x-axis is the rank i (from 1 to the total
 number of valid cells m), and the y-axis is the ordered p-value
-p_(i) itself."><meta property="og:image" content="https://olive-r.github.io/sptrends/logo.png"></head><body>
+p_(i) itself."><meta property="og:image" content="https://olivergh.github.io/sptrends/logo.png"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -17,7 +17,7 @@ p_(i) itself."><meta property="og:image" content="https://olive-r.github.io/sptr
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +48,7 @@ p_(i) itself."><meta property="og:image" content="https://olive-r.github.io/sptr
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Rejection-threshold plot for FDR-BH and FDR-BKY</h1>
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v1.0/R/fdr.R" class="external-link"><code>R/fdr.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/R/fdr.R" class="external-link"><code>R/fdr.R</code></a></small>
       <div class="d-none name"><code>fdr_threshold_plot.Rd</code></div>
     </div>
 
@@ -187,7 +187,7 @@ Trend Testing. Mathematics, 13(22), 3630. <a href="https://doi.org/10.3390/math1
 <span class="r-msg co"><span class="r-pr">#&gt;</span>              42            2023 VHP_SMN_annual_ndvi_2023.tif</span>
 <span class="r-plt img"><img src="fdr_threshold_plot-1.png" alt="" width="700" height="433"></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Stack built: 42 layers, 146 x 338 cells.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [read_ordered_stack()] elapsed: 0.06 s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [read_ordered_stack()] elapsed: 0.07 s</span>
 <span class="r-in"><span><span class="va">trend</span> <span class="op">&lt;-</span> <span class="fu"><a href="trend_test.html">trend_test</a></span><span class="op">(</span><span class="va">r</span>, report <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">fdr_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="fdr_correction.html">fdr_correction</a></span><span class="op">(</span><span class="va">trend</span><span class="op">$</span><span class="va">stats</span><span class="op">$</span><span class="va">p</span>, report <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>

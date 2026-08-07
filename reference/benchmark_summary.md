@@ -1,7 +1,7 @@
 # Summarise a method benchmark across Monte Carlo replicates
 
 Aggregates the replicate-level output of
-[`benchmark_methods()`](https://olive-r.github.io/sptrends/reference/benchmark_methods.md)
+[`benchmark_methods()`](https://olivergh.github.io/sptrends/reference/benchmark_methods.md)
 while preserving scenarios and methods. For detection-like stages,
 empirical FDR is the mean false-discovery proportion and empirical FWER
 is the proportion of replicates containing at least one false positive.
@@ -17,7 +17,7 @@ benchmark_summary(x, path = NULL, verbose = TRUE)
 - x:
 
   Replicate-level result returned by
-  [`benchmark_methods()`](https://olive-r.github.io/sptrends/reference/benchmark_methods.md).
+  [`benchmark_methods()`](https://olivergh.github.io/sptrends/reference/benchmark_methods.md).
 
 - path:
 
@@ -44,7 +44,7 @@ experiments; it does not perform statistical inference on user data.
 ## Typical use
 
 Run
-[`benchmark_methods()`](https://olive-r.github.io/sptrends/reference/benchmark_methods.md)
+[`benchmark_methods()`](https://olivergh.github.io/sptrends/reference/benchmark_methods.md)
 and pass its result directly to this function.
 
 ## Methodological details
@@ -75,14 +75,14 @@ paired MK replicates and 33 independent simulation-cycle controls.
 
 ## See also
 
-[`benchmark_methods()`](https://olive-r.github.io/sptrends/reference/benchmark_methods.md),
-[`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md)
+[`benchmark_methods()`](https://olivergh.github.io/sptrends/reference/benchmark_methods.md),
+[`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md)
 
 Other validation functions:
-[`benchmark_methods()`](https://olive-r.github.io/sptrends/reference/benchmark_methods.md),
-[`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md),
-[`plot_detection_comparison()`](https://olive-r.github.io/sptrends/reference/plot_detection_comparison.md),
-[`simulation_design()`](https://olive-r.github.io/sptrends/reference/simulation_design.md)
+[`benchmark_methods()`](https://olivergh.github.io/sptrends/reference/benchmark_methods.md),
+[`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md),
+[`plot_detection_comparison()`](https://olivergh.github.io/sptrends/reference/plot_detection_comparison.md),
+[`simulation_design()`](https://olivergh.github.io/sptrends/reference/simulation_design.md)
 
 ## Examples
 

@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,7 +64,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>5. Trend workflows and published methods</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v1.0/vignettes/g-workflow-trends.Rmd" class="external-link"><code>vignettes/g-workflow-trends.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/vignettes/g-workflow-trends.Rmd" class="external-link"><code>vignettes/g-workflow-trends.Rmd</code></a></small>
       <div class="d-none name"><code>g-workflow-trends.Rmd</code></div>
     </div>
 
@@ -76,11 +76,12 @@
 <p>A complete trend analysis is not one problem but several: serial
 correlation within each cell’s own series, spatial dependence among
 neighbouring cells, and the multiplicity created by testing many cells
-at once. A workflow’s own structure mirrors this: one stage per
-challenge – prewhitening, trend testing, slope estimation,
-multiple-testing correction – run in a fixed order that keeps track of
-itself, rather than left to be reassembled by hand each time and risking
-a lost intermediate result along the way.</p>
+at once.</p>
+<p>A workflow’s own structure mirrors this: one stage per challenge –
+prewhitening, trend testing, slope estimation, multiple-testing
+correction – run in a fixed order that keeps track of itself, rather
+than left to be reassembled by hand each time and risking a lost
+intermediate result along the way.</p>
 <p>That structure follows True Significant Trends (TST), introduced by
 <a href="https://doi.org/10.1016/j.rsase.2024.101377" class="external-link">Gutiérrez-Hernández
 and García (2025)</a> as the methodological origin of sptrends: a
@@ -244,13 +245,20 @@ question requires a genuinely custom combination.</p>
 <h2 id="common-mistakes">Common mistakes<a class="anchor" aria-label="anchor" href="#common-mistakes"></a>
 </h2>
 <ul>
-<li>Do not label every complete custom workflow as TST.</li>
+<li>Do not label every complete custom workflow as TST; only
+<code><a href="../reference/workflow_tst.html">workflow_tst()</a></code>’s own published defaults reproduce that
+exact method (see <a href="#published-workflows">Published workflows</a>
+above).</li>
 <li>Do not correct temporal autocorrelation twice by combining
-prewhitening and MMK without a specific rationale.</li>
+prewhitening and MMK without a specific rationale; both approaches
+address the same problem.</li>
 <li>Do not repeat workflow-managed arguments inside stage argument
-lists.</li>
+lists; <code>prewhiten_args</code>, <code>trend_args</code>,
+<code>slope_args</code> and <code>fdr_args</code> are for stage-specific
+options only, not for arguments the workflow itself already sets.</li>
 <li>Do not omit a stage merely to reduce computation without a
-methodological reason.</li>
+methodological reason; each stage exists to address one of the three
+challenges described above.</li>
 </ul>
 </div>
 <div class="section level2">

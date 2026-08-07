@@ -3,7 +3,7 @@
 Builds the sparse adjacency matrix (`W[i,j] = 1` if `j` is a queen
 neighbour of `i` and both have complete data) and the valid-neighbour
 count per cell. Kept separate from
-[`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)
+[`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)
 so it can be reused without recomputation when the test is called
 repeatedly on the same raster geometry (e.g. inside a permutation loop).
 
@@ -49,7 +49,7 @@ signature used to reject unsafe reuse.
 is not one of the core building blocks of TST or RTA (used internally
 by, or as a standalone diagnostic alongside, the core functions). Not
 exported – called internally by
-[`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)
+[`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)
 whenever `precomputed_neighbourhood` isn't supplied; reachable from
 outside the package with `:::` for the repeated-call optimisation
 described above, since there is no single-object S3 method this folds
@@ -66,9 +66,9 @@ result).
 ## See also
 
 Other Contextual Mann-Kendall functions:
-[`trend_histograms()`](https://olive-r.github.io/sptrends/reference/trend_histograms.md),
-[`trend_maps()`](https://olive-r.github.io/sptrends/reference/trend_maps.md),
-[`trend_summary()`](https://olive-r.github.io/sptrends/reference/trend_summary.md)
+[`trend_histograms()`](https://olivergh.github.io/sptrends/reference/trend_histograms.md),
+[`trend_maps()`](https://olivergh.github.io/sptrends/reference/trend_maps.md),
+[`trend_summary()`](https://olivergh.github.io/sptrends/reference/trend_summary.md)
 
 ## Examples
 
@@ -121,7 +121,7 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.06 s
+#> >> [read_ordered_stack()] elapsed: 0.07 s
 
 # A matrix with one row per cell and one column per time step, and a
 # logical vector marking which cells have a complete (no-NA) series --

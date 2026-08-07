@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,7 +64,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>3. Trend magnitude estimation</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v1.0/vignettes/d-slope-estimation.Rmd" class="external-link"><code>vignettes/d-slope-estimation.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/vignettes/d-slope-estimation.Rmd" class="external-link"><code>vignettes/d-slope-estimation.Rmd</code></a></small>
       <div class="d-none name"><code>d-slope-estimation.Rmd</code></div>
     </div>
 
@@ -73,12 +73,13 @@
 <div class="section level2">
 <h2 id="why-this-matters">Why this matters<a class="anchor" aria-label="anchor" href="#why-this-matters"></a>
 </h2>
-<p>Statistical significance does not indicate how rapidly a variable is
-changing. A small change may be highly significant, whereas a large
-estimated change may remain uncertain. Trend tests and slope estimators
-therefore answer different questions: the former assess statistical
-evidence for change, while the latter quantify its magnitude and rate
-over time.</p>
+<p>Trend tests and slope estimators answer different questions: the
+former assess statistical evidence for change, while the latter quantify
+its magnitude and rate over time.</p>
+<p>Having established whether a trend exists in the previous vignette,
+this one turns to the second question: how large is it?
+<code><a href="../reference/slope_estimator.html">slope_estimator()</a></code> answers that question directly,
+independently of whether the trend reached statistical significance.</p>
 </div>
 <div class="section level2">
 <h2 id="what-slope_estimator-does">What <code>slope_estimator()</code> does<a class="anchor" aria-label="anchor" href="#what-slope_estimator-does"></a>
@@ -88,9 +89,10 @@ In <code>sptrends</code>, it is quantified through slope estimation and
 expressed in the units of the input variable per unit of time.
 <code><a href="../reference/slope_estimator.html">slope_estimator()</a></code> estimates one temporal slope for each
 valid raster cell and returns a raster representing the rate of change
-across the study area. Theil-Sen (<code>TS</code>) is the default and
-generally recommended estimator because it provides a robust balance
-between computational efficiency and resistance to outliers.</p>
+across the study area. Theil-Sen (<code>TS</code>) (<a href="https://doi.org/10.1007/978-94-011-2546-8_20" class="external-link">Theil, 1950</a>; <a href="https://doi.org/10.1080/01621459.1968.10480934" class="external-link">Sen, 1968</a>) is
+the default and generally recommended estimator because it provides a
+robust balance between computational efficiency and resistance to
+outliers.</p>
 </div>
 <div class="section level2">
 <h2 id="basic-workflow">Basic workflow<a class="anchor" aria-label="anchor" href="#basic-workflow"></a>
@@ -107,25 +109,6 @@ significance.</p>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ts</span><span class="op">)</span></span></code></pre></div>
 <p><img src="d-slope-estimation_files/figure-html/theil-sen-map-1.png" class="r-plt" alt="Global map of raw Theil-Sen NDVI slopes" width="576"></p>
-<p>To connect the spatial result with the underlying time series, one
-valid cell is selected reproducibly. Its annual observations are shown
-together with the corresponding Theil-Sen fitted line.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">slope_values</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/values.html" class="external-link">values</a></span><span class="op">(</span><span class="va">ts</span><span class="op">$</span><span class="va">slope</span>, mat <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="va">valid_cells</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/is.finite.html" class="external-link">is.finite</a></span><span class="op">(</span><span class="va">slope_values</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">cell</span> <span class="op">&lt;-</span> <span class="va">valid_cells</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">ceiling</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">valid_cells</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">cell_values</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">r</span><span class="op">[</span><span class="va">cell</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">cell_slope</span> <span class="op">&lt;-</span> <span class="va">slope_values</span><span class="op">[</span><span class="va">cell</span><span class="op">]</span></span>
-<span><span class="va">cell_intercept</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">cell_values</span> <span class="op">-</span> <span class="va">cell_slope</span> <span class="op">*</span> <span class="va">years</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">graphics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span></span>
-<span>  <span class="va">years</span>, <span class="va">cell_values</span>, type <span class="op">=</span> <span class="st">"b"</span>, pch <span class="op">=</span> <span class="fl">19</span>, col <span class="op">=</span> <span class="st">"grey35"</span>,</span>
-<span>  xlab <span class="op">=</span> <span class="st">"Year"</span>, ylab <span class="op">=</span> <span class="st">"NDVI"</span>,</span>
-<span>  main <span class="op">=</span> <span class="st">"Theil-Sen slope for one raster cell"</span></span>
-<span><span class="op">)</span></span>
-<span><span class="fu">graphics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>a <span class="op">=</span> <span class="va">cell_intercept</span>, b <span class="op">=</span> <span class="va">cell_slope</span>,</span>
-<span>                 col <span class="op">=</span> <span class="st">"steelblue"</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<p><img src="d-slope-estimation_files/figure-html/theil-sen-cell-1.png" class="r-plt" alt="Annual NDVI series and Theil-Sen fitted line for one raster cell" width="576"></p>
 </div>
 <div class="section level2">
 <h2 id="understanding-the-results">Understanding the results<a class="anchor" aria-label="anchor" href="#understanding-the-results"></a>
@@ -162,18 +145,18 @@ significance and multiple testing must be evaluated separately.</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
+<td><code>OLS</code></td>
+<td>Low</td>
+<td>Low</td>
+<td>Use when assumptions and efficiency justify it</td>
+</tr>
+<tr class="even">
 <td>
 <code>TS</code> (<a href="https://doi.org/10.1007/978-94-011-2546-8_20" class="external-link">Theil, 1950</a>; <a href="https://doi.org/10.1080/01621459.1968.10480934" class="external-link">Sen,
 1968</a>)</td>
 <td>High</td>
 <td>Moderate</td>
 <td>Recommended general-purpose choice</td>
-</tr>
-<tr class="even">
-<td><code>OLS</code></td>
-<td>Low</td>
-<td>Low</td>
-<td>Use when assumptions and efficiency justify it</td>
 </tr>
 <tr class="odd">
 <td>
@@ -184,8 +167,8 @@ significance and multiple testing must be evaluated separately.</p>
 </tr>
 </tbody>
 </table>
-<p>Theil-Sen (<code>TS</code>) usually provides the best balance between
-robustness and computation. OLS is faster but sensitive to outliers.
+<p>OLS is fastest but sensitive to outliers. Theil-Sen (<code>TS</code>)
+usually provides the best balance between robustness and computation.
 Siegel’s repeated median (<code>RM</code>) is more resistant but
 substantially slower.</p>
 </div>
@@ -193,17 +176,20 @@ substantially slower.</p>
 <h2 id="common-mistakes">Common mistakes<a class="anchor" aria-label="anchor" href="#common-mistakes"></a>
 </h2>
 <ul>
+<li>Do not assume that OLS, TS and RM produce identical estimates; they
+can diverge substantially in the presence of outliers.</li>
 <li>Do not interpret a slope estimate as statistically significant by
-itself. For inferential interpretation, combine it with a trend test and
-multiple-testing correction.</li>
+itself; combine it with a trend test and multiple-testing correction for
+inferential interpretation (see <a href="c-trend-test.html">trend-test
+vignette</a> and <a href="e-fdr-correction.html">multiple-testing
+vignette</a>).</li>
 <li>Do not ignore serial correlation when combining slope estimates with
 significance results; diagnose and treat temporal dependence when
-necessary.</li>
+necessary (see <a href="b-prewhitening.html">prewhitening
+vignette</a>).</li>
 <li>Do not compare slopes expressed in different units without
-appropriate standardisation, and supply actual observation times when
+appropriate standardisation; supply actual observation times when
 measurements are irregularly spaced.</li>
-<li>Do not assume that OLS, TS and RM produce identical estimates,
-particularly in the presence of outliers.</li>
 </ul>
 </div>
 <div class="section level2">

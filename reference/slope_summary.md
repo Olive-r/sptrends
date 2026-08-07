@@ -15,7 +15,7 @@ slope_summary(slope, path = NULL)
 - slope:
 
   Output of
-  [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)
+  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)
   (a single-layer
   [`terra::SpatRaster`](https://rspatial.github.io/terra/reference/SpatRaster-class.html)).
 
@@ -50,7 +50,7 @@ outside the package via
 ## See also
 
 Other Theil-Sen functions:
-[`slope_map()`](https://olive-r.github.io/sptrends/reference/slope_map.md)
+[`slope_map()`](https://olivergh.github.io/sptrends/reference/slope_map.md)
 
 ## Examples
 

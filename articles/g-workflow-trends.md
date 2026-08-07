@@ -5,11 +5,13 @@
 A complete trend analysis is not one problem but several: serial
 correlation within each cell’s own series, spatial dependence among
 neighbouring cells, and the multiplicity created by testing many cells
-at once. A workflow’s own structure mirrors this: one stage per
-challenge – prewhitening, trend testing, slope estimation,
-multiple-testing correction – run in a fixed order that keeps track of
-itself, rather than left to be reassembled by hand each time and risking
-a lost intermediate result along the way.
+at once.
+
+A workflow’s own structure mirrors this: one stage per challenge –
+prewhitening, trend testing, slope estimation, multiple-testing
+correction – run in a fixed order that keeps track of itself, rather
+than left to be reassembled by hand each time and risking a lost
+intermediate result along the way.
 
 That structure follows True Significant Trends (TST), introduced by
 [Gutiérrez-Hernández and García
@@ -20,7 +22,7 @@ challenges above.
 
 ## What `workflow_trends()` does
 
-[`workflow_trends()`](https://olive-r.github.io/sptrends/reference/workflow_trends.md)
+[`workflow_trends()`](https://olivergh.github.io/sptrends/reference/workflow_trends.md)
 coordinates the selected stages and returns one `sptrends` object
 compatible with [`print()`](https://rdrr.io/r/base/print.html),
 [`summary()`](https://rdrr.io/r/base/summary.html) and
@@ -110,19 +112,19 @@ Stage-specific arguments are supplied through `prewhiten_args`,
 
 ### Published workflows
 
-[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)
+[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)
 and
-[`workflow_rta()`](https://olive-r.github.io/sptrends/reference/workflow_rta.md)
+[`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md)
 run an entire published analysis in one line of code, each reproducing
 one specific, citable method exactly – use them, rather than assembling
 the same sequence by hand through
-[`workflow_trends()`](https://olive-r.github.io/sptrends/reference/workflow_trends.md),
+[`workflow_trends()`](https://olivergh.github.io/sptrends/reference/workflow_trends.md),
 whenever the goal is to reproduce a published result:
 
 | Workflow | Published sequence | Function |
 |----|----|----|
-| TST ([Gutiérrez-Hernández & García, 2025](https://doi.org/10.1016/j.rsase.2024.101377)) | Selective prewhitening, CMK, Theil-Sen, FDR-BKY | [`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md) |
-| RTA ([Gutiérrez-Hernández & García, 2024](https://doi.org/10.3390/rs16203886)) | CMK, Theil-Sen, FDR-BH; no prewhitening | [`workflow_rta()`](https://olive-r.github.io/sptrends/reference/workflow_rta.md) |
+| TST ([Gutiérrez-Hernández & García, 2025](https://doi.org/10.1016/j.rsase.2024.101377)) | Selective prewhitening, CMK, Theil-Sen, FDR-BKY | [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md) |
+| RTA ([Gutiérrez-Hernández & García, 2024](https://doi.org/10.3390/rs16203886)) | CMK, Theil-Sen, FDR-BH; no prewhitening | [`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md) |
 
 ``` r
 
@@ -133,17 +135,25 @@ rta <- workflow_rta(r, report = FALSE, verbose = FALSE)
 Both functions permit documented extensions, but changing their
 published defaults produces a derived variant rather than an exact
 reproduction. Use
-[`workflow_trends()`](https://olive-r.github.io/sptrends/reference/workflow_trends.md)
+[`workflow_trends()`](https://olivergh.github.io/sptrends/reference/workflow_trends.md)
 when the scientific question requires a genuinely custom combination.
 
 ## Common mistakes
 
-- Do not label every complete custom workflow as TST.
+- Do not label every complete custom workflow as TST; only
+  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)’s
+  own published defaults reproduce that exact method (see [Published
+  workflows](#published-workflows) above).
 - Do not correct temporal autocorrelation twice by combining
-  prewhitening and MMK without a specific rationale.
-- Do not repeat workflow-managed arguments inside stage argument lists.
+  prewhitening and MMK without a specific rationale; both approaches
+  address the same problem.
+- Do not repeat workflow-managed arguments inside stage argument lists;
+  `prewhiten_args`, `trend_args`, `slope_args` and `fdr_args` are for
+  stage-specific options only, not for arguments the workflow itself
+  already sets.
 - Do not omit a stage merely to reduce computation without a
-  methodological reason.
+  methodological reason; each stage exists to address one of the three
+  challenges described above.
 
 ## Next steps
 
@@ -164,11 +174,11 @@ trends.
 ## Further details
 
 See
-[`?workflow_trends`](https://olive-r.github.io/sptrends/reference/workflow_trends.md)
+[`?workflow_trends`](https://olivergh.github.io/sptrends/reference/workflow_trends.md)
 for configuration rules and
-[`?workflow_tst`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)
+[`?workflow_tst`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)
 and
-[`?workflow_rta`](https://olive-r.github.io/sptrends/reference/workflow_rta.md)
+[`?workflow_rta`](https://olivergh.github.io/sptrends/reference/workflow_rta.md)
 for the complete published methods, assumptions, limitations, quality
 assurance and references.
 

@@ -16,7 +16,7 @@ and Wang, 2002](https://doi.org/10.1029/2001WR000861)).
 
 ## What `prewhiten()` does
 
-[`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md)
+[`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md)
 receives a raster time series and returns a transformed series together
 with cell-level diagnostics. Its default method is selective: only cells
 whose diagnostic indicates relevant serial autocorrelation are modified.
@@ -61,31 +61,6 @@ prewhitening](b-prewhitening_files/figure-html/unnamed-chunk-3-2.png)![Spatial
 diagnostics from selective trend-free
 prewhitening](b-prewhitening_files/figure-html/unnamed-chunk-3-3.png)
 
-``` r
-
-dw <- terra::values(pw$diagnostics$DW_initial, mat = FALSE)
-dw_valid <- is.finite(dw)
-dw_counts <- c(
-  positive = sum(dw_valid & dw < 1.4),
-  no_relevant = sum(dw_valid & dw >= 1.4 & dw <= 2.6),
-  negative = sum(dw_valid & dw > 2.6)
-)
-data.frame(
-  interpretation = c(
-    "Relevant positive autocorrelation",
-    "No relevant autocorrelation",
-    "Relevant negative autocorrelation"
-  ),
-  criterion = c("DW < 1.4", "1.4 <= DW <= 2.6", "DW > 2.6"),
-  cells = unname(dw_counts),
-  percentage = round(100 * dw_counts / sum(dw_counts), 1)
-)
-#>                                interpretation        criterion cells percentage
-#> positive    Relevant positive autocorrelation         DW < 1.4  5975       38.1
-#> no_relevant       No relevant autocorrelation 1.4 <= DW <= 2.6  9688       61.8
-#> negative    Relevant negative autocorrelation         DW > 2.6    12        0.1
-```
-
 The diagnostic maps show the initial Durbin-Watson statistic, the
 estimated lag-1 autocorrelation and the consequence of the selective
 decision. Only cells crossing the diagnostic criterion and completing
@@ -119,34 +94,35 @@ raw series can attenuate the trend that the analysis seeks to detect
 
 ## Common mistakes
 
-- Do not assume that every time series requires prewhitening. Examine
-  the diagnostics and apply treatment only when serial correlation and
-  the analytical context justify it.
+- Do not assume that every time series requires prewhitening; examine
+  the diagnostics first and apply treatment only when serial correlation
+  and the analytical context justify it.
 - Do not interpret the default Durbin-Watson thresholds as a formal
-  significance test. Use `dw_method = "test"` when formal
+  significance test; use `dw_method = "test"` when formal
   critical-value-based inference is required.
-- Do not treat prewhitening procedures as interchangeable. Inspect the
+- Do not treat prewhitening procedures as interchangeable; inspect the
   original and transformed series, compare their diagnostic maps and,
   when several methods are scientifically plausible, evaluate them as a
   sensitivity analysis before selecting one.
 - Do not combine prewhitening with modified Mann-Kendall (`MMK`) without
-  a clear methodological justification, because both approaches address
-  temporal autocorrelation.
-- `TFPW_Y` returns one fewer temporal observation than the input series.
-  Always verify the output dimensions before proceeding to later
-  analytical stages.
+  a clear methodological justification; both approaches address temporal
+  autocorrelation (see [trend-test
+  vignette](https://olivergh.github.io/sptrends/articles/c-trend-test.md)).
+- Do not assume `TFPW_Y` preserves the input series length; it returns
+  one fewer temporal observation, so verify the output dimensions before
+  proceeding to later analytical stages.
 
 ## Next steps
 
 Continue to
-[`vignette("c-trend-test")`](https://olive-r.github.io/sptrends/articles/c-trend-test.md)
+[`vignette("c-trend-test")`](https://olivergh.github.io/sptrends/articles/c-trend-test.md)
 and pass either the transformed series or the original series, according
 to the analytical decision.
 
 ## Further details
 
 See
-[`?prewhiten`](https://olive-r.github.io/sptrends/reference/prewhiten.md)
+[`?prewhiten`](https://olivergh.github.io/sptrends/reference/prewhiten.md)
 for equations, statistical assumptions, diagnostics, method comparisons,
 limitations, external validation and references.
 

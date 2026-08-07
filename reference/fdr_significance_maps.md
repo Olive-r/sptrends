@@ -17,7 +17,7 @@ fdr_significance_maps(result, path = NULL)
 - result:
 
   Output of
-  [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
+  [`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
   (must have been run on a raster, so `result$rasters` is populated).
 
 - path:
@@ -30,9 +30,10 @@ fdr_significance_maps(result, path = NULL)
 
 ## References
 
-See [`fdr_bh()`](https://olive-r.github.io/sptrends/reference/fdr_bh.md)
+See
+[`fdr_bh()`](https://olivergh.github.io/sptrends/reference/fdr_bh.md)
 and
-[`fdr_bky()`](https://olive-r.github.io/sptrends/reference/fdr_bky.md)
+[`fdr_bky()`](https://olivergh.github.io/sptrends/reference/fdr_bky.md)
 for the full reference list and the reasoning behind each citation.
 
 - Benjamini, Y., & Yekutieli, D. (2001) The control of the false
@@ -43,16 +44,16 @@ for the full reference list and the reasoning behind each citation.
 ## See also
 
 Other FDR correction functions:
-[`fdr_bh()`](https://olive-r.github.io/sptrends/reference/fdr_bh.md),
-[`fdr_bky()`](https://olive-r.github.io/sptrends/reference/fdr_bky.md),
-[`fdr_by()`](https://olive-r.github.io/sptrends/reference/fdr_by.md),
-[`fdr_comparison_barplot()`](https://olive-r.github.io/sptrends/reference/fdr_comparison_barplot.md),
-[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md),
-[`fdr_direction_plot()`](https://olive-r.github.io/sptrends/reference/fdr_direction_plot.md),
-[`fdr_direction_summary()`](https://olive-r.github.io/sptrends/reference/fdr_direction_summary.md),
-[`fdr_pvalue_histogram()`](https://olive-r.github.io/sptrends/reference/fdr_pvalue_histogram.md),
-[`fdr_summary()`](https://olive-r.github.io/sptrends/reference/fdr_summary.md),
-[`fdr_threshold_plot()`](https://olive-r.github.io/sptrends/reference/fdr_threshold_plot.md)
+[`fdr_bh()`](https://olivergh.github.io/sptrends/reference/fdr_bh.md),
+[`fdr_bky()`](https://olivergh.github.io/sptrends/reference/fdr_bky.md),
+[`fdr_by()`](https://olivergh.github.io/sptrends/reference/fdr_by.md),
+[`fdr_comparison_barplot()`](https://olivergh.github.io/sptrends/reference/fdr_comparison_barplot.md),
+[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md),
+[`fdr_direction_plot()`](https://olivergh.github.io/sptrends/reference/fdr_direction_plot.md),
+[`fdr_direction_summary()`](https://olivergh.github.io/sptrends/reference/fdr_direction_summary.md),
+[`fdr_pvalue_histogram()`](https://olivergh.github.io/sptrends/reference/fdr_pvalue_histogram.md),
+[`fdr_summary()`](https://olivergh.github.io/sptrends/reference/fdr_summary.md),
+[`fdr_threshold_plot()`](https://olivergh.github.io/sptrends/reference/fdr_threshold_plot.md)
 
 ## Examples
 
@@ -105,7 +106,7 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.06 s
+#> >> [read_ordered_stack()] elapsed: 0.07 s
 trend <- trend_test(r, report = FALSE, verbose = FALSE)
 fdr_result <- fdr_correction(trend$stats$p, report = FALSE, verbose = FALSE)
 

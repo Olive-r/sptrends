@@ -59,7 +59,7 @@ completes without any error. This function reorders by the time
 dimension explicitly rather than trusting the on-disk order, the same
 "surface a silent risk rather than let it pass unnoticed" instinct
 behind
-[`read_ordered_stack()`](https://olive-r.github.io/sptrends/reference/read_ordered_stack.md)'s
+[`read_ordered_stack()`](https://olivergh.github.io/sptrends/reference/read_ordered_stack.md)'s
 own, stricter, filename-based check (see its own documentation for the
 fuller reasoning, which applies here too).
 
@@ -94,12 +94,12 @@ detected time step looks sub-annual (based on
 [`terra::timeInfo()`](https://rspatial.github.io/terra/reference/time.html)),
 a [`warning()`](https://rdrr.io/r/base/warning.html) is issued reminding
 you to deseasonalise with
-[`compute_anomalies()`](https://olive-r.github.io/sptrends/reference/compute_anomalies.md)
+[`compute_anomalies()`](https://olivergh.github.io/sptrends/reference/compute_anomalies.md)
 *before* passing the result to
-[`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md),
-[`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md),
+[`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md),
+[`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md),
 or
-[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md),
+[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md),
 all of which assume a monotonic trend, not a periodic one. Ordering and
 deseasonalisation solve different problems.
 
@@ -114,13 +114,13 @@ not guess among scientifically different variables.
 Tests verify time-coordinate extraction and ordering, variable
 selection, layer naming, preserved `terra` geometry/time metadata, and
 failures for absent or ambiguous NetCDF variables. See
-[`?sptrends`](https://olive-r.github.io/sptrends/reference/sptrends-package.md)
+[`?sptrends`](https://olivergh.github.io/sptrends/reference/sptrends-package.md)
 for the package-wide release-check protocol.
 
 ## See also
 
 Other Data import functions:
-[`read_ordered_stack()`](https://olive-r.github.io/sptrends/reference/read_ordered_stack.md)
+[`read_ordered_stack()`](https://olivergh.github.io/sptrends/reference/read_ordered_stack.md)
 
 ## Examples
 

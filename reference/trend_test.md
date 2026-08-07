@@ -4,12 +4,12 @@ Applies a trend test to a raster time series – the general step this
 function exists for, regardless of which specific test is used
 underneath. `trend_test()` is the core inferential step of sptrends. In
 a standard workflow it follows optional preprocessing
-([`compute_anomalies()`](https://olive-r.github.io/sptrends/reference/compute_anomalies.md),
-[`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md))
+([`compute_anomalies()`](https://olivergh.github.io/sptrends/reference/compute_anomalies.md),
+[`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md))
 and precedes slope estimation
-([`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md))
+([`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md))
 and multiple-testing correction
-([`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)).
+([`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)).
 
 ## Usage
 
@@ -60,12 +60,12 @@ trend_test(
   directly (an effective sample size, estimated from the significant
   autocorrelation of the Sen-detrended series' own ranks), rather than
   transforming the series the way
-  [`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md)
+  [`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md)
   does; like `"MK"`, no spatial averaging.
 
   **`"MMK"` is an alternative to prewhitening, not a complement to it:
   do not run
-  [`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md)
+  [`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md)
   before using `method = "MMK"`.** Both exist to solve the same problem
   – temporal autocorrelation inflating the classical MK test's
   significance – by different means; `"MMK"` corrects the test
@@ -86,7 +86,7 @@ trend_test(
   OLS is the more statistically efficient of the three), or when the
   result needs to be directly comparable to other analyses reported as
   classical linear-regression trend tests – see
-  [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)'s
+  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)'s
   own `method` argument for the same robust-vs-parametric trade-off
   applied to slope estimation instead of significance testing. Use
   `"MMK"` as an alternative to prewhitening when temporal
@@ -134,7 +134,7 @@ trend_test(
 - precomputed_neighbourhood:
 
   Optional output of
-  [`prepare_cmk_neighbourhood()`](https://olive-r.github.io/sptrends/reference/prepare_cmk_neighbourhood.md),
+  [`prepare_cmk_neighbourhood()`](https://olivergh.github.io/sptrends/reference/prepare_cmk_neighbourhood.md),
   to avoid recomputing the adjacency when this function is called
   repeatedly on the same raster (e.g. in a permutation loop). It does
   not alter the statistical method in any way; it only skips rebuilding
@@ -178,9 +178,9 @@ trend_test(
 
   Numeric vector of significance thresholds. **What it controls**: only
   used when `report = TRUE`, passed to
-  [`trend_summary()`](https://olive-r.github.io/sptrends/reference/trend_summary.md)
+  [`trend_summary()`](https://olivergh.github.io/sptrends/reference/trend_summary.md)
   as-is. **How it is used for maps**: the single threshold for
-  [`trend_maps()`](https://olive-r.github.io/sptrends/reference/trend_maps.md)
+  [`trend_maps()`](https://olivergh.github.io/sptrends/reference/trend_maps.md)
   is `0.05` if it is one of the values in `alpha` (the default vector
   includes it), otherwise the strictest (smallest) value supplied. The
   default `c(0.1, 0.05, 0.01)` reports all three side by side for
@@ -196,13 +196,13 @@ trend_test(
 - report:
 
   Logical. If `TRUE` (default), automatically print the summary table
-  ([`trend_summary()`](https://olive-r.github.io/sptrends/reference/trend_summary.md))
+  ([`trend_summary()`](https://olivergh.github.io/sptrends/reference/trend_summary.md))
   and draw the diagnostic histograms and maps
-  ([`trend_histograms()`](https://olive-r.github.io/sptrends/reference/trend_histograms.md),
-  [`trend_maps()`](https://olive-r.github.io/sptrends/reference/trend_maps.md))
+  ([`trend_histograms()`](https://olivergh.github.io/sptrends/reference/trend_histograms.md),
+  [`trend_maps()`](https://olivergh.github.io/sptrends/reference/trend_maps.md))
   after computing. Set to `FALSE` for programmatic use (e.g. inside a
   loop, or when called from
-  [`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)).
+  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)).
 
 - verbose:
 
@@ -213,7 +213,7 @@ trend_test(
   Advanced; most users never need this directly. An already-running
   [`parallel::makeCluster()`](https://rdrr.io/r/parallel/makeCluster.html)
   PSOCK cluster (e.g. from
-  [`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)'s
+  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)'s
   own `n_cores`) to reuse instead of building a new one from `n_cores`
   above. When supplied, `n_cores` is ignored – the shared cluster's own
   size was already decided by whoever built it. `NULL` (default): builds
@@ -244,10 +244,10 @@ Returns a list of class `c("trend_test", "sptrends")`, with:
 Use
 [`print()`](https://rdrr.io/r/base/print.html)/[`summary()`](https://rdrr.io/r/base/summary.html)/[`plot()`](https://rdrr.io/r/graphics/plot.default.html)
 – see
-[`print.sptrends()`](https://olive-r.github.io/sptrends/reference/print.sptrends.md),
-[`summary.sptrends()`](https://olive-r.github.io/sptrends/reference/summary.sptrends.md),
+[`print.sptrends()`](https://olivergh.github.io/sptrends/reference/print.sptrends.md),
+[`summary.sptrends()`](https://olivergh.github.io/sptrends/reference/summary.sptrends.md),
 and
-[`plot.sptrends()`](https://olive-r.github.io/sptrends/reference/plot.sptrends.md)
+[`plot.sptrends()`](https://olivergh.github.io/sptrends/reference/plot.sptrends.md)
 – rather than accessing `$stats` directly for anything beyond
 programmatic use.
 
@@ -262,7 +262,7 @@ distinguishable from no trend – but make different assumptions. See
 
 **Function type:** **Core function** – one of the core building blocks
 of TST and RTA. Typically followed by
-[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md),
+[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md),
 once this function's own p-values exist for every spatial cell.
 
 ## Typical use
@@ -276,12 +276,12 @@ once this function's own p-values exist for every spatial cell.
     fdr_correction()
 
 Use
-[`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md)
+[`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md)
 first when serial correlation requires treatment, except when choosing
 `method = "MMK"`, which is itself the alternative variance correction;
 analyse the prewhitened `result$series` with the other methods. Estimate
 change magnitude separately with
-[`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md);
+[`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md);
 significance and slope answer different questions.
 
 ## Methodological details
@@ -323,7 +323,7 @@ The two operations address different dependencies:
 
 - **serial autocorrelation** is dependence through time within one cell;
   diagnose and, when justified, treat it before this function with
-  [`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md),
+  [`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md),
   or use `"MMK"` as a non-prewhitening alternative;
 
 - **spatial cross-correlation** is contemporaneous dependence between
@@ -333,7 +333,7 @@ Prewhitening one cell at a time does not remove the lag-zero
 cross-correlation between neighbouring cells. Conversely, CMK's spatial
 variance adjustment does not remove serial autocorrelation. A workflow
 that needs both therefore calls
-[`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md)
+[`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md)
 first and `trend_test(method = "CMK")` second. Keeping them as separate,
 composable functions makes the statistical role of each step explicit.
 
@@ -415,12 +415,12 @@ disappeared.
 
 - raw cell-wise p-values are followed by a multiple-testing procedure
   such as
-  [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
+  [`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
   before producing a final significance map.
 
 `Sm` describes direction and strength on the Mann-Kendall rank scale,
 not change per year. Use
-[`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)
+[`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)
 for magnitude. A small `p` supports a locally coherent monotonic trend;
 it does not establish causation, practical importance, linearity, or a
 particular slope.
@@ -462,18 +462,18 @@ TerrSet's Kendall module.
   regression slope – offered for the specific, narrower case where that
   robustness genuinely is not needed (see the `method` argument below),
   the same reason
-  [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)
+  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)
   offers Theil-Sen, OLS, and Siegel's repeated median rather than only
   one robust option: this package aims to be a platform for comparing
   such methods (see
-  [`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md)),
+  [`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md)),
   not a vehicle for only one statistical philosophy.
 
 - **Why `method = "MMK"` is offered, and why it is an alternative to
   prewhitening, not a complement**: temporal (not spatial)
   autocorrelation is a separate problem from the one CMK addresses, and
   this package's other answer to it is
-  [`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md)
+  [`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md)
   – which transforms the series before testing it. `"MMK"` (Hamed and
   Rao, 1998) solves the same problem differently: it leaves the series
   untouched and corrects the classical MK test's own variance formula
@@ -509,7 +509,7 @@ not designed to detect or accommodate a periodic/seasonal cycle – if the
 input has one (e.g. raw monthly data with an annual cycle), that cycle
 itself will dominate the ranking of values and can produce a meaningless
 or misleading trend result. Deseasonalise first (see
-[`compute_anomalies()`](https://olive-r.github.io/sptrends/reference/compute_anomalies.md))
+[`compute_anomalies()`](https://olivergh.github.io/sptrends/reference/compute_anomalies.md))
 and run this function on the anomalies, not on the raw seasonal series.
 
 **Implementation notes**
@@ -632,7 +632,7 @@ Frozen external results and their reproducible script are stored in
 `inst/validation/`. Package-wide checks also include the complete
 `testthat` suite, coverage inspection, `R CMD check`, `goodpractice`,
 `lintr`, and spelling review; see
-[`?sptrends`](https://olive-r.github.io/sptrends/reference/sptrends-package.md)
+[`?sptrends`](https://olivergh.github.io/sptrends/reference/sptrends-package.md)
 for the overall quality policy. A tool being part of that policy does
 not imply that a particular source archive has passed its latest run:
 release-specific results are recorded only after an actual run in
@@ -641,14 +641,14 @@ release-specific results are recorded only after an actual run in
 **Limitations and scope**
 
 It does not prewhiten the series for serial correlation (see
-[`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md)),
+[`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md)),
 does not correct for multiple testing (see
-[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)),
+[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)),
 and does not compute a separate robust estimate of trend magnitude such
 as the Theil-Sen slope. The `"OLS"` branch necessarily returns its
 fitted slope (`beta`), but robust and method-independent magnitude
 estimation belongs to
-[`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md).
+[`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md).
 
 CMK defaults to the local queen 3 by 3 region described in the source
 paper, as implemented in TerrSet's Kendall module. Neeti and Eastman
@@ -690,7 +690,7 @@ not a defensible final significance map, whichever `method` was used to
 produce them.
 
 **What to do about it**: always run
-[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
+[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
 on `p` before reporting which cells are "significant" – see
 Gutiérrez-Hernández & García (2025) below for the full statistical
 argument (this exact problem, in this exact context, is what that paper
@@ -799,13 +799,13 @@ practice:
 
 ## See also
 
-[`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md)
+[`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md)
 for temporal preprocessing,
-[`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)
+[`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)
 for trend magnitude, and
-[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
+[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
 for multiplicity across valid cells;
-[`workflow_trends()`](https://olive-r.github.io/sptrends/reference/workflow_trends.md)
+[`workflow_trends()`](https://olivergh.github.io/sptrends/reference/workflow_trends.md)
 combines these stages in one configurable workflow.
 
 ## Examples
@@ -861,7 +861,7 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.06 s
+#> >> [read_ordered_stack()] elapsed: 0.07 s
 
 # Test every cell for a monotonic trend, borrowing strength from each
 # cell's spatial neighbourhood (method = "CMK", the default).

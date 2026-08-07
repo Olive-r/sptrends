@@ -2,7 +2,7 @@
 
 A histogram (with a kernel density overlay) of the raw, continuous slope
 values across every valid cell – the distribution the diverging map
-([`slope_map()`](https://olive-r.github.io/sptrends/reference/slope_map.md))
+([`slope_map()`](https://olivergh.github.io/sptrends/reference/slope_map.md))
 shows spatially, seen instead as a single one-dimensional summary.
 
 ## Usage
@@ -16,7 +16,7 @@ slope_histogram(slope, breaks = 40, ...)
 - slope:
 
   A `SpatRaster` of Theil-Sen slopes, e.g.
-  [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)'s
+  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)'s
   own `$slope`.
 
 - breaks:
@@ -46,8 +46,8 @@ outside the package via
 ## See also
 
 Other Theil-Sen slope functions:
-[`slope_direction_barplot()`](https://olive-r.github.io/sptrends/reference/slope_direction_barplot.md),
-[`slope_direction_map()`](https://olive-r.github.io/sptrends/reference/slope_direction_map.md)
+[`slope_direction_barplot()`](https://olivergh.github.io/sptrends/reference/slope_direction_barplot.md),
+[`slope_direction_map()`](https://olivergh.github.io/sptrends/reference/slope_direction_map.md)
 
 ## Examples
 

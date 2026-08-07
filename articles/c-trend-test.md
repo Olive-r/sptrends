@@ -8,9 +8,15 @@ provides a formal framework for assessing whether an observed
 directional pattern is unlikely to have arisen by chance under the null
 hypothesis of no trend.
 
+In gridded data, this question must be answered separately for every
+valid cell. This is usually done through pixel-wise testing, applying
+the same test independently to each cell’s own time series – amounting
+to simultaneous inference across many hypothesis tests at once, one per
+cell.
+
 ## What `trend_test()` does
 
-[`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)
+[`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)
 applies one of four inferential methods to every valid raster cell. Each
 method tests its corresponding null hypothesis of no temporal trend
 against a two-sided alternative hypothesis of an increasing or
@@ -24,7 +30,11 @@ of the Regionally Averaged Mann-Kendall (RAMK) test developed by
 (2000)](https://doi.org/10.1016/S0022-1694%2800%2900336-X). By default,
 it evaluates a 3 × 3 queen neighbourhood centred on each raster cell,
 comprising the focal cell and its eight immediate neighbours, although
-other odd neighbourhood sizes can be configured.
+other odd neighbourhood sizes can be configured. Because neighbouring
+cells are themselves correlated with one another, simply pooling their
+evidence would inflate the apparent significance of the result; CMK’s
+variance estimate explicitly corrects for this cross-correlation, so its
+*p*-values remain properly calibrated rather than artificially small.
 
 ## Basic workflow
 
@@ -71,6 +81,8 @@ terra::plot(
 ![Global comparison of uncorrected MK and CMK trend directions in annual
 mean NDVI](c-trend-test_files/figure-html/unnamed-chunk-3-1.png)
 
+## Understanding the results
+
 Both maps use the same uncorrected *α* = 0.05 threshold, allowing the
 effect of incorporating spatial context to be compared directly. The
 cell-wise MK result shows a fragmented salt-and-pepper pattern with
@@ -78,8 +90,6 @@ numerous isolated detections. By accounting for the cross-correlation
 among neighbouring time series, CMK reduces these isolated responses and
 identifies more spatially coherent patterns of increasing and decreasing
 trends.
-
-## Understanding the results
 
 For CMK, *Sm* indicates trend direction, while *VarSm* accounts for
 cross-correlation among neighbouring time series. Its *p*-values are
@@ -125,37 +135,36 @@ a broader region.
 
 ## Common mistakes
 
-- Do not describe CMK as a prewhitening procedure. It incorporates
+- Do not describe CMK as a prewhitening procedure; it incorporates
   spatial context and cross-correlation but does not correct serial
   autocorrelation.
-- Do not interpret *Sm* as a rate of change or change per year. It is a
+- Do not interpret *Sm* as a rate of change or change per year; it is a
   rank-based test statistic whose sign indicates trend direction.
 - Do not combine MMK with prewhitening without a specific methodological
-  justification, because both approaches address serial autocorrelation.
-- Do not describe a raster-wide analysis as a single trend test.
-  [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)
-  performs one hypothesis test for every valid raster cell. Report the
-  total number of tests performed, because it defines the size of the
-  multiple-testing problem.
-- Do not interpret raw *p* \< *α* as raster-wide significance. Testing
-  many cells simultaneously creates a multiple-testing problem that
-  requires explicit correction.
+  justification; both approaches address serial autocorrelation.
+- Do not treat a raster-wide analysis as a single trend test, nor
+  interpret raw *p* \< *α* as raster-wide significance;
+  [`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)
+  performs one hypothesis test per valid raster cell, and testing many
+  cells simultaneously creates a multiple-testing problem that requires
+  explicit correction (see [multiple-testing
+  vignette](https://olivergh.github.io/sptrends/articles/e-fdr-correction.md)).
 - Do not interpret statistical significance as evidence of a large or
-  practically important change. Significance and magnitude answer
+  practically important change; significance and magnitude answer
   different questions.
 
 ## Next steps
 
 Use
-[`vignette("d-slope-estimation")`](https://olive-r.github.io/sptrends/articles/d-slope-estimation.md)
+[`vignette("d-slope-estimation")`](https://olivergh.github.io/sptrends/articles/d-slope-estimation.md)
 for magnitude and
-[`vignette("e-fdr-correction")`](https://olive-r.github.io/sptrends/articles/e-fdr-correction.md)
+[`vignette("e-fdr-correction")`](https://olivergh.github.io/sptrends/articles/e-fdr-correction.md)
 before reporting significant cells.
 
 ## Further details
 
 See
-[`?trend_test`](https://olive-r.github.io/sptrends/reference/trend_test.md)
+[`?trend_test`](https://olivergh.github.io/sptrends/reference/trend_test.md)
 for equations, assumptions, continuity conventions, RAMK foundations,
 CMK validation, limitations and complete references.
 

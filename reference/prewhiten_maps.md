@@ -17,7 +17,7 @@ prewhiten_maps(diagnostics, path = NULL)
 - diagnostics:
 
   The `diagnostics` element returned by
-  [`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md).
+  [`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md).
 
 - path:
 
@@ -38,9 +38,9 @@ prewhiten_maps(diagnostics, path = NULL)
 ## See also
 
 Other Prewhitening functions:
-[`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md),
-[`prewhiten_histograms()`](https://olive-r.github.io/sptrends/reference/prewhiten_histograms.md),
-[`prewhiten_summary()`](https://olive-r.github.io/sptrends/reference/prewhiten_summary.md)
+[`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md),
+[`prewhiten_histograms()`](https://olivergh.github.io/sptrends/reference/prewhiten_histograms.md),
+[`prewhiten_summary()`](https://olivergh.github.io/sptrends/reference/prewhiten_summary.md)
 
 ## Examples
 
@@ -93,7 +93,7 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.06 s
+#> >> [read_ordered_stack()] elapsed: 0.07 s
 pw <- prewhiten(r, report = FALSE, verbose = FALSE)
 
 # Where, spatially, cells were modified by prewhitening.

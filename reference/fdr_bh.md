@@ -36,14 +36,14 @@ A list with `q_value` (BH-adjusted p-values) and `reject` (logical).
 
 **Function type:** **Support function** – computes the BH procedure used
 internally by
-[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md).
+[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md).
 It is not exported; call `fdr_correction(p, method = "BH")` for a
 BH-only result.
 
 ## Typical use
 
 Supply one family of raw p-values to
-[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
+[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
 with `method = "BH"`; this internal helper returns the corresponding
 adjusted values and rejection decisions.
 
@@ -62,9 +62,9 @@ adjusted values and rejection decisions.
 - **Typical applications**: correcting for multiple testing when many
   hypotheses are tested at once (e.g. one Mann-Kendall test per pixel in
   a raster) and a fixed, non-adaptive guarantee is preferred over
-  [`fdr_bky()`](https://olive-r.github.io/sptrends/reference/fdr_bky.md)'s
+  [`fdr_bky()`](https://olivergh.github.io/sptrends/reference/fdr_bky.md)'s
   adaptive one – see
-  [`workflow_rta()`](https://olive-r.github.io/sptrends/reference/workflow_rta.md)
+  [`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md)
   for a workflow that defaults to this method specifically for that
   reason.
 
@@ -73,7 +73,7 @@ adjusted values and rejection decisions.
 BH controls FDR under independence and recognised positive-dependence
 conditions such as PRDS. Spatial autocorrelation diagnostics can be
 compatible with those conditions but do not prove them. Use
-[`fdr_by()`](https://olive-r.github.io/sptrends/reference/fdr_by.md)
+[`fdr_by()`](https://olivergh.github.io/sptrends/reference/fdr_by.md)
 when control under arbitrary dependence is required.
 
 **Quality assurance**
@@ -93,7 +93,7 @@ Primary method reference:
 
 Theoretical justification for why BH remains valid under the positive
 spatial dependence typical of gridded data (for which
-[`spatial_autocorrelation()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation.md)
+[`spatial_autocorrelation()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation.md)
 or `moran_check` can provide a diagnostic):
 
 - Benjamini, Y., & Yekutieli, D. (2001). The control of the false
@@ -119,11 +119,11 @@ structure of gridded data (directly motivates this function):
   [doi:10.1080/2150704X.2025.2478664](https://doi.org/10.1080/2150704X.2025.2478664)
 
 This function is used (not authored) by
-[`workflow_rta()`](https://olive-r.github.io/sptrends/reference/workflow_rta.md),
+[`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md),
 this package's own non-prewhitened workflow
-([`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)
+([`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)
 instead defaults to the adaptive
-[`fdr_bky()`](https://olive-r.github.io/sptrends/reference/fdr_bky.md)):
+[`fdr_bky()`](https://olivergh.github.io/sptrends/reference/fdr_bky.md)):
 
 - Gutiérrez-Hernández, O. and García, L.V. (2024) Robust Trend Analysis
   in Environmental Remote Sensing: A Case Study of Cork Oak Forest
@@ -133,16 +133,16 @@ instead defaults to the adaptive
 ## See also
 
 Other FDR correction functions:
-[`fdr_bky()`](https://olive-r.github.io/sptrends/reference/fdr_bky.md),
-[`fdr_by()`](https://olive-r.github.io/sptrends/reference/fdr_by.md),
-[`fdr_comparison_barplot()`](https://olive-r.github.io/sptrends/reference/fdr_comparison_barplot.md),
-[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md),
-[`fdr_direction_plot()`](https://olive-r.github.io/sptrends/reference/fdr_direction_plot.md),
-[`fdr_direction_summary()`](https://olive-r.github.io/sptrends/reference/fdr_direction_summary.md),
-[`fdr_pvalue_histogram()`](https://olive-r.github.io/sptrends/reference/fdr_pvalue_histogram.md),
-[`fdr_significance_maps()`](https://olive-r.github.io/sptrends/reference/fdr_significance_maps.md),
-[`fdr_summary()`](https://olive-r.github.io/sptrends/reference/fdr_summary.md),
-[`fdr_threshold_plot()`](https://olive-r.github.io/sptrends/reference/fdr_threshold_plot.md)
+[`fdr_bky()`](https://olivergh.github.io/sptrends/reference/fdr_bky.md),
+[`fdr_by()`](https://olivergh.github.io/sptrends/reference/fdr_by.md),
+[`fdr_comparison_barplot()`](https://olivergh.github.io/sptrends/reference/fdr_comparison_barplot.md),
+[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md),
+[`fdr_direction_plot()`](https://olivergh.github.io/sptrends/reference/fdr_direction_plot.md),
+[`fdr_direction_summary()`](https://olivergh.github.io/sptrends/reference/fdr_direction_summary.md),
+[`fdr_pvalue_histogram()`](https://olivergh.github.io/sptrends/reference/fdr_pvalue_histogram.md),
+[`fdr_significance_maps()`](https://olivergh.github.io/sptrends/reference/fdr_significance_maps.md),
+[`fdr_summary()`](https://olivergh.github.io/sptrends/reference/fdr_summary.md),
+[`fdr_threshold_plot()`](https://olivergh.github.io/sptrends/reference/fdr_threshold_plot.md)
 
 ## Examples
 

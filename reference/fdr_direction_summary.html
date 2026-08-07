@@ -3,7 +3,7 @@
 the significant-increase/decrease counts shrink (or don't) as the
 correction gets stricter."><meta property="og:description" content="A single table with one row per correction method, so you can see how
 the significant-increase/decrease counts shrink (or don't) as the
-correction gets stricter."><meta property="og:image" content="https://olive-r.github.io/sptrends/logo.png"></head><body>
+correction gets stricter."><meta property="og:image" content="https://olivergh.github.io/sptrends/logo.png"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -11,7 +11,7 @@ correction gets stricter."><meta property="og:image" content="https://olive-r.gi
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,7 +42,7 @@ correction gets stricter."><meta property="og:image" content="https://olive-r.gi
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Compare direction of change across raw, FDR-BH, and FDR-BKY</h1>
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v1.0/R/fdr.R" class="external-link"><code>R/fdr.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/R/fdr.R" class="external-link"><code>R/fdr.R</code></a></small>
       <div class="d-none name"><code>fdr_direction_summary.Rd</code></div>
     </div>
 
@@ -57,6 +57,7 @@ correction gets stricter.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fdr_direction_summary</span><span class="op">(</span></span>
 <span>  <span class="va">trend</span>,</span>
 <span>  <span class="va">fdr_result</span>,</span>
+<span>  slope <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  methods <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"raw"</span>, <span class="st">"BH"</span>, <span class="st">"BKY"</span><span class="op">)</span>,</span>
 <span>  path <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -72,6 +73,14 @@ correction gets stricter.</p>
 
 <dt id="arg-fdr-result">fdr_result<a class="anchor" aria-label="anchor" href="#arg-fdr-result"></a></dt>
 <dd><p>Output of <code><a href="fdr_correction.html">fdr_correction()</a></code>, run on <code>trend$stats$p</code>.</p></dd>
+
+
+<dt id="arg-slope">slope<a class="anchor" aria-label="anchor" href="#arg-slope"></a></dt>
+<dd><p>Optional single-layer <code>SpatRaster</code> (e.g.
+<code><a href="slope_estimator.html">slope_estimator()</a></code>'s own <code>$slope</code>) whose sign determines direction
+instead of the trend test's own statistic. <code>NULL</code> (default): use
+<code>trend</code>'s own <code>Sm</code>/<code>S</code>/<code>beta</code>, matching <code><a href="direction_map.html">direction_map()</a></code>'s own
+default.</p></dd>
 
 
 <dt id="arg-methods">methods<a class="anchor" aria-label="anchor" href="#arg-methods"></a></dt>

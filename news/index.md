@@ -1,5 +1,160 @@
 # Changelog
 
+## sptrends 1.1
+
+### Quality assurance
+
+- Passed a comprehensive integral audit covering: code and vignette
+  block balance across the whole package; consistency of every
+  `NAMESPACE` export against its actual function definition; citation
+  consistency across vignettes; internal cross-vignette links;
+  `DESCRIPTION` field completeness; `inst/WORDLIST` integrity;
+  consistent use of
+  [`direction_map()`](https://olivergh.github.io/sptrends/reference/direction_map.md)’s
+  `slope` argument everywhere it is called; `NEWS.md` version-header
+  integrity; and absence of leftover development markers. No issues
+  found.
+- This release also reflects two earlier, independent rounds of external
+  testing beyond `tests/testthat/`: an extensive battery covering all
+  exported functions with correctness checks (not just execution without
+  error), and a manual, real-data round-trip verification of
+  [`read_netcdf_stack()`](https://olivergh.github.io/sptrends/reference/read_netcdf_stack.md)
+  (write a known NetCDF file, read it back, and compare layers, dates
+  and values directly).
+
+## sptrends 1.0.8
+
+### Quality assurance
+
+- Added a test triggering
+  [`direction_map()`](https://olivergh.github.io/sptrends/reference/direction_map.md)’s
+  own input-validation error (a non-`SpatRaster` `slope` argument).
+  Confirmed against a real `R CMD check`/`covr::package_coverage()` run:
+  0 errors, 0 warnings, 0 notes, 100.00% coverage overall and in every
+  individual R source file.
+
+## sptrends 1.0.7
+
+### Bug fixes
+
+- Fixed the 1.0.6 fix itself: the
+  [`direction_map()`](https://olivergh.github.io/sptrends/reference/direction_map.md)
+  `slope`-argument regression test still relied on the default
+  `trend_shape = "radial"`, which fades towards the raster edges – on a
+  tiny 5x5 raster almost every cell is near an edge, so the effective
+  signal was still too weak to guarantee any significant cells
+  regardless of `trend_strength`. Switched to `trend_shape = "block"`
+  with `signal_size = c(5, 5)` (the full raster), giving every cell the
+  same uniform, untapered signal.
+
+### Quality assurance
+
+- Added a round-trip fidelity test for
+  [`read_netcdf_stack()`](https://olivergh.github.io/sptrends/reference/read_netcdf_stack.md):
+  writes a known raster to a real NetCDF file and confirms the function
+  reads back the same number of layers, the same dates, and numerically
+  identical values. The existing test suite for this function covered
+  error and warning conditions thoroughly but had no test confirming
+  correct data on the successful, ordinary path.
+
+## sptrends 1.0.6
+
+### Bug fixes
+
+- Fixed a flaky test introduced in 1.0.3/1.0.5: the
+  [`direction_map()`](https://olivergh.github.io/sptrends/reference/direction_map.md)
+  `slope`-argument regression test used a tiny raster (5x5) with the
+  default (modest) trend signal, so under some seeds no cell reached raw
+  significance at all, making the test vacuously fail. Switched to a
+  raster with a strong, guaranteed signal
+  (`trend_fraction = 1, trend_strength = 0.3, noise_sd = 0.05`) so the
+  test reliably has significant cells to compare regardless of seed.
+
+## sptrends 1.0.5
+
+### Bug fixes
+
+- Fixed two test failures introduced with the 1.0.3
+  [`direction_map()`](https://olivergh.github.io/sptrends/reference/direction_map.md)
+  `slope` argument: the new regression test called
+  [`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
+  with the invalid `method = "raw"` (only `"BH"`/`"BKY"`/`"BY"` are
+  valid there; `reject_raw` is always computed automatically regardless
+  of the requested method); and
+  [`direction_map()`](https://olivergh.github.io/sptrends/reference/direction_map.md)’s
+  own `verbose` message format changed in a way that broke an existing
+  test’s exact-match regex (`"Binarised trend map (BH)"`). The new
+  source-of-direction detail is now appended outside those parentheses
+  instead of inside them.
+
+## sptrends 1.0.4
+
+### Package identity
+
+- Added README badges: license (GPL v3), lifecycle (stable), the
+  official Zenodo DOI, and a link to the published pkgdown site.
+
+## sptrends 1.0.3
+
+### Feature changes
+
+- [`direction_map()`](https://olivergh.github.io/sptrends/reference/direction_map.md)
+  (internal, used by `plot(which = "direction")` on
+  [`workflow_trends()`](https://olivergh.github.io/sptrends/reference/workflow_trends.md),
+  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)
+  and
+  [`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md)
+  results, and by
+  [`fdr_direction_summary()`](https://olivergh.github.io/sptrends/reference/fdr_direction_summary.md))
+  gained an optional `slope` argument: a single-layer `SpatRaster`
+  (typically
+  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)‘s
+  own `$slope`) whose sign determines trend direction instead of the
+  trend test’s own statistic (`Sm`/`S`/ `beta`). **Default behaviour
+  change**: the three workflow
+  [`plot()`](https://rdrr.io/r/graphics/plot.default.html) methods now
+  pass their own slope result (`$slope` for
+  [`workflow_trends()`](https://olivergh.github.io/sptrends/reference/workflow_trends.md),
+  `$theil_sen` for
+  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)/
+  [`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md))
+  automatically when available, so binarised trend maps are, by default,
+  coloured by the slope estimator’s sign rather than the trend test
+  statistic’s sign. Direction from the slope and from the trend
+  statistic usually agree but are not guaranteed to – a cell with a
+  near-flat slope of its own can still inherit its neighbours’ sign in
+  CMK’s `Sm` under neighbourhood averaging. When the workflow was
+  configured without a slope stage, the previous behaviour (direction
+  from the trend statistic) is used automatically, so no workflow errors
+  because of this change. The significance mask itself (which cells are
+  shown as increasing/decreasing at all) is unaffected either way.
+
+## sptrends 1.0.2
+
+### Documentation
+
+- Vignette and documentation improved.
+
+## sptrends 1.0.1
+
+### Documentation
+
+- Polished `README.md`: added the official package citation (Zenodo
+  DOI), completed author affiliations (academic rank, department),
+  reordered “Quick start” to lead with the runnable bundled-data
+  example, added references to
+  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)/
+  [`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md),
+  reordered “Main modules” to start with data import, and simplified
+  duplicated example options.
+- Polished `vignettes/a-getting-started.Rmd`: separated the TST origin
+  into its own paragraph emphasising it as a unified understanding of
+  the problem rather than just a pipeline, renamed “What sptrends does”
+  to name the actual functions it describes, added a map-projection
+  comparison link, and reworked “Common mistakes” down to 5 items (the
+  documented maximum) with an error-then-solution structure and links to
+  the relevant vignettes.
+
 ## sptrends 1.0
 
 ### Package identity
@@ -36,32 +191,35 @@
 
 ## sptrends 0.97
 
+Last pre-release (beta) version. sptrends 1.0 is the first stable
+release.
+
 ### Quality assurance
 
 - Passed an extensive external test battery covering all 18 exported
   functions, independent of the `tests/testthat/` suite: correctness
   checks (not just execution without error) for
-  [`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md)
+  [`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md)
   (including confirmation of the 0.96.7 `"block"` + `signal_location`
   fix),
-  [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md),
-  [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md),
-  [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md),
-  [`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md),
-  [`spatial_autocorrelation()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation.md),
-  [`compute_anomalies()`](https://olive-r.github.io/sptrends/reference/compute_anomalies.md),
-  [`inspect_ts_cell()`](https://olive-r.github.io/sptrends/reference/inspect_ts_cell.md),
-  [`example_data()`](https://olive-r.github.io/sptrends/reference/example_data.md),
-  [`read_ordered_stack()`](https://olive-r.github.io/sptrends/reference/read_ordered_stack.md),
-  [`read_netcdf_stack()`](https://olive-r.github.io/sptrends/reference/read_netcdf_stack.md),
-  [`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md),
-  [`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md),
-  [`workflow_rta()`](https://olive-r.github.io/sptrends/reference/workflow_rta.md),
-  [`workflow_trends()`](https://olive-r.github.io/sptrends/reference/workflow_trends.md),
-  [`simulation_design()`](https://olive-r.github.io/sptrends/reference/simulation_design.md),
-  [`benchmark_methods()`](https://olive-r.github.io/sptrends/reference/benchmark_methods.md)
+  [`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md),
+  [`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md),
+  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md),
+  [`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md),
+  [`spatial_autocorrelation()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation.md),
+  [`compute_anomalies()`](https://olivergh.github.io/sptrends/reference/compute_anomalies.md),
+  [`inspect_ts_cell()`](https://olivergh.github.io/sptrends/reference/inspect_ts_cell.md),
+  [`example_data()`](https://olivergh.github.io/sptrends/reference/example_data.md),
+  [`read_ordered_stack()`](https://olivergh.github.io/sptrends/reference/read_ordered_stack.md),
+  [`read_netcdf_stack()`](https://olivergh.github.io/sptrends/reference/read_netcdf_stack.md),
+  [`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md),
+  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md),
+  [`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md),
+  [`workflow_trends()`](https://olivergh.github.io/sptrends/reference/workflow_trends.md),
+  [`simulation_design()`](https://olivergh.github.io/sptrends/reference/simulation_design.md),
+  [`benchmark_methods()`](https://olivergh.github.io/sptrends/reference/benchmark_methods.md)
   and
-  [`benchmark_summary()`](https://olive-r.github.io/sptrends/reference/benchmark_summary.md).
+  [`benchmark_summary()`](https://olivergh.github.io/sptrends/reference/benchmark_summary.md).
   All 17 checks passed (two functions share one combined check).
 
 ## sptrends 0.96.7
@@ -139,15 +297,15 @@
 ### Simulation and validation
 
 - Redesigned
-  [`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md)
+  [`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md)
   and
-  [`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md)
+  [`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md)
   for calibrated spatiotemporal simulation and known-truth evaluation.
   Added
-  [`simulation_design()`](https://olive-r.github.io/sptrends/reference/simulation_design.md),
-  [`benchmark_methods()`](https://olive-r.github.io/sptrends/reference/benchmark_methods.md),
+  [`simulation_design()`](https://olivergh.github.io/sptrends/reference/simulation_design.md),
+  [`benchmark_methods()`](https://olivergh.github.io/sptrends/reference/benchmark_methods.md),
   and
-  [`benchmark_summary()`](https://olive-r.github.io/sptrends/reference/benchmark_summary.md)
+  [`benchmark_summary()`](https://olivergh.github.io/sptrends/reference/benchmark_summary.md)
   with unified S3 reporting and scenario-performance graphics.
 - Standardised public examples and the documentation architecture of the
   simulation and benchmarking interfaces.
@@ -233,7 +391,7 @@
   vignettes to use the bundled NDVI series, including a complete
   temporal mosaic, interactive animation code and linked navigation.
 - Expanded the
-  [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
+  [`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
   example to show BH, BKY and BY explicitly, and listed additional CRAN
   packages used as external validation references.
 
@@ -410,7 +568,7 @@
 
 - Added permutation-based local Moran’s I and Getis-Ord Gi\*.
 - Added local maps and FDR forwarding through
-  [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md).
+  [`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md).
 
 ## sptrends 0.89.1
 
@@ -436,13 +594,13 @@
 
 - Separated spatial scale (`smooth_radius`) from spatial intensity
   (`spatial_rho`) in
-  [`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md),
+  [`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md),
   preserving the established default output.
 
 ### API
 
 - Exposed every
-  [`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md)
+  [`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md)
   metric in Usage while keeping FWER opt-in for replicated validation.
 - Added dependency-free elapsed-time messages to verbose analytical
   functions; workflow objects continue to retain per-stage timings.
@@ -496,7 +654,7 @@
 
 - Added an explicit global/local scope and scope-specific S3 hierarchy
   to
-  [`spatial_autocorrelation()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation.md),
+  [`spatial_autocorrelation()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation.md),
   preserving the global result while reserving a stable interface for
   independently validated local statistics.
 - Reserved local multiple-testing choices (`none`, BH, BKY, BY and
@@ -506,7 +664,7 @@
 ### Documentation
 
 - Reframed
-  [`spatial_autocorrelation()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation.md)
+  [`spatial_autocorrelation()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation.md)
   as a general spatial diagnostic for environmental variables,
   residuals, coefficients and inferential fields; FDR-assumption
   assessment is now presented only as one qualified application.
@@ -520,7 +678,7 @@
 
 - Exposed configurable trend workflows through the single public
   interface
-  [`workflow_trends()`](https://olive-r.github.io/sptrends/reference/workflow_trends.md);
+  [`workflow_trends()`](https://olivergh.github.io/sptrends/reference/workflow_trends.md);
   the temporary pre-release alias and compatibility class were removed.
 
 ### Bug fixes
@@ -652,11 +810,11 @@
 ### New features
 
 - Added repeated-median slopes and three-estimator comparison to
-  [`inspect_ts_cell()`](https://olive-r.github.io/sptrends/reference/inspect_ts_cell.md).
+  [`inspect_ts_cell()`](https://olivergh.github.io/sptrends/reference/inspect_ts_cell.md).
 
 ### Breaking changes
 
-- [`inspect_ts_cell()`](https://olive-r.github.io/sptrends/reference/inspect_ts_cell.md)
+- [`inspect_ts_cell()`](https://olivergh.github.io/sptrends/reference/inspect_ts_cell.md)
   no longer draws a shaded confidence band; the interval is now
   text-only in the legend.
 
@@ -665,19 +823,19 @@
 ### New features
 
 - Added Siegel’s repeated median (`"RM"`) to
-  [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md).
+  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md).
 
 ### Bug fixes
 
 - Added `"RM"` validation to
-  [`workflow_trends()`](https://olive-r.github.io/sptrends/reference/workflow_trends.md).
+  [`workflow_trends()`](https://olivergh.github.io/sptrends/reference/workflow_trends.md).
 
 ## sptrends 0.78
 
 ### New features
 
 - Added
-  [`workflow_trends()`](https://olive-r.github.io/sptrends/reference/workflow_trends.md)
+  [`workflow_trends()`](https://olivergh.github.io/sptrends/reference/workflow_trends.md)
   for user-defined analytical workflows.
 - Added a dedicated vignette for configurable trend workflows.
 
@@ -686,7 +844,7 @@
 ### New features
 
 - Added Benjamini-Yekutieli (`"BY"`) to
-  [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md).
+  [`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md).
 
 ### Bug fixes
 
@@ -697,7 +855,7 @@
 ### New features
 
 - Added `MMK` to
-  [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md).
+  [`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md).
 
 ### Bug fixes
 
@@ -708,7 +866,7 @@
 ### New features
 
 - Added `TFPW_Z` and `VCTFPW` to
-  [`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md).
+  [`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md).
 
 ### Bug fixes
 
@@ -752,13 +910,13 @@
 ### New features
 
 - Shared spatial-adjacency caching between
-  [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)
+  [`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)
   and
-  [`spatial_autocorrelation()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation.md).
+  [`spatial_autocorrelation()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation.md).
   Both previously recomputed the identical structure independently; now
   computed once and reusable via a new `precomputed_neighbourhood`
   argument.
-- [`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)/[`workflow_rta()`](https://olive-r.github.io/sptrends/reference/workflow_rta.md)
+- [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)/[`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md)
   gain a shared `n_cores`, reusing one cluster across their own internal
   parallel steps instead of building and tearing down a separate one for
   each.
@@ -767,7 +925,7 @@
 
 ### New features
 
-- [`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md)
+- [`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md)
   gains `"fwer"` (family-wise error rate) as a requestable metric, only
   meaningful with `replicates = TRUE`.
 
@@ -785,7 +943,7 @@
 - Clarified the distinction between `FDR` (a single run’s realised
   proportion) and `FDR_mean` (the actual rate estimate, averaged across
   replicates), and added the Benjamini & Hochberg (1995) reference to
-  [`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md)’s
+  [`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md)’s
   own citation list.
 
 ## sptrends 0.68
@@ -793,7 +951,7 @@
 ### New features
 
 - Added `method = "ols"` to
-  [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md).
+  [`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md).
   Provides the classical parametric alternative to CMK/MK, verified
   against [`stats::lm()`](https://rdrr.io/r/stats/lm.html).
 
@@ -802,14 +960,14 @@
 ### New features
 
 - Exposed
-  [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)’s
+  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)’s
   own direction map, histogram, and bar chart via `report = TRUE` and
   `plot(which = ...)`. These reports previously existed only inside the
   full
-  [`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)/
-  [`workflow_rta()`](https://olive-r.github.io/sptrends/reference/workflow_rta.md)
+  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)/
+  [`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md)
   pipeline, not from
-  [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)
+  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)
   directly.
 
 ## sptrends 0.66
@@ -823,9 +981,9 @@
 ### Breaking changes
 
 - Renamed
-  [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)’s
+  [`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)’s
   and
-  [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)’s
+  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)’s
   own returned S3 classes (`"cmk"` to `"trend_test"`, `"theil"` to
   `"slope"`). Reflects that both functions now cover more than one
   method each.
@@ -835,7 +993,7 @@
 ### API changes
 
 - Renamed
-  [`fdr_bky()`](https://olive-r.github.io/sptrends/reference/fdr_bky.md)’s
+  [`fdr_bky()`](https://olivergh.github.io/sptrends/reference/fdr_bky.md)’s
   `variant` argument to `implementation`, and its `"definition6"` value
   to `"original"`. The old names did not say what they were a
   variant/implementation of.
@@ -845,7 +1003,7 @@
 ### API changes
 
 - Renamed
-  [`inspect_ts_cell()`](https://olive-r.github.io/sptrends/reference/inspect_ts_cell.md)’s
+  [`inspect_ts_cell()`](https://olivergh.github.io/sptrends/reference/inspect_ts_cell.md)’s
   `type` argument to `selection_type`. Avoided ambiguity with
   [`graphics::plot()`](https://rdrr.io/r/graphics/plot.default.html)’s
   own unrelated `type` argument used nearby.
@@ -874,7 +1032,7 @@
 ### Bug fixes
 
 - Fixed
-  [`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)/[`workflow_rta()`](https://olive-r.github.io/sptrends/reference/workflow_rta.md)’s
+  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)/[`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md)’s
   own progress messages always saying “Contextual Mann-Kendall”
   regardless of the actual `method` used.
 
@@ -904,17 +1062,17 @@
   notation, a fixed-width indentation style) in a new `.lintr` file, so
   future runs do not re-surface the same false positives.
 - Reorganised the documentation of most core functions
-  ([`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md),
-  [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md),
-  [`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md),
-  [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md),
-  [`spatial_autocorrelation()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation.md),
-  [`read_ordered_stack()`](https://olive-r.github.io/sptrends/reference/read_ordered_stack.md),
-  [`compute_anomalies()`](https://olive-r.github.io/sptrends/reference/compute_anomalies.md),
-  [`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md),
-  [`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md),
-  [`workflow_rta()`](https://olive-r.github.io/sptrends/reference/workflow_rta.md),
-  [`inspect_ts_cell()`](https://olive-r.github.io/sptrends/reference/inspect_ts_cell.md),
+  ([`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md),
+  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md),
+  [`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md),
+  [`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md),
+  [`spatial_autocorrelation()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation.md),
+  [`read_ordered_stack()`](https://olivergh.github.io/sptrends/reference/read_ordered_stack.md),
+  [`compute_anomalies()`](https://olivergh.github.io/sptrends/reference/compute_anomalies.md),
+  [`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md),
+  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md),
+  [`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md),
+  [`inspect_ts_cell()`](https://olivergh.github.io/sptrends/reference/inspect_ts_cell.md),
   and the three shared S3 generics) for a consistent structure and to
   lead with general purpose rather than the specific methods available
   today.
@@ -924,14 +1082,14 @@
 ### Documentation
 
 - Corrected
-  [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)’s
+  [`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)’s
   own title (still describing only two of its three methods) and added a
   missing citation (Douglas, Vogel & Kroll, 2000) for the RAMK
   connection behind CMK’s own variance correction.
 - Audited the whole package for vignettes/docs describing only one
   method where more than one now exists; added missing coverage in three
   vignettes and
-  [`?sptrends`](https://olive-r.github.io/sptrends/reference/sptrends-package.md)’s
+  [`?sptrends`](https://olivergh.github.io/sptrends/reference/sptrends-package.md)’s
   own overview.
 - Finalised the diverging-colour convention (navy, not cyan, for
   “significant”) across all affected plots.
@@ -946,7 +1104,7 @@
   [`citation()`](https://rdrr.io/r/utils/citation.html) mechanism, and
   does not need to be part of the built package).
 - Wrapped
-  [`compute_anomalies()`](https://olive-r.github.io/sptrends/reference/compute_anomalies.md)’s
+  [`compute_anomalies()`](https://olivergh.github.io/sptrends/reference/compute_anomalies.md)’s
   own example in `\donttest{}` (6.17s, over the 5-second threshold).
 
 ## sptrends 0.55.8
@@ -966,25 +1124,25 @@
 ### New features
 
 - Added `verbose = TRUE` messaging to
-  [`inspect_ts_cell()`](https://olive-r.github.io/sptrends/reference/inspect_ts_cell.md),
+  [`inspect_ts_cell()`](https://olivergh.github.io/sptrends/reference/inspect_ts_cell.md),
   matching every other function’s own convention.
 - Folded `summarise_replicates()` into
-  [`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md)’s
+  [`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md)’s
   own `replicates = TRUE` argument. One function instead of two for the
   same task.
 - `tst()` and `rta()` renamed to
-  [`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)
+  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)
   and
-  [`workflow_rta()`](https://olive-r.github.io/sptrends/reference/workflow_rta.md).
+  [`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md).
   Clarifies these are complete, opinionated workflows, not the only way
   to run each analytical step.
-- [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md),
-  [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md),
+- [`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md),
+  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md),
   and
-  [`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md)
+  [`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md)
   now fail fast with an informative error on invalid input shapes,
   instead of a cryptic error partway through computation.
-- [`spatial_autocorrelation()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation.md)
+- [`spatial_autocorrelation()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation.md)
   now errors informatively on two previously-confusing invalid input
   cases.
 - Established a consistent visual identity (colours, logo, hex sticker)
@@ -993,15 +1151,15 @@
 ### Bug fixes
 
 - Fixed two real bugs in
-  [`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md),
+  [`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md),
   including a division-by-zero, found by new edge-case tests written for
   it,
-  [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md),
+  [`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md),
   and
-  [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md).
+  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md).
 - Fixed a wrong DOI, caught by `devtools::check(remote = TRUE)`.
 - Fixed a real `R CMD check` WARNING and a separate ERROR, both in
-  [`compute_anomalies()`](https://olive-r.github.io/sptrends/reference/compute_anomalies.md)’s
+  [`compute_anomalies()`](https://olivergh.github.io/sptrends/reference/compute_anomalies.md)’s
   own documentation.
 - Fixed 2 real test failures and a bug from the previous release’s
   `verbose =` addition, found running `test-external-validation.R` (a
@@ -1067,10 +1225,10 @@
 
 - Fixed, while completing a rename, a genuinely broken previous state:
   the earlier `moran_permutation_test()` to
-  [`spatial_autocorrelation()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation.md)
+  [`spatial_autocorrelation()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation.md)
   rename had been left half-done – neither the old nor the new name was
   actually callable from outside the package, and
-  [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)’s
+  [`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)’s
   own `moran_check = TRUE` silently called the missing old name
   internally. Fixed throughout.
 
@@ -1079,7 +1237,7 @@
 ### New features
 
 - `moran_permutation_test()` generalised into
-  [`spatial_autocorrelation()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation.md),
+  [`spatial_autocorrelation()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation.md),
   gaining a second method (`method = "getis_ord"`, global Getis-Ord
   General G) alongside the existing Moran’s I. Follows the same
   `method =` pattern already used elsewhere in the package; verified
@@ -1092,38 +1250,38 @@
 
 ### New features
 
-- [`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md)
+- [`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md)
   gains structural-break simulation (`break_type = "mean"`/`"slope"`),
   composing independently from the existing monotonic-trend simulation,
   with its own ground truth (`true_break`/`break_time`) for validating a
   future change-point method – none is implemented yet.
-- [`inspect_ts_cell()`](https://olive-r.github.io/sptrends/reference/inspect_ts_cell.md)
+- [`inspect_ts_cell()`](https://olivergh.github.io/sptrends/reference/inspect_ts_cell.md)
   gains `slope_method = "ols"`, matching
-  [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)’s
+  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)’s
   own second method; the confidence band’s “bowtie” shape was checked
   and confirmed correct (standard linear-trend theory), not a bug.
-- [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)
+- [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)
   gains `method = "ols"`, a fast closed-form alternative to the default
   Theil-Sen, not a replacement for it (not robust to outliers the way
   Theil-Sen is).
-- [`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md)
+- [`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md)
   gains `method = "yue_pilon"` (trend-free prewhitening) alongside the
   default `wang_swail`. Loses one time step (classic lag-1 differencing)
   and has a different diagnostics structure. Fixed three real
   integration bugs found while adding it –
   [`print()`](https://rdrr.io/r/base/print.html)/[`summary()`](https://rdrr.io/r/base/summary.html)/[`plot()`](https://rdrr.io/r/graphics/plot.default.html),
   `tst()`’s own [`print()`](https://rdrr.io/r/base/print.html), and
-  [`inspect_ts_cell()`](https://olive-r.github.io/sptrends/reference/inspect_ts_cell.md)
+  [`inspect_ts_cell()`](https://olivergh.github.io/sptrends/reference/inspect_ts_cell.md)
   all hard-assumed the other method’s own structure and would have
   errored on a `yue_pilon` result.
 
 ### Improvements
 
-- [`read_ordered_stack()`](https://olive-r.github.io/sptrends/reference/read_ordered_stack.md)
+- [`read_ordered_stack()`](https://olivergh.github.io/sptrends/reference/read_ordered_stack.md)
   now stores detected years as real
   [`terra::time()`](https://rspatial.github.io/terra/reference/time.html)
   metadata;
-  [`inspect_ts_cell()`](https://olive-r.github.io/sptrends/reference/inspect_ts_cell.md)’s
+  [`inspect_ts_cell()`](https://olivergh.github.io/sptrends/reference/inspect_ts_cell.md)’s
   x-axis uses them automatically. Found and fixed a related bug while
   doing this: the prewhitened panel misaligned `t` by one step for
   `yue_pilon`’s own shorter output, silently, with no visible symptom.
@@ -1140,7 +1298,7 @@
 
 ### Internal changes
 
-- [`direction_map()`](https://olive-r.github.io/sptrends/reference/direction_map.md)
+- [`direction_map()`](https://olivergh.github.io/sptrends/reference/direction_map.md)
   made internal – the FDR-corrected and uncorrected direction are the
   same computation with an optional filter, not two things needing
   separate public entry points. **Breaking: no longer exported**; use
@@ -1160,10 +1318,10 @@
 
 - API redesign stage 1: `contextual_mann_kendall()`,
   `theil_sen_slope()`, and `wang_swail_prewhiten()` renamed to
-  [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md),
-  [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md),
+  [`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md),
+  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md),
   and
-  [`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md),
+  [`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md),
   each gaining a `method =` argument ahead of a planned second method
   per function. **Breaking: update any direct calls to the old names**,
   and `neighbourhood = TRUE/FALSE` to `method = "cmk"`/`"mk"`. Fixed a
@@ -1199,7 +1357,7 @@
   with [`summary()`](https://rdrr.io/r/base/summary.html)’s own simpler
   default rather than sitting alongside it. **No replacement**;
   `x$timing` has the same data.
-- [`inspect_ts_cell()`](https://olive-r.github.io/sptrends/reference/inspect_ts_cell.md)
+- [`inspect_ts_cell()`](https://olivergh.github.io/sptrends/reference/inspect_ts_cell.md)
   gains `show_neighbours`: a small-multiples grid of each aggregated
   neighbour cell’s own fit, drawn in a separate window, answering
   whether the clicked cell’s trend is representative of its
@@ -1214,7 +1372,7 @@
   own `@references`; fixed a real bug this surfaced along the way
   (duplicated, driftable citation text in `workflow_summary()`). **No
   replacement**; see each function’s own help page.
-- [`classify_moran()`](https://olive-r.github.io/sptrends/reference/classify_moran.md)
+- [`classify_moran()`](https://olivergh.github.io/sptrends/reference/classify_moran.md)
   folded into
   [`print()`](https://rdrr.io/r/base/print.html)/[`summary()`](https://rdrr.io/r/base/summary.html)
   of a `"moran"` object; no longer exported separately.
@@ -1229,15 +1387,15 @@
 ### Internal changes
 
 - `fdr_direction_map()` renamed to
-  [`direction_map()`](https://olive-r.github.io/sptrends/reference/direction_map.md)
+  [`direction_map()`](https://olivergh.github.io/sptrends/reference/direction_map.md)
   and moved out of `fdr.R` into its own file – it isn’t itself an FDR
   method, it combines a trend test’s direction with an FDR result.
   **Breaking: rename any direct calls.**
-- [`prepare_cmk_neighbourhood()`](https://olive-r.github.io/sptrends/reference/prepare_cmk_neighbourhood.md)
+- [`prepare_cmk_neighbourhood()`](https://olivergh.github.io/sptrends/reference/prepare_cmk_neighbourhood.md)
   no longer exported – a real, acknowledged capability loss for
   batch-processing many rasters sharing one grid geometry (no longer
   precomputable without `:::`).
-- [`classify_moran()`](https://olive-r.github.io/sptrends/reference/classify_moran.md)
+- [`classify_moran()`](https://olivergh.github.io/sptrends/reference/classify_moran.md)
   no longer exported; its category now shown automatically in
   [`print()`](https://rdrr.io/r/base/print.html)/[`summary()`](https://rdrr.io/r/base/summary.html)
   of a `"moran"` object.
@@ -1245,7 +1403,7 @@
 
 ### Documentation
 
-- [`prepare_cmk_neighbourhood()`](https://olive-r.github.io/sptrends/reference/prepare_cmk_neighbourhood.md)’s
+- [`prepare_cmk_neighbourhood()`](https://olivergh.github.io/sptrends/reference/prepare_cmk_neighbourhood.md)’s
   batch-processing use case now demonstrated in examples and a vignette,
   not only described.
 
@@ -1264,7 +1422,7 @@
 
 ### Improvements
 
-- [`print.sptrends()`](https://olive-r.github.io/sptrends/reference/print.sptrends.md)/[`summary.sptrends()`](https://olive-r.github.io/sptrends/reference/summary.sptrends.md)/[`plot.sptrends()`](https://olive-r.github.io/sptrends/reference/plot.sptrends.md)
+- [`print.sptrends()`](https://olivergh.github.io/sptrends/reference/print.sptrends.md)/[`summary.sptrends()`](https://olivergh.github.io/sptrends/reference/summary.sptrends.md)/[`plot.sptrends()`](https://olivergh.github.io/sptrends/reference/plot.sptrends.md)
   now dispatch by naming convention (`.print_<class>()` lookup) instead
   of a hardcoded [`switch()`](https://rdrr.io/r/base/switch.html) –
   adding a future class no longer requires editing all three shared
@@ -1279,12 +1437,12 @@
 
 ### Documentation
 
-- [`fdr_bh()`](https://olive-r.github.io/sptrends/reference/fdr_bh.md)/[`fdr_bky()`](https://olive-r.github.io/sptrends/reference/fdr_bky.md)
+- [`fdr_bh()`](https://olivergh.github.io/sptrends/reference/fdr_bh.md)/[`fdr_bky()`](https://olivergh.github.io/sptrends/reference/fdr_bky.md)
   no longer exported (use `fdr_correction(method = ...)`);
   `moran_permutation_test()` now returns a classed object with its own
   [`print()`](https://rdrr.io/r/base/print.html)/[`summary()`](https://rdrr.io/r/base/summary.html)/[`plot()`](https://rdrr.io/r/graphics/plot.default.html),
   folding in two previously separate reporting functions;
-  [`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md)
+  [`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md)
   likewise gains a class and a genuinely new
   [`summary()`](https://rdrr.io/r/base/summary.html). Exported function
   count: 28 to 23.
@@ -1303,8 +1461,8 @@
 ### Improvements
 
 - API redesign stages 4-5 of 5: 15 standalone reporting functions
-  ([`trend_maps()`](https://olive-r.github.io/sptrends/reference/trend_maps.md),
-  [`fdr_summary()`](https://olive-r.github.io/sptrends/reference/fdr_summary.md),
+  ([`trend_maps()`](https://olivergh.github.io/sptrends/reference/trend_maps.md),
+  [`fdr_summary()`](https://olivergh.github.io/sptrends/reference/fdr_summary.md),
   and others) no longer exported – fully covered by the
   [`print()`](https://rdrr.io/r/base/print.html)/[`summary()`](https://rdrr.io/r/base/summary.html)/[`plot()`](https://rdrr.io/r/graphics/plot.default.html)
   methods added in earlier stages. **Breaking: switch to the equivalent
@@ -1334,7 +1492,7 @@
 ### Improvements
 
 - API redesign stages 1-2 of 5: `wang_swail_prewhiten()`,
-  [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md),
+  [`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md),
   and `theil_sen_slope()` now return classed objects with their own
   [`print()`](https://rdrr.io/r/base/print.html)/[`summary()`](https://rdrr.io/r/base/summary.html)/[`plot()`](https://rdrr.io/r/graphics/plot.default.html),
   matching `tst()`/`rta()`’s own pattern. `theil_sen_slope()`’s own
@@ -1369,7 +1527,7 @@
 ### New features
 
 - New “Preprocessing” pkgdown category, separating
-  `wang_swail_prewhiten()`/[`compute_anomalies()`](https://olive-r.github.io/sptrends/reference/compute_anomalies.md)
+  `wang_swail_prewhiten()`/[`compute_anomalies()`](https://olivergh.github.io/sptrends/reference/compute_anomalies.md)
   from “Core”/“Support” – documentation/organisation only, no
   behavioural change.
 
@@ -1424,7 +1582,7 @@
 ### Internal changes
 
 - Covered
-  [`inspect_ts_cell()`](https://olive-r.github.io/sptrends/reference/inspect_ts_cell.md)’s
+  [`inspect_ts_cell()`](https://olivergh.github.io/sptrends/reference/inspect_ts_cell.md)’s
   interactive dispatch, reversing an earlier “this is the coverage
   ceiling” conclusion, by mocking
   [`terra::click()`](https://rspatial.github.io/terra/reference/click.html)/[`terra::draw()`](https://rspatial.github.io/terra/reference/draw.html)
@@ -1441,11 +1599,11 @@
 ### Bug fixes
 
 - Fixed a real bug: `tst()`/`rta()` called
-  [`trend_summary()`](https://olive-r.github.io/sptrends/reference/trend_summary.md)
+  [`trend_summary()`](https://olivergh.github.io/sptrends/reference/trend_summary.md)
   a second, unconditional time with no way to suppress its own printed
   output, so `report = FALSE` never achieved full silence and
   `report = TRUE` printed the summary twice. Added `verbose =` to
-  [`trend_summary()`](https://olive-r.github.io/sptrends/reference/trend_summary.md).
+  [`trend_summary()`](https://olivergh.github.io/sptrends/reference/trend_summary.md).
 
 ## sptrends 0.37.0
 
@@ -1465,7 +1623,7 @@ documentation work only.
   gained `report = TRUE`, closing the one core function still missing
   companion reporting functions. Found and fixed a real bug while wiring
   this in:
-  [`inspect_ts_cell()`](https://olive-r.github.io/sptrends/reference/inspect_ts_cell.md)’s
+  [`inspect_ts_cell()`](https://olivergh.github.io/sptrends/reference/inspect_ts_cell.md)’s
   own internal call did not set `report = FALSE`, so every call would
   have started auto-printing a spurious one-cell summary/map.
 
@@ -1480,7 +1638,7 @@ documentation work only.
   validation on `connectivity` (previously failed silently deep inside
   [`terra::adjacent()`](https://rspatial.github.io/terra/reference/adjacent.html)
   on a typo).
-- [`prewhiten_summary()`](https://olive-r.github.io/sptrends/reference/prewhiten_summary.md)
+- [`prewhiten_summary()`](https://olivergh.github.io/sptrends/reference/prewhiten_summary.md)
   now prints an informative narrative summary, matching the other
   `*_summary()` functions.
 
@@ -1494,7 +1652,7 @@ documentation work only.
 - Reorganised the pkgdown reference index into four blocks by user
   intent (“Published workflows”, “Core methods”, “Diagnostics”,
   “Utilities”) rather than internal function type.
-- [`inspect_ts_cell()`](https://olive-r.github.io/sptrends/reference/inspect_ts_cell.md)
+- [`inspect_ts_cell()`](https://olivergh.github.io/sptrends/reference/inspect_ts_cell.md)
   added to `README.md` for the first time.
 - Rebalanced TST/RTA presentation further, per explicit feedback that an
   earlier pass still read as TST-first: rewrote the README opening,
@@ -1508,11 +1666,11 @@ documentation work only.
 ### New features
 
 - Documentation review following `rta()`’s introduction:
-  [`?sptrends`](https://olive-r.github.io/sptrends/reference/sptrends-package.md),
+  [`?sptrends`](https://olivergh.github.io/sptrends/reference/sptrends-package.md),
   `README.md`, `inst/CITATION`, and four vignettes updated to present
   TST and RTA as two workflows, not TST alone (`rta()` had been missing
   from several places despite already being complete and tested).
-  `theil_sen_slope()`/[`fdr_bh()`](https://olive-r.github.io/sptrends/reference/fdr_bh.md)
+  `theil_sen_slope()`/[`fdr_bh()`](https://olivergh.github.io/sptrends/reference/fdr_bh.md)
   gained a “used by” note that both are shared infrastructure, not
   TST-specific.
 
@@ -1528,7 +1686,7 @@ documentation work only.
 ### Bug fixes
 
 - Fixed a real, visually misleading bug:
-  [`inspect_ts_cell()`](https://olive-r.github.io/sptrends/reference/inspect_ts_cell.md)’s
+  [`inspect_ts_cell()`](https://olivergh.github.io/sptrends/reference/inspect_ts_cell.md)’s
   confidence band was anchored at `t = 0` (typically outside the
   observed range), widening in only one direction instead of the
   standard symmetric “bowtie” shape. Anchored at the centre of the
@@ -1565,7 +1723,7 @@ documentation work only.
 ### New features
 
 - Redesigned
-  [`inspect_ts_cell()`](https://olive-r.github.io/sptrends/reference/inspect_ts_cell.md):
+  [`inspect_ts_cell()`](https://olivergh.github.io/sptrends/reference/inspect_ts_cell.md):
   a single `neighbourhood` argument (default `TRUE`) replaces always
   overlaying two Theil-Sen lines. All aggregation modes now take the
   per-time-step median of raw values first, then fit one Theil-Sen slope
@@ -1582,13 +1740,13 @@ documentation work only.
 
 ### Improvements
 
-- [`inspect_ts_cell()`](https://olive-r.github.io/sptrends/reference/inspect_ts_cell.md)
+- [`inspect_ts_cell()`](https://olivergh.github.io/sptrends/reference/inspect_ts_cell.md)
   gained an optional `prewhitened` argument, drawing a second panel
   using `wang_swail_prewhiten()`’s own output side by side with the raw
   one. Internally refactored into small, reusable helpers shared by both
   panels.
 - Completed
-  [`inspect_ts_cell()`](https://olive-r.github.io/sptrends/reference/inspect_ts_cell.md)’s
+  [`inspect_ts_cell()`](https://olivergh.github.io/sptrends/reference/inspect_ts_cell.md)’s
   own references, and found and fixed a real gap while doing so:
   `contextual_mann_kendall()` itself had never explicitly cited Mann
   (1945)/Kendall (1975), the foundational statistic its own `S`/`VarS`
@@ -1599,7 +1757,7 @@ documentation work only.
 ### New features
 
 - New function
-  [`inspect_ts_cell()`](https://olive-r.github.io/sptrends/reference/inspect_ts_cell.md):
+  [`inspect_ts_cell()`](https://olivergh.github.io/sptrends/reference/inspect_ts_cell.md):
   interactive click-to-inspect time series viewer, overlaying the
   clicked cell’s own Theil-Sen fit against one that borrows its queen
   neighbourhood – whether the two agree is itself the diagnostic. Split
@@ -1661,10 +1819,10 @@ documentation work only.
 ### New features
 
 - New `variant` argument for
-  [`fdr_bky()`](https://olive-r.github.io/sptrends/reference/fdr_bky.md)
+  [`fdr_bky()`](https://olivergh.github.io/sptrends/reference/fdr_bky.md)
   (`"multtest"`/`"definition6"`, two distinct published implementations
   of the same BKY procedure), forwarded through
-  [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)/`tst()`.
+  [`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)/`tst()`.
   Confirmed `"multtest"`’s threshold is never stricter than
   `"definition6"`’s.
 
@@ -1746,8 +1904,8 @@ documentation work only.
 ### Bug fixes
 
 - Fixed a real, potentially misleading plotting bug:
-  [`trend_maps()`](https://olive-r.github.io/sptrends/reference/trend_maps.md)/
-  [`prewhiten_maps()`](https://olive-r.github.io/sptrends/reference/prewhiten_maps.md)
+  [`trend_maps()`](https://olivergh.github.io/sptrends/reference/trend_maps.md)/
+  [`prewhiten_maps()`](https://olivergh.github.io/sptrends/reference/prewhiten_maps.md)
   did not fix their diverging colour range symmetrically around zero,
   visually misrepresenting the sign boundary whenever positive and
   negative values were not equally extreme.
@@ -1776,7 +1934,7 @@ documentation work only.
   in `prewhiten.R` (Durbin-Watson out-of-range messages, several verbose
   branches, `path =` untested for two reporting functions) and
   `read_stack.R`
-  ([`read_netcdf_stack()`](https://olive-r.github.io/sptrends/reference/read_netcdf_stack.md)’s
+  ([`read_netcdf_stack()`](https://olivergh.github.io/sptrends/reference/read_netcdf_stack.md)’s
   own messages, never exercised since every existing test used
   `verbose = FALSE`). Noted, not forced: two checks appear structurally
   unreachable given existing upstream guards.
@@ -1892,9 +2050,9 @@ documentation work only.
   `contextual_mk.R` (hand-worked exact `S`/variance values, isolated-
   cell fallback, connectivity comparison).
 - Added a test suite for
-  [`read_ordered_stack()`](https://olive-r.github.io/sptrends/reference/read_ordered_stack.md)
+  [`read_ordered_stack()`](https://olivergh.github.io/sptrends/reference/read_ordered_stack.md)
   (previously zero tests, unlike
-  [`read_netcdf_stack()`](https://olive-r.github.io/sptrends/reference/read_netcdf_stack.md)),
+  [`read_netcdf_stack()`](https://olivergh.github.io/sptrends/reference/read_netcdf_stack.md)),
   plus further NetCDF tests guarded by `skip_if_not_installed("ncdf4")`.
 - Added a substantial test suite for `moran.R` (previously 40.8%
   coverage): hand-worked exact Moran’s I values under both connectivity
@@ -1914,7 +2072,7 @@ documentation work only.
 ### Internal changes
 
 - Added a full test suite for
-  [`compute_anomalies()`](https://olive-r.github.io/sptrends/reference/compute_anomalies.md)
+  [`compute_anomalies()`](https://olivergh.github.io/sptrends/reference/compute_anomalies.md)
   (previously 0% coverage), verified against hand-worked expected
   values, not just “does it run”.
 
@@ -1975,7 +2133,7 @@ documentation work only.
 ### Internal changes
 
 - Renamed `sptrends_example()` to
-  [`example_data()`](https://olive-r.github.io/sptrends/reference/example_data.md)
+  [`example_data()`](https://olivergh.github.io/sptrends/reference/example_data.md)
   (inconsistent prefix), and two identifiers to British spelling
   (`summarise_replicates()`, `standardise`) – done now, before the
   package reaches CRAN.
@@ -1995,7 +2153,7 @@ documentation work only.
 
 - `tst()`’s own examples and all four vignettes switched to the bundled
   real temperature dataset instead of
-  [`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md),
+  [`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md),
   a more recognisable example for the package’s flagship function and
   walkthroughs specifically.
 
@@ -2012,28 +2170,28 @@ documentation work only.
 
 - New bundled real-world example dataset (annual mean temperature, CRU
   TS v4.10, 1976-2025) and new function
-  [`example_data()`](https://olive-r.github.io/sptrends/reference/example_data.md)
+  [`example_data()`](https://olivergh.github.io/sptrends/reference/example_data.md)
   to access it, doubling as a realistic
-  [`read_ordered_stack()`](https://olive-r.github.io/sptrends/reference/read_ordered_stack.md)
+  [`read_ordered_stack()`](https://olivergh.github.io/sptrends/reference/read_ordered_stack.md)
   example.
 
 ### Improvements
 
-- [`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md)
+- [`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md)
   gained `Accuracy` and `MCC` (Matthews correlation coefficient,
   generally preferred under class imbalance) as two more metrics, both
   included by default.
 
 ### Internal changes
 
-- [`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md)’s
+- [`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md)’s
   `truth` argument renamed to `ground_truth`.
 
 ### Documentation
 
 - New “Simulation and benchmarking” README section showcasing
-  [`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md) +
-  [`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md)
+  [`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md) +
+  [`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md)
   together.
 
 ## sptrends 0.12.0
@@ -2041,17 +2199,17 @@ documentation work only.
 ### New features
 
 - New functions `summarise_replicates()` and
-  [`plot_detection_comparison()`](https://olive-r.github.io/sptrends/reference/plot_detection_comparison.md),
+  [`plot_detection_comparison()`](https://olivergh.github.io/sptrends/reference/plot_detection_comparison.md),
   completing the validation toolkit.
 - New function
-  [`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md):
+  [`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md):
   a confusion-matrix comparison of one or more trend-detection results
   against a known ground truth, deliberately agnostic to where either
   side comes from.
 
 ### Improvements
 
-- [`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md)
+- [`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md)
   gained `noise_dist = "gaussian"/"t"`, generating heavy-tailed noise –
   the condition under which rank-based methods’ robustness argument over
   a parametric one like OLS actually shows up.
@@ -2059,13 +2217,13 @@ documentation work only.
 ### Bug fixes
 
 - Fixed a real bug in
-  [`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md)’s
+  [`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md)’s
   own trend-assignment logic: sign flips were applied cell-by-cell at
   random (“salt-and-pepper”), silently defeating CMK’s whole rationale
   (borrowing strength from a plausibly-trending neighbourhood). Switched
   to coarse, spatially contiguous blocks.
 - Fixed a real documentation bug: an internal helper had ended up inside
-  [`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md)’s
+  [`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md)’s
   own roxygen block, documenting the wrong function as exported.
 
 ## sptrends 0.11.0
@@ -2079,7 +2237,7 @@ documentation work only.
 
 ### New features
 
-- [`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md)
+- [`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md)
   gained `noise_sd`, `trend_fraction` (proportion of cells keeping a
   non-zero true slope; `0` gives a complete null field for
   false-positive-rate checks), and `trend_shape`
@@ -2088,7 +2246,7 @@ documentation work only.
 ### Improvements
 
 - **Breaking**:
-  [`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md)
+  [`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md)
   now returns `list(series = ..., true_slope = ...)` instead of the
   raster directly – what makes it a simulator with known ground truth,
   comparable directly against a fitted slope or a method’s own
@@ -2102,7 +2260,7 @@ documentation work only.
 
 ### Documentation
 
-- [`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md)’s
+- [`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md)’s
   examples now demonstrate `smooth_radius`’s own effect directly via
   Moran’s I (~0.07 vs ~0.65).
 
@@ -2110,7 +2268,7 @@ documentation work only.
 
 ### New features
 
-- [`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md)
+- [`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md)
   now genuinely generates spatial autocorrelation between neighbouring
   cells, via a new `smooth_radius` argument – previously documented but
   not actually implemented (noise was independent per cell).
@@ -2122,7 +2280,7 @@ documentation work only.
   and/or skewed trend statistics, not normally distributed).
 - Removed `sptrends_pipeline()` entirely – a deprecated alias for
   `tst()`, never part of a public release.
-- [`read_netcdf_stack()`](https://olive-r.github.io/sptrends/reference/read_netcdf_stack.md)
+- [`read_netcdf_stack()`](https://olivergh.github.io/sptrends/reference/read_netcdf_stack.md)
   now issues a real [`warning()`](https://rdrr.io/r/base/warning.html),
   not just a documentation note, when the detected time step looks
   sub-annual.
@@ -2136,7 +2294,7 @@ documentation work only.
 
 - Benjamini & Yekutieli (2001) now cited explicitly in all 11 `fdr_*`
   functions, not only
-  [`fdr_bh()`](https://olive-r.github.io/sptrends/reference/fdr_bh.md).
+  [`fdr_bh()`](https://olivergh.github.io/sptrends/reference/fdr_bh.md).
 - `tst()`’s own argument order regrouped for logical proximity (`alpha`
   with `moran_check`, `fdr_method` with `q`); named-argument code is
   unaffected.
@@ -2237,18 +2395,18 @@ documentation work only.
 ### New features
 
 - New `theil_sen_slope()`, `fdr_direction_map()`/`_plot()`/`_summary()`,
-  [`compute_anomalies()`](https://olive-r.github.io/sptrends/reference/compute_anomalies.md),
+  [`compute_anomalies()`](https://olivergh.github.io/sptrends/reference/compute_anomalies.md),
   and NetCDF support for
-  [`read_ordered_stack()`](https://olive-r.github.io/sptrends/reference/read_ordered_stack.md)
+  [`read_ordered_stack()`](https://olivergh.github.io/sptrends/reference/read_ordered_stack.md)
   plus a new
-  [`read_netcdf_stack()`](https://olive-r.github.io/sptrends/reference/read_netcdf_stack.md).
+  [`read_netcdf_stack()`](https://olivergh.github.io/sptrends/reference/read_netcdf_stack.md).
 
 ### Improvements
 
 - Added second author; added `inst/CITATION`; added the package-level
   help page; `report = TRUE` added as the default across the core
   functions; `moran_check` added to
-  [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)/the
+  [`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)/the
   pipeline; parallel computation (`n_cores`) added to the CMK and
   Moran’s I steps; documentation overhaul with verified/corrected DOIs
   throughout.
@@ -2270,6 +2428,6 @@ workflow described at the top of this file: selective AR(1) prewhitening
 pixel-wise FDR correction (Benjamini-Hochberg 1995;
 Benjamini-Krieger-Yekutieli 2006), and Moran’s I permutation testing,
 plus
-[`compute_anomalies()`](https://olive-r.github.io/sptrends/reference/compute_anomalies.md),
+[`compute_anomalies()`](https://olivergh.github.io/sptrends/reference/compute_anomalies.md),
 raster/NetCDF reading, a convenience pipeline wrapper, and a synthetic
 data generator for examples and tests.

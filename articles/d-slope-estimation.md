@@ -2,24 +2,28 @@
 
 ## Why this matters
 
-Statistical significance does not indicate how rapidly a variable is
-changing. A small change may be highly significant, whereas a large
-estimated change may remain uncertain. Trend tests and slope estimators
-therefore answer different questions: the former assess statistical
-evidence for change, while the latter quantify its magnitude and rate
-over time.
+Trend tests and slope estimators answer different questions: the former
+assess statistical evidence for change, while the latter quantify its
+magnitude and rate over time.
+
+Having established whether a trend exists in the previous vignette, this
+one turns to the second question: how large is it?
+[`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)
+answers that question directly, independently of whether the trend
+reached statistical significance.
 
 ## What `slope_estimator()` does
 
 Trend magnitude describes how rapidly a variable changes over time. In
 `sptrends`, it is quantified through slope estimation and expressed in
 the units of the input variable per unit of time.
-[`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)
+[`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)
 estimates one temporal slope for each valid raster cell and returns a
 raster representing the rate of change across the study area. Theil-Sen
-(`TS`) is the default and generally recommended estimator because it
-provides a robust balance between computational efficiency and
-resistance to outliers.
+(`TS`) ([Theil, 1950](https://doi.org/10.1007/978-94-011-2546-8_20);
+[Sen, 1968](https://doi.org/10.1080/01621459.1968.10480934)) is the
+default and generally recommended estimator because it provides a robust
+balance between computational efficiency and resistance to outliers.
 
 ## Basic workflow
 
@@ -40,31 +44,6 @@ plot(ts)
 
 ![Global map of raw Theil-Sen NDVI
 slopes](d-slope-estimation_files/figure-html/theil-sen-map-1.png)
-
-To connect the spatial result with the underlying time series, one valid
-cell is selected reproducibly. Its annual observations are shown
-together with the corresponding Theil-Sen fitted line.
-
-``` r
-
-slope_values <- terra::values(ts$slope, mat = FALSE)
-valid_cells <- which(is.finite(slope_values))
-cell <- valid_cells[ceiling(length(valid_cells) / 2)]
-cell_values <- as.numeric(r[cell])
-cell_slope <- slope_values[cell]
-cell_intercept <- stats::median(cell_values - cell_slope * years)
-
-graphics::plot(
-  years, cell_values, type = "b", pch = 19, col = "grey35",
-  xlab = "Year", ylab = "NDVI",
-  main = "Theil-Sen slope for one raster cell"
-)
-graphics::abline(a = cell_intercept, b = cell_slope,
-                 col = "steelblue", lwd = 2)
-```
-
-![Annual NDVI series and Theil-Sen fitted line for one raster
-cell](d-slope-estimation_files/figure-html/theil-sen-cell-1.png)
 
 ## Understanding the results
 
@@ -87,39 +66,43 @@ significance and multiple testing must be evaluated separately.
 
 | Method | Robustness | Relative computational cost | Guidance |
 |----|----|----|----|
-| `TS` ([Theil, 1950](https://doi.org/10.1007/978-94-011-2546-8_20); [Sen, 1968](https://doi.org/10.1080/01621459.1968.10480934)) | High | Moderate | Recommended general-purpose choice |
 | `OLS` | Low | Low | Use when assumptions and efficiency justify it |
+| `TS` ([Theil, 1950](https://doi.org/10.1007/978-94-011-2546-8_20); [Sen, 1968](https://doi.org/10.1080/01621459.1968.10480934)) | High | Moderate | Recommended general-purpose choice |
 | `RM` ([Siegel, 1982](https://doi.org/10.1093/biomet/69.1.242)) | Very high | High | Use when extreme contamination is plausible |
 
-Theil-Sen (`TS`) usually provides the best balance between robustness
-and computation. OLS is faster but sensitive to outliers. Siegel’s
+OLS is fastest but sensitive to outliers. Theil-Sen (`TS`) usually
+provides the best balance between robustness and computation. Siegel’s
 repeated median (`RM`) is more resistant but substantially slower.
 
 ## Common mistakes
 
+- Do not assume that OLS, TS and RM produce identical estimates; they
+  can diverge substantially in the presence of outliers.
 - Do not interpret a slope estimate as statistically significant by
-  itself. For inferential interpretation, combine it with a trend test
-  and multiple-testing correction.
+  itself; combine it with a trend test and multiple-testing correction
+  for inferential interpretation (see [trend-test
+  vignette](https://olivergh.github.io/sptrends/articles/c-trend-test.md)
+  and [multiple-testing
+  vignette](https://olivergh.github.io/sptrends/articles/e-fdr-correction.md)).
 - Do not ignore serial correlation when combining slope estimates with
   significance results; diagnose and treat temporal dependence when
-  necessary.
+  necessary (see [prewhitening
+  vignette](https://olivergh.github.io/sptrends/articles/b-prewhitening.md)).
 - Do not compare slopes expressed in different units without appropriate
-  standardisation, and supply actual observation times when measurements
-  are irregularly spaced.
-- Do not assume that OLS, TS and RM produce identical estimates,
-  particularly in the presence of outliers.
+  standardisation; supply actual observation times when measurements are
+  irregularly spaced.
 
 ## Next steps
 
 Continue to
-[`vignette("e-fdr-correction")`](https://olive-r.github.io/sptrends/articles/e-fdr-correction.md)
+[`vignette("e-fdr-correction")`](https://olivergh.github.io/sptrends/articles/e-fdr-correction.md)
 to decide which trend-test results remain reliable after testing many
 cells.
 
 ## Further details
 
 See
-[`?slope_estimator`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)
+[`?slope_estimator`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)
 for formulas, assumptions, computational costs, robustness, optional
 smoothing, validation and complete references.
 

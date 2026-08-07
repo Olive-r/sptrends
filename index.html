@@ -13,7 +13,7 @@
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Statistical Inference for Spatiotemporal Trends in Gridded Data">
 <meta name="description" content="Provides a unified and reproducible framework for statistical inference of spatiotemporal trends in gridded environmental data. The framework addresses the interconnected challenges of serial correlation, spatial dependence and multiple testing that commonly arise when analysing gridded environmental time series. Its core methods support serial-correlation treatment through trend-preserving prewhitening, pixel-wise and spatially explicit trend inference, slope estimation and multiple-testing correction. These methods may be applied independently or integrated within configurable analytical workflows. Dedicated workflows are also provided to reproduce methodologies published in the scientific literature. Supporting utilities facilitate raster data import and inspection, anomaly calculation, spatial autocorrelation diagnostics, simulation studies, benchmarking, visualisation, mapping, and reporting.">
 <meta property="og:description" content="Provides a unified and reproducible framework for statistical inference of spatiotemporal trends in gridded environmental data. The framework addresses the interconnected challenges of serial correlation, spatial dependence and multiple testing that commonly arise when analysing gridded environmental time series. Its core methods support serial-correlation treatment through trend-preserving prewhitening, pixel-wise and spatially explicit trend inference, slope estimation and multiple-testing correction. These methods may be applied independently or integrated within configurable analytical workflows. Dedicated workflows are also provided to reproduce methodologies published in the scientific literature. Supporting utilities facilitate raster data import and inspection, anomaly calculation, spatial autocorrelation diagnostics, simulation studies, benchmarking, visualisation, mapping, and reporting.">
-<meta property="og:image" content="https://olive-r.github.io/sptrends/logo.png">
+<meta property="og:image" content="https://olivergh.github.io/sptrends/logo.png">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -23,7 +23,7 @@
 
     <a class="navbar-brand me-2" href="index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,22 +78,24 @@
 <div class="section level2">
 <h2 id="quick-start">Quick start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
 </h2>
+<p>A bundled annual NDVI dataset is available for reproducible examples:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Olive-r/sptrends" class="external-link">sptrends</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># One raster file per time step, ordered from numbers in the file names.</span></span>
+<span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_ordered_stack.html">read_ordered_stack</a></span><span class="op">(</span><span class="fu"><a href="reference/example_data.html">example_data</a></span><span class="op">(</span><span class="st">"vhp_ndvi"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/workflow_tst.html">workflow_tst</a></span><span class="op">(</span><span class="va">r</span>, report <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></code></pre></div>
+<p>With your own data, replace the file path:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># One raster file per time step, ordered from numbers in the file names.</span></span>
 <span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_ordered_stack.html">read_ordered_stack</a></span><span class="op">(</span><span class="st">"path/to/rasters"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Published True Significant Trends workflow.</span></span>
+<span><span class="co"># Published True Significant Trends workflow</span></span>
+<span><span class="co"># (Gutierrez-Hernandez and Garcia, 2025, https://doi.org/10.1016/j.rsase.2024.101377).</span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/workflow_tst.html">workflow_tst</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></code></pre></div>
-<p>A bundled annual NDVI dataset is available for reproducible examples:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_ordered_stack.html">read_ordered_stack</a></span><span class="op">(</span><span class="fu"><a href="reference/example_data.html">example_data</a></span><span class="op">(</span><span class="st">"vhp_ndvi"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/workflow_tst.html">workflow_tst</a></span><span class="op">(</span><span class="va">r</span>, report <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -101,9 +103,9 @@
 </h2>
 <ul>
 <li>
-<code><a href="reference/workflow_tst.html">workflow_tst()</a></code> implements True Significant Trends: selective prewhitening, Contextual Mann-Kendall, Theil-Sen and adaptive FDR.</li>
+<code><a href="reference/workflow_tst.html">workflow_tst()</a></code> implements True Significant Trends: selective prewhitening, Contextual Mann-Kendall, Theil-Sen and adaptive FDR (<a href="https://doi.org/10.1016/j.rsase.2024.101377" class="external-link">Gutiérrez-Hernández and García, 2025</a>).</li>
 <li>
-<code><a href="reference/workflow_rta.html">workflow_rta()</a></code> implements Robust Trend Analysis: Contextual Mann-Kendall, Theil-Sen and FDR-BH without prewhitening.</li>
+<code><a href="reference/workflow_rta.html">workflow_rta()</a></code> implements Robust Trend Analysis: Contextual Mann-Kendall, Theil-Sen and FDR-BH without prewhitening (<a href="https://doi.org/10.3390/rs16203886" class="external-link">Gutiérrez-Hernández and García, 2024</a>).</li>
 <li>
 <code><a href="reference/workflow_trends.html">workflow_trends()</a></code> combines user-selected preprocessing, trend, slope and FDR modules through the same validated interfaces.</li>
 </ul>
@@ -112,7 +114,7 @@
 <code class="sourceCode R"><span><span class="va">pw</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/prewhiten.html">prewhiten</a></span><span class="op">(</span><span class="va">r</span>, method <span class="op">=</span> <span class="st">"TFPW_WS"</span><span class="op">)</span></span>
 <span><span class="va">trend</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/trend_test.html">trend_test</a></span><span class="op">(</span><span class="va">pw</span><span class="op">$</span><span class="va">series</span>, method <span class="op">=</span> <span class="st">"CMK"</span><span class="op">)</span></span>
 <span><span class="va">slope</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/slope_estimator.html">slope_estimator</a></span><span class="op">(</span><span class="va">pw</span><span class="op">$</span><span class="va">series</span>, method <span class="op">=</span> <span class="st">"TS"</span><span class="op">)</span></span>
-<span><span class="va">fdr</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fdr_correction.html">fdr_correction</a></span><span class="op">(</span><span class="va">trend</span><span class="op">$</span><span class="va">stats</span><span class="op">$</span><span class="va">p</span>, method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"BH"</span>, <span class="st">"BKY"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">fdr</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fdr_correction.html">fdr_correction</a></span><span class="op">(</span><span class="va">trend</span><span class="op">$</span><span class="va">stats</span><span class="op">$</span><span class="va">p</span>, method <span class="op">=</span> <span class="st">"BKY"</span><span class="op">)</span></span></code></pre></div>
 <p><code><a href="reference/spatial_autocorrelation.html">spatial_autocorrelation()</a></code> provides independent global and local permutation inference for environmental variables, residuals, coefficients or inferential fields. Local p-value rasters can be passed to <code><a href="reference/fdr_correction.html">fdr_correction()</a></code> for BH, BKY or BY control.</p>
 </div>
 <div class="section level2">
@@ -120,7 +122,11 @@
 </h2>
 <ul>
 <li>
-<code><a href="reference/compute_anomalies.html">compute_anomalies()</a></code> and <code><a href="reference/prewhiten.html">prewhiten()</a></code> — temporal preprocessing.</li>
+<code><a href="reference/read_ordered_stack.html">read_ordered_stack()</a></code> and <code><a href="reference/read_netcdf_stack.html">read_netcdf_stack()</a></code> — raster import with temporal-order checks.</li>
+<li>
+<code><a href="reference/compute_anomalies.html">compute_anomalies()</a></code> — deseasonalising, when the series has a known cycle.</li>
+<li>
+<code><a href="reference/prewhiten.html">prewhiten()</a></code> — serial-correlation treatment, trend-preserving.</li>
 <li>
 <code><a href="reference/trend_test.html">trend_test()</a></code> — CMK with configurable odd neighbourhoods (3 by 3 by default), MK, OLS and modified MK.</li>
 <li>
@@ -130,11 +136,7 @@
 <li>
 <code><a href="reference/spatial_autocorrelation.html">spatial_autocorrelation()</a></code> — permutation-based spatial diagnostics.</li>
 <li>
-<code><a href="reference/sim_trend_stack.html">sim_trend_stack()</a></code>, <code><a href="reference/simulation_design.html">simulation_design()</a></code>, <code><a href="reference/compare_detections.html">compare_detections()</a></code>, and <code><a href="reference/benchmark_methods.html">benchmark_methods()</a></code> — known-truth simulation and reproducible method benchmarking, including S3 performance plots across scenario factors.</li>
-<li>
-<code><a href="reference/benchmark_summary.html">benchmark_summary()</a></code> — Monte Carlo summaries, including empirical FDR and FWER where applicable.</li>
-<li>
-<code><a href="reference/read_ordered_stack.html">read_ordered_stack()</a></code> and <code><a href="reference/read_netcdf_stack.html">read_netcdf_stack()</a></code> — raster import with temporal-order checks.</li>
+<code><a href="reference/sim_trend_stack.html">sim_trend_stack()</a></code>, <code><a href="reference/simulation_design.html">simulation_design()</a></code>, <code><a href="reference/compare_detections.html">compare_detections()</a></code>, <code><a href="reference/benchmark_methods.html">benchmark_methods()</a></code> and <code><a href="reference/benchmark_summary.html">benchmark_summary()</a></code> — known-truth simulation and reproducible method benchmarking, including S3 performance plots and Monte Carlo summaries (empirical FDR and FWER where applicable) across scenario factors.</li>
 </ul>
 <p>The current calculations are vectorised and selected stages can use parallel processing, but analytical rasters are materialised in memory. Test representative dimensions before processing very large datasets.</p>
 </div>
@@ -148,13 +150,18 @@
 <div class="section level2">
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h2>
+<p>To cite the package itself:</p>
+<blockquote>
+<p>Gutiérrez-Hernández, O., &amp; García, L. V. (2026). sptrends: Statistical Inference for Spatiotemporal Trends in Gridded Data [R package]. Zenodo. <a href="https://doi.org/10.5281/zenodo.21822842" class="external-link uri">https://doi.org/10.5281/zenodo.21822842</a></p>
+</blockquote>
+<p>Or, from R:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"sptrends"</span><span class="op">)</span></span></code></pre></div>
 <p>Published workflows:</p>
 <ul>
 <li>Gutiérrez-Hernández, O. and García, L.V. (2025). Uncovering true significant trends in global greening. <em>Remote Sensing Applications: Society and Environment</em>, 37, 101377. <a href="https://doi.org/10.1016/j.rsase.2024.101377" class="external-link uri">https://doi.org/10.1016/j.rsase.2024.101377</a>
 </li>
-<li>Gutiérrez-Hernández, O. and García, L.V. (2024). Robust Trend Analysis in Environmental Remote Sensing: A Case Study of Cork Oak Forest Decline. <em>Remote Sensing</em>, 16(20), 3886. <a href="doi:10.3390/rs16203886" class="uri">doi:10.3390/rs16203886</a>
+<li>Gutiérrez-Hernández, O. and García, L.V. (2024). Robust Trend Analysis in Environmental Remote Sensing: A Case Study of Cork Oak Forest Decline. <em>Remote Sensing</em>, 16(20), 3886. <a href="https://doi.org/10.3390/rs16203886" class="external-link uri">https://doi.org/10.3390/rs16203886</a>
 </li>
 </ul>
 </div>
@@ -162,8 +169,8 @@
 <h2 id="authors">Authors<a class="anchor" aria-label="anchor" href="#authors"></a>
 </h2>
 <ul>
-<li>Oliver Gutiérrez-Hernández (<a href="https://orcid.org/0000-0003-2580-5465" class="external-link">ORCID</a>), University of Málaga.</li>
-<li>Luis V. García (<a href="https://orcid.org/0000-0002-5514-2941" class="external-link">ORCID</a>), IRNAS-CSIC.</li>
+<li>Oliver Gutiérrez-Hernández (<a href="https://orcid.org/0000-0003-2580-5465" class="external-link">ORCID</a>), Associate Professor, Department of Geography, University of Málaga.</li>
+<li>Luis V. García (<a href="https://orcid.org/0000-0002-5514-2941" class="external-link">ORCID</a>), Tenured Scientist, Institute of Natural Resources and Agrobiology of Seville (IRNAS), Spanish National Research Council (CSIC).</li>
 </ul>
 </div>
 <div class="section level2">
@@ -208,6 +215,10 @@
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://www.r-project.org/" class="external-link"><img src="https://img.shields.io/badge/R-%3E%3D4.1-blue?logo=r" alt="R"></a></li>
+<li><a href="https://www.gnu.org/licenses/gpl-3.0" class="external-link"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg" alt="License: GPL v3"></a></li>
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html#stable" class="external-link"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a></li>
+<li><a href="https://doi.org/10.5281/zenodo.21822842" class="external-link"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.21822842.svg" alt="DOI"></a></li>
+<li><a href="https://olive-r.github.io/sptrends/" class="external-link"><img src="https://img.shields.io/badge/docs-pkgdown-blue" alt="pkgdown"></a></li>
 </ul>
 </div>
 

@@ -4,7 +4,7 @@ Combines the sign of the trend statistic (`Sm`/`S`) with a chosen
 FDR-corrected (or raw) rejection vector to classify each cell as an
 increase, a decrease, or a non-significant result – a binarised map for
 reporting *after* multiple-comparison correction, as opposed to
-[`trend_maps()`](https://olive-r.github.io/sptrends/reference/trend_maps.md),
+[`trend_maps()`](https://olivergh.github.io/sptrends/reference/trend_maps.md),
 which uses the uncorrected p-value.
 
 ## Usage
@@ -13,6 +13,7 @@ which uses the uncorrected p-value.
 direction_map(
   trend,
   fdr_result,
+  slope = NULL,
   method = c("BH", "BKY", "BY", "raw"),
   verbose = TRUE
 )
@@ -23,14 +24,28 @@ direction_map(
 - trend:
 
   The `$stats` field of
-  [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)'s
+  [`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)'s
   output.
 
 - fdr_result:
 
   Output of
-  [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md),
+  [`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md),
   run on `trend$stats$p`.
+
+- slope:
+
+  Optional single-layer `SpatRaster` (e.g.
+  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)'s
+  own `$slope`) whose sign determines direction instead of the trend
+  test's own statistic. `NULL` (default): use `trend`'s own
+  `Sm`/`S`/`beta`, as before. Direction from the slope and direction
+  from the trend statistic usually agree but are not guaranteed to: a
+  cell with a near-flat slope of its own can still inherit its
+  neighbours' sign in `Sm` under CMK's neighbourhood averaging. The
+  significance mask (which cells are shown as increasing/decreasing at
+  all, from `fdr_result`) is identical either way – only the source of
+  the *sign* for already-significant cells changes.
 
 - method:
 
@@ -55,14 +70,14 @@ values `-1` (significant decrease), `0` (not significant), `1`
 genuinely new raster, combining trend direction with significance), but
 is not one of the core building blocks of TST or RTA itself; it is a
 post-processing step that consumes the output of two of them
-([`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)
+([`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)
 and
-[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md))
+[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md))
 together. Not exported – the binarised trend direction is the same
 underlying computation as the uncorrected direction already reachable
 via `plot(x, which = "trend")`, just with a significance filter applied
 on top; reachable directly via `plot(x, which = "direction")` for
-[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)/[`workflow_rta()`](https://olive-r.github.io/sptrends/reference/workflow_rta.md)
+[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)/[`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md)
 results, or with `:::` for programmatic use.
 
 ## References
@@ -143,6 +158,6 @@ fdr_result <- fdr_correction(trend$stats$p, report = FALSE, verbose = FALSE)
 # Combines "is it significant" (from fdr_result) with "which way is
 # it going" (from trend) into a single binarised trend map.
 direction <- sptrends:::direction_map(trend$stats, fdr_result, method = "BH")
-#> Binarised trend map (BH) -- increase: 6428 | decrease: 1537 | not significant: 7710
+#> Binarised trend map (BH) [direction from Sm] -- increase: 6428 | decrease: 1537 | not significant: 7710
 # }
 ```

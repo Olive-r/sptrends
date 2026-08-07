@@ -5,11 +5,11 @@ truth – the scientific question this function exists to answer is
 simple: *which method actually recovers the true trends better?* A
 confusion-matrix comparison is how it answers that question, not the
 point of the function itself. Built for
-[`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md)'s
+[`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md)'s
 `true_slope`, but deliberately agnostic to where either side comes from.
 `detections` and `ground_truth` are just logical vectors (or objects
 that reduce to one): this works equally well comparing
-[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)
+[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)
 against a classic Mann-Kendall, a linear model, a method from another
 package, or an algorithm you implemented yourself – as long as each is
 reduced to a "significant / not significant" call per cell.
@@ -49,7 +49,7 @@ compare_detections(
 
   When `replicates = FALSE`: the ground truth, in any of the same forms
   as one element of `detections` – most commonly
-  [`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md)'s
+  [`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md)'s
   `true_slope` (a `SpatRaster`, non-zero where a true trend exists) or
   its raw values. Coerced to logical the same way as `detections`. When
   `replicates = TRUE`: either a single ground truth reused for every
@@ -57,7 +57,7 @@ compare_detections(
   detected repeatedly under different noise draws), or a list the same
   length as `detections` with one ground truth per replicate (for the
   rarer case where the truth itself is re-simulated every time too, e.g.
-  [`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md)'s
+  [`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md)'s
   own `true_slope` with a different `seed` on each call).
 
 - metrics:
@@ -106,7 +106,7 @@ compare_detections(
 - truth_direction:
 
   Optional known direction vector, normally
-  [`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md)'s
+  [`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md)'s
   `true_direction`. Required for Type III error and directional power.
 
 - evaluation_mask:
@@ -139,7 +139,7 @@ table, is the realised false discovery *proportion* (Benjamini &
 Hochberg, 1995) in this one result (`FP / (FP + TP)`) – not the false
 discovery *rate* itself, which is formally defined as the expectation of
 that proportion over many repetitions. `q` in
-[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
+[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
 bounds that expectation, not the value in any single realisation – see
 `replicates = TRUE` below for what actually estimates the expectation
 this proportion is a single draw from. By standard convention, this
@@ -158,7 +158,7 @@ column above (`TP_mean`, `TP_sd`, `Sensitivity_mean`, `Sensitivity_sd`,
 and so on). `FDR_mean` here is the actual estimate of the false
 discovery rate itself (the average of the per-replicate proportion
 described above, across replicates) – the quantity `q` in
-[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
+[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
 is meant to bound, unlike the single-run `FDR` column above. If `"fwer"`
 was requested, also a plain `FWER` column (no `_mean`/`_sd` pair): the
 proportion of replicates with at least one false positive (`FP > 0`) –
@@ -203,7 +203,7 @@ See the examples below for both routes worked through in full.
 Real environmental datasets have no known "correct" answer, so detection
 performance cannot be measured directly – there is no ground truth to
 score against for a real NDVI or temperature raster. Simulation studies
-([`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md))
+([`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md))
 provide a known ground truth instead, allowing sensitivity, specificity,
 precision, and the other metrics below to be computed objectively,
 something no amount of visual inspection of a real map can substitute
@@ -212,11 +212,11 @@ for.
 **A platform for comparing methods, not just running them**
 
 Together,
-[`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md),
+[`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md),
 this function, and the two published workflows this package offers
-([`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)
+([`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)
 and
-[`workflow_rta()`](https://olive-r.github.io/sptrends/reference/workflow_rta.md))
+[`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md))
 mean sptrends is not only a tool for running a trend analysis, but also
 a platform for validating and comparing *how well* different methods do
 it – including methods this package did not itself implement, since both
@@ -256,7 +256,7 @@ printing, summaries and plots. In the retained external validation,
 `sptrends` and `Kendall` produced identical MK decisions, directions and
 derived performance metrics across 4,000 paired Monte Carlo replicates.
 See `inst/validation/` and
-[`?sptrends`](https://olive-r.github.io/sptrends/reference/sptrends-package.md)
+[`?sptrends`](https://olivergh.github.io/sptrends/reference/sptrends-package.md)
 for scope and limitations.
 
 ## References
@@ -284,10 +284,10 @@ and of the family-wise error rate `FWER` is contrasted against (see
 ## See also
 
 Other validation functions:
-[`benchmark_methods()`](https://olive-r.github.io/sptrends/reference/benchmark_methods.md),
-[`benchmark_summary()`](https://olive-r.github.io/sptrends/reference/benchmark_summary.md),
-[`plot_detection_comparison()`](https://olive-r.github.io/sptrends/reference/plot_detection_comparison.md),
-[`simulation_design()`](https://olive-r.github.io/sptrends/reference/simulation_design.md)
+[`benchmark_methods()`](https://olivergh.github.io/sptrends/reference/benchmark_methods.md),
+[`benchmark_summary()`](https://olivergh.github.io/sptrends/reference/benchmark_summary.md),
+[`plot_detection_comparison()`](https://olivergh.github.io/sptrends/reference/plot_detection_comparison.md),
+[`simulation_design()`](https://olivergh.github.io/sptrends/reference/simulation_design.md)
 
 ## Examples
 
@@ -298,7 +298,7 @@ Other validation functions:
 # data has no equivalent "true" answer to compare a detection against.
 # \donttest{
 sim <- sim_trend_stack(nrow = 15, ncol = 15, n_time = 15, seed = 1)
-#> >> [sim_trend_stack()] elapsed: 0.20 s
+#> >> [sim_trend_stack()] elapsed: 0.07 s
 
 # Two variants of the same test: classic Mann-Kendall (no
 # neighbourhood averaging) vs. the Contextual version.
@@ -343,11 +343,11 @@ for (s in 1:10) {
 #> >> [sim_trend_stack()] elapsed: 0.07 s
 #> >> [sim_trend_stack()] elapsed: 0.07 s
 #> >> [sim_trend_stack()] elapsed: 0.06 s
+#> >> [sim_trend_stack()] elapsed: 0.05 s
+#> >> [sim_trend_stack()] elapsed: 0.05 s
 #> >> [sim_trend_stack()] elapsed: 0.06 s
 #> >> [sim_trend_stack()] elapsed: 0.06 s
-#> >> [sim_trend_stack()] elapsed: 0.06 s
-#> >> [sim_trend_stack()] elapsed: 0.06 s
-#> >> [sim_trend_stack()] elapsed: 0.06 s
+#> >> [sim_trend_stack()] elapsed: 0.05 s
 compare_detections(detections_list, truths_list, replicates = TRUE,
                    verbose = FALSE)
 #>   Method n_replicates TP_mean     TP_sd FP_mean    FP_sd TN_mean    TN_sd

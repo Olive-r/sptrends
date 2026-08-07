@@ -15,7 +15,7 @@ the standard sptrends workflow, applied once one raw p-value has
 already been obtained for every spatial cell (e.g. with
 trend_test() or local spatial_autocorrelation()), and it controls
 the expected false discovery rate
-across the complete set of simultaneous tests."><meta property="og:image" content="https://olive-r.github.io/sptrends/logo.png"></head><body>
+across the complete set of simultaneous tests."><meta property="og:image" content="https://olivergh.github.io/sptrends/logo.png"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -23,7 +23,7 @@ across the complete set of simultaneous tests."><meta property="og:image" conten
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,7 +54,7 @@ across the complete set of simultaneous tests."><meta property="og:image" conten
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Apply false discovery rate (FDR) correction to multiple p-values</h1>
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v1.0/R/fdr.R" class="external-link"><code>R/fdr.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/R/fdr.R" class="external-link"><code>R/fdr.R</code></a></small>
       <div class="d-none name"><code>fdr_correction.Rd</code></div>
     </div>
 
@@ -391,7 +391,7 @@ Statistics, 29(4), 1165-1188. <a href="https://doi.org/10.1214/aos/1013699998" c
 <span class="r-msg co"><span class="r-pr">#&gt;</span>              42            2023 VHP_SMN_annual_ndvi_2023.tif</span>
 <span class="r-plt img"><img src="fdr_correction-1.png" alt="" width="700" height="433"></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Stack built: 42 layers, 146 x 338 cells.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [read_ordered_stack()] elapsed: 0.06 s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [read_ordered_stack()] elapsed: 0.07 s</span>
 <span class="r-in"><span><span class="va">trend</span> <span class="op">&lt;-</span> <span class="fu"><a href="trend_test.html">trend_test</a></span><span class="op">(</span><span class="va">r</span>, report <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Corrects trend$stats$p for the fact that every cell was tested at once</span></span></span>

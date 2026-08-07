@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,7 +64,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>4. Correcting for multiple testing</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v1.0/vignettes/e-fdr-correction.Rmd" class="external-link"><code>vignettes/e-fdr-correction.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/vignettes/e-fdr-correction.Rmd" class="external-link"><code>vignettes/e-fdr-correction.Rmd</code></a></small>
       <div class="d-none name"><code>e-fdr-correction.Rmd</code></div>
     </div>
 
@@ -76,26 +76,33 @@
 <p>Consider a trend test applied to a single environmental time series
 at a significance level of <em>α</em> = 0.05. If the null hypothesis is
 true, there is a 5% probability of committing a Type I error: rejecting
-the null hypothesis when no genuine trend exists.</p>
-<p>The situation changes dramatically with gridded data, where a
-separate trend test is performed for every valid raster cell. Thousands
-of trend tests may therefore be evaluated simultaneously. Even if the
-Type I error rate remains at 5% for each test, the total number of false
-positives can become large, allowing random variation to produce
-apparently meaningful spatial patterns.</p>
+the null hypothesis when no genuine trend exists. The situation changes
+dramatically with gridded data, where a separate trend test is performed
+for every valid raster cell (<a href="https://doi.org/10.3390/math13223630" class="external-link">Gutiérrez-Hernández and
+García, 2025a</a>). Many trend tests may therefore be evaluated
+simultaneously. Even if the Type I error rate remains at 5% for each
+test, the total number of false positives can become large, allowing
+random variation to produce apparently meaningful spatial patterns.</p>
 <p>Three general responses are possible. The first is to ignore
 multiplicity and report cells with raw <em>p</em> &lt; <em>α</em>. This
 produces selective inference (<a href="https://doi.org/10.1016/j.scitotenv.2024.177832" class="external-link">Gutiérrez-Hernández
-and García, 2025</a>) because the apparently significant results are
+and García, 2025b</a>) because the apparently significant results are
 interpreted without considering the complete family of trend tests. The
 second is to control the family-wise error rate (FWER), limiting the
 probability of making even one false discovery across the entire family.
 This provides strict control but can substantially reduce statistical
-power when thousands of cells are tested. The third is to control the
-false discovery rate (FDR), accepting that some false positives may
-occur while limiting their expected proportion among all results
-declared significant. FDR therefore provides a more flexible balance
-between error control and the ability to detect genuine trends.</p>
+power when many cells are tested (<a href="https://doi.org/10.1111/j.0030-1299.2004.13046.x" class="external-link">García,
+2004</a>). The third is to control the false discovery rate (FDR) (<a href="https://doi.org/10.1111/j.2517-6161.1995.tb02031.x" class="external-link">Benjamini and
+Hochberg, 1995</a>; <a href="https://doi.org/10.1080/2150704X.2025.2478664" class="external-link">Gutiérrez-Hernández
+and García, 2025c</a>), accepting that some false positives may occur
+while limiting their expected proportion among all results declared
+significant. FDR therefore provides a more flexible balance between
+error control and the ability to detect genuine trends (<a href="https://doi.org/10.1016/j.tree.2003.08.011" class="external-link">García, 2003</a>).</p>
+<p>This is a real problem that undermines the reliability of
+significance claims in gridded environmental analyses, and one that is
+often ignored and omitted in practice – particularly in environmental
+remote sensing (<a href="https://doi.org/10.2139/ssrn.4891512" class="external-link">Gutiérrez-Hernández and
+García, 2025</a>, preprint; <a href="https://doi.org/10.14358/PERS.81.12.921" class="external-link">Heumann, 2015</a>).</p>
 </div>
 <div class="section level2">
 <h2 id="what-fdr_correction-does">What <code>fdr_correction()</code> does<a class="anchor" aria-label="anchor" href="#what-fdr_correction-does"></a>
@@ -108,7 +115,7 @@ dependence among tests. <a href="https://doi.org/10.1093/biomet/93.3.491" class=
 (<code>BKY</code>)</a> is an adaptive two-stage procedure that estimates
 how many null hypotheses are likely to be true and may provide greater
 power under comparable dependence assumptions (<a href="https://doi.org/10.3390/math13223630" class="external-link">Gutiérrez-Hernández and
-García, 2025</a>). <a href="https://doi.org/10.1214/aos/1013699998" class="external-link">Benjamini-Yekutieli
+García, 2025a</a>). <a href="https://doi.org/10.1214/aos/1013699998" class="external-link">Benjamini-Yekutieli
 (<code>BY</code>)</a> controls FDR under arbitrary dependence but is
 generally more conservative.</p>
 <p>The function receives a raster or vector of <em>p</em>-values and
@@ -174,7 +181,9 @@ more significant results, thereby increasing statistical power.</p>
 <p>The vertical line marks the final cutoff. Every trend test before or
 at that cutoff is declared significant, whereas every test after it is
 not. Comparing both panels therefore shows whether the adaptive BKY
-procedure retains more discoveries than BH and why.</p>
+procedure retains more discoveries than BH and why. A fuller explanation
+of this adaptive mechanism is available in <a href="https://doi.org/10.3390/math13223630" class="external-link">Gutiérrez-Hernández and
+García (2025a)</a>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fdr</span>, which <span class="op">=</span> <span class="st">"threshold"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="e-fdr-correction_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="Ordered p-values and BH and BKY rejection thresholds" width="576"></p>
@@ -247,17 +256,19 @@ Yekutieli, 2006</a>)</td>
 </tr>
 </tbody>
 </table>
-<p>BH and BKY assume that the trend tests are independent or positively
-dependent. Positive spatial dependence is often expected in gridded
-environmental data because neighbouring cells tend to share similar
-conditions, but it should be examined rather than assumed.
+<p>BH (<a href="https://doi.org/10.1111/j.2517-6161.1995.tb02031.x" class="external-link">Benjamini and
+Hochberg, 1995</a>) and BKY (<a href="https://doi.org/10.1093/biomet/93.3.491" class="external-link">Benjamini, Krieger and
+Yekutieli, 2006</a>) assume that the trend tests are independent or
+positively dependent. Positive spatial dependence is often expected in
+gridded environmental data because neighbouring cells tend to share
+similar conditions, but it should be examined rather than assumed.
 <code><a href="../reference/spatial_autocorrelation.html">spatial_autocorrelation()</a></code> can be used to assess whether the
 spatial pattern is consistent with positive dependence. BH and BKY are
 the recommended procedures: BH provides a standard and reliable starting
 point (<a href="https://doi.org/10.1080/2150704X.2025.2478664" class="external-link">Gutiérrez-Hernández
-and García, 2025</a>), whereas BKY is particularly attractive when its
+and García, 2025c</a>), whereas BKY is particularly attractive when its
 adaptive estimation is expected to increase statistical power (<a href="https://doi.org/10.3390/math13223630" class="external-link">Gutiérrez-Hernández and
-García, 2025</a>). BY accommodates arbitrary dependence but is highly
+García, 2025a</a>). BY accommodates arbitrary dependence but is highly
 conservative and can substantially reduce power; it would therefore be
 discarded in most applications and retained only when arbitrary
 dependence must be explicitly accommodated. FDR correction itself is
@@ -270,8 +281,13 @@ usually very fast relative to trend testing.</p>
 <li>Do not call <em>q</em> an adjusted <em>α</em>; they describe
 different error rates.</li>
 <li>Do not include missing or invalid cells in the number of tests.</li>
-<li>Interpreting FDR rejection as local significance.</li>
-<li>Redefining the testing domain after inspecting the results.</li>
+<li>Do not interpret FDR rejection as evidence of local significance for
+an individual cell; the guarantee it provides applies to the expected
+proportion of false discoveries across the whole family of tests, not to
+any single result in isolation.</li>
+<li>Do not redefine the testing domain after inspecting the results; the
+family of tests must be fixed before looking at the outcomes, or the FDR
+guarantee no longer holds.</li>
 </ul>
 </div>
 <div class="section level2">
@@ -304,16 +320,16 @@ Linear Step-Up Procedures That Control the False Discovery Rate.
 Discovery Rate in Multiple Testing Under Dependency. <em>Annals of
 Statistics</em>, 29(4), 1165-1188. <a href="https://doi.org/10.1214/aos/1013699998" class="external-link uri">https://doi.org/10.1214/aos/1013699998</a>
 </li>
-<li>Gutiérrez-Hernández, O. and García, L.V. (2025) The Ghost of
+<li>Gutiérrez-Hernández, O. and García, L.V. (2025b) The Ghost of
 Selective Inference in Spatiotemporal Trend Analysis. <em>Science of The
 Total Environment</em>, 958, 177832. <a href="https://doi.org/10.1016/j.scitotenv.2024.177832" class="external-link uri">https://doi.org/10.1016/j.scitotenv.2024.177832</a>
 </li>
-<li>Gutiérrez-Hernández, O. and García, L.V. (2025) Implementing the
+<li>Gutiérrez-Hernández, O. and García, L.V. (2025a) Implementing the
 Linear Adaptive False Discovery Rate Procedure for Spatiotemporal Trend
 Testing. <em>Mathematics</em>, 13(22), 3630. <a href="https://doi.org/10.3390/math13223630" class="external-link uri">https://doi.org/10.3390/math13223630</a>
 </li>
-<li>Gutiérrez-Hernández, O. and García, L.V. (2025) False Discovery Rate
-Estimation and Control in Remote Sensing. <em>Remote Sensing
+<li>Gutiérrez-Hernández, O. and García, L.V. (2025c) False Discovery
+Rate Estimation and Control in Remote Sensing. <em>Remote Sensing
 Letters</em>, 16(5), 537-548. <a href="https://doi.org/10.1080/2150704X.2025.2478664" class="external-link uri">https://doi.org/10.1080/2150704X.2025.2478664</a>
 </li>
 </ul>

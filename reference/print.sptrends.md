@@ -2,19 +2,19 @@
 
 A quick, one-line-per-detail overview of any classed object this package
 returns –
-[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md),
-[`workflow_rta()`](https://olive-r.github.io/sptrends/reference/workflow_rta.md),
-[`workflow_trends()`](https://olive-r.github.io/sptrends/reference/workflow_trends.md),
-[`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md),
-[`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md),
-[`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md),
+[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md),
+[`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md),
+[`workflow_trends()`](https://olivergh.github.io/sptrends/reference/workflow_trends.md),
+[`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md),
+[`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md),
+[`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md),
 and
-[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
+[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
 all return an object with `"sptrends"` as (one of) its classes, and
 [`print()`](https://rdrr.io/r/base/print.html),
-[`summary.sptrends()`](https://olive-r.github.io/sptrends/reference/summary.sptrends.md),
+[`summary.sptrends()`](https://olivergh.github.io/sptrends/reference/summary.sptrends.md),
 and
-[`plot.sptrends()`](https://olive-r.github.io/sptrends/reference/plot.sptrends.md)
+[`plot.sptrends()`](https://olivergh.github.io/sptrends/reference/plot.sptrends.md)
 all work the same way regardless of which one you have – the specific
 one-line summary shown depends on `x`'s own class, listed below. This
 mirrors the convention used throughout `terra` itself (a single
@@ -42,19 +42,19 @@ print(x, ...)
   `"fdr"`, `"spatial_autocorrelation"`, `"compare_detections"`,
   `"sptrends_simulation"`, `"sptrends_simulation_design"`, or
   `"sptrends_benchmark"`), from
-  [`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md),
-  [`workflow_rta()`](https://olive-r.github.io/sptrends/reference/workflow_rta.md),
-  [`workflow_trends()`](https://olive-r.github.io/sptrends/reference/workflow_trends.md),
-  [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md),
-  [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md),
-  [`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md),
-  [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md),
-  [`spatial_autocorrelation()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation.md),
-  [`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md),
-  [`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md),
-  [`simulation_design()`](https://olive-r.github.io/sptrends/reference/simulation_design.md),
+  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md),
+  [`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md),
+  [`workflow_trends()`](https://olivergh.github.io/sptrends/reference/workflow_trends.md),
+  [`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md),
+  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md),
+  [`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md),
+  [`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md),
+  [`spatial_autocorrelation()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation.md),
+  [`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md),
+  [`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md),
+  [`simulation_design()`](https://olivergh.github.io/sptrends/reference/simulation_design.md),
   or
-  [`benchmark_methods()`](https://olive-r.github.io/sptrends/reference/benchmark_methods.md).
+  [`benchmark_methods()`](https://olivergh.github.io/sptrends/reference/benchmark_methods.md).
 
 - ...:
 
@@ -75,9 +75,9 @@ print(x, ...)
 
 [`print()`](https://rdrr.io/r/base/print.html) itself is intended for a
 quick inspection of an object at the console; use
-[`summary.sptrends()`](https://olive-r.github.io/sptrends/reference/summary.sptrends.md)
+[`summary.sptrends()`](https://olivergh.github.io/sptrends/reference/summary.sptrends.md)
 for more detailed textual reporting and
-[`plot.sptrends()`](https://olive-r.github.io/sptrends/reference/plot.sptrends.md)
+[`plot.sptrends()`](https://olivergh.github.io/sptrends/reference/plot.sptrends.md)
 for graphical exploration.
 
 **Function type:** **Reporting/derived function** – presents an existing
@@ -104,14 +104,14 @@ valid slope, and its range. **Diagnostic: `"prewhiten"`.** How many
 cells were prewhitened, out of how many valid cells. **Diagnostic:
 `"fdr"`.** How many cells are significant under each method that was
 requested (raw, BH, BKY, and BY, if it was explicitly requested – see
-[`?fdr_correction`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)'s
+[`?fdr_correction`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)'s
 own `method` argument for why `"BY"` is opt-in, not part of its own
 default). **Diagnostic: `"spatial_autocorrelation"`.** Global results
 show the observed statistic (Moran's I or Getis-Ord General G), its sign
 where applicable, and its permutation p-value. Local results show the
 valid-cell count and the exploratory number of cells below the raw
 `alpha`, followed by the route to
-[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
+[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
 for BH, BKY or BY. **Validation: `"compare_detections"`.** The
 comparison table itself, printed as a plain data frame (this class also
 inherits from `"data.frame"`, so indexing, `$`, and so on all work
@@ -123,9 +123,9 @@ and elapsed time.
 
 ## See also
 
-[`summary.sptrends()`](https://olive-r.github.io/sptrends/reference/summary.sptrends.md)
+[`summary.sptrends()`](https://olivergh.github.io/sptrends/reference/summary.sptrends.md)
 for detailed textual output and
-[`plot.sptrends()`](https://olive-r.github.io/sptrends/reference/plot.sptrends.md)
+[`plot.sptrends()`](https://olivergh.github.io/sptrends/reference/plot.sptrends.md)
 for graphical exploration.
 
 ## Examples
@@ -181,7 +181,7 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.06 s
+#> >> [read_ordered_stack()] elapsed: 0.07 s
 result <- workflow_tst(r, report = FALSE, verbose = FALSE)
 print(result)  # dispatches to the "tst" case above
 #> <True Significant Trends (TST) result>

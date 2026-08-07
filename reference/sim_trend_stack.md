@@ -225,7 +225,7 @@ sim_trend_stack(
   Logical. If `TRUE`, report simulation progress, elapsed duration and
   estimated time remaining. Set to `FALSE` inside large Monte Carlo
   experiments when
-  [`benchmark_methods()`](https://olive-r.github.io/sptrends/reference/benchmark_methods.md)
+  [`benchmark_methods()`](https://olivergh.github.io/sptrends/reference/benchmark_methods.md)
   provides the outer progress display.
 
 ## Value
@@ -241,7 +241,7 @@ An object of class `"sptrends_simulation"` and `"sptrends"`, supporting
   [`terra::SpatRaster`](https://rspatial.github.io/terra/reference/SpatRaster-class.html)
   with `n_time` layers named `"t1"`, `"t2"`, ...; each layer represents
   one time step. Pass this to
-  [`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)
+  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)
   or the individual trend functions.
 
 - true_slope:
@@ -250,9 +250,9 @@ An object of class `"sptrends_simulation"` and `"sptrends"`, supporting
   [`terra::SpatRaster`](https://rspatial.github.io/terra/reference/SpatRaster-class.html):
   the exact true slope used to generate each cell's series (`0` where
   `trend_fraction` assigned no trend). Compare directly against a fitted
-  [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)
+  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)
   to see estimation error, or against
-  [`direction_map()`](https://olive-r.github.io/sptrends/reference/direction_map.md)
+  [`direction_map()`](https://olivergh.github.io/sptrends/reference/direction_map.md)
   to see which cells a method calls significant vs. which cells truly
   have a trend.
 
@@ -274,7 +274,7 @@ An object of class `"sptrends_simulation"` and `"sptrends"`, supporting
   `break_fraction`), `0` elsewhere – ground truth for evaluating a
   change-point detection method the same way `true_slope` already lets
   you evaluate a trend test, via
-  [`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md).
+  [`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md).
   Always present, even when `break_type = "none"` (all `0` in that
   case), so downstream code doesn't need to branch on whether the field
   exists.
@@ -299,7 +299,7 @@ An object of class `"sptrends_simulation"` and `"sptrends"`, supporting
 
 **Function type:** **Benchmarking function** – generates known-truth
 data for
-[`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md)
+[`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md)
 and external methods. It is not a component of the inferential workflows
 themselves.
 
@@ -322,7 +322,7 @@ seeds, collect the results, and aggregate them:
     compare_detections(replicates = TRUE)
 
 See
-[`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md)'s
+[`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md)'s
 examples for both routes worked through in full. One call creates one
 replicate; Monte Carlo repetition remains outside this function so the
 same simulator can benchmark sptrends methods, future procedures, or
@@ -368,7 +368,7 @@ blocks (not individual cells), a random `trend_fraction` proportion of
 are forced to an exact true slope of `0`, regardless of shape. Acting on
 whole spatial patches rather than scattering individual cells at random
 matters here:
-[`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)'s
+[`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)'s
 whole rationale is borrowing statistical strength from a cell's
 neighbours, which only helps when neighbouring cells are plausibly
 trending together – a cell-by-cell (salt-and-pepper) random mask would
@@ -404,7 +404,7 @@ mean filter. `smooth_radius` controls spatial scale, whereas
 blended. This is a pragmatic moving-average smoother, not a fitted
 CAR/SAR model or a Gaussian random field with a specified covariance
 function – it is meant to give
-[`spatial_autocorrelation()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation.md)
+[`spatial_autocorrelation()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation.md)
 something genuine to detect in examples, not to match any particular
 real-world spatial process (see "What this simulator is not" above).
 
@@ -468,7 +468,7 @@ Gaussian noise, it is the target correlation between horizontally or
 vertically adjacent cells. With Student-t noise, it controls the latent
 Gaussian dependence used by the copula, so realised Pearson correlation
 need not equal it exactly. One call produces one realisation; use
-[`benchmark_methods()`](https://olive-r.github.io/sptrends/reference/benchmark_methods.md)
+[`benchmark_methods()`](https://olivergh.github.io/sptrends/reference/benchmark_methods.md)
 for a Monte Carlo experiment.
 
 **Quality assurance**
@@ -477,7 +477,7 @@ Tests verify known slope and break fields, reproducibility, null and
 complete-signal cases, noise scale and distribution, degenerate grid
 sizes, focal-window safeguards, temporal/spatial controls and direct
 compatibility with
-[`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md).
+[`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md).
 The `spatial_rho` tests specifically protect both endpoint semantics and
 the pre-0.89 default. Independent validation additionally compared the
 analytical Matérn correlation with
@@ -487,7 +487,7 @@ AR(1), marginal distributions, exact truth fields, detection metrics and
 reproducibility. All 33 external validation controls passed in the
 recorded 0.96.3 full run. The retained script and numerical summaries
 are described under `inst/validation`. See
-[`?sptrends`](https://olive-r.github.io/sptrends/reference/sptrends-package.md)
+[`?sptrends`](https://olivergh.github.io/sptrends/reference/sptrends-package.md)
 for the package-wide release-check protocol.
 
 ## References
@@ -501,7 +501,7 @@ covariance matrix. *SIAM Journal on Scientific Computing*, 18(4),
 ## See also
 
 Other example data functions:
-[`example_data()`](https://olive-r.github.io/sptrends/reference/example_data.md)
+[`example_data()`](https://olivergh.github.io/sptrends/reference/example_data.md)
 
 ## Examples
 
@@ -510,7 +510,7 @@ Other example data functions:
 # 12x12 grid. terra::global(..., "range") shows the true slope's
 # minimum and maximum across all cells.
 sim <- sim_trend_stack(nrow = 12, ncol = 12, n_time = 8, seed = 42)
-#> >> [sim_trend_stack()] elapsed: 0.04 s
+#> >> [sim_trend_stack()] elapsed: 0.05 s
 terra::nlyr(sim$series)
 #> [1] 8
 terra::global(sim$true_slope, "range", na.rm = TRUE)
@@ -530,7 +530,7 @@ terra::global(sim_null$true_slope, "range", na.rm = TRUE)
 sim_break <- sim_trend_stack(nrow = 12, ncol = 12, n_time = 10,
                               trend_fraction = 0, break_type = "mean",
                               break_fraction = 0.3, seed = 2)
-#> >> [sim_trend_stack()] elapsed: 0.05 s
+#> >> [sim_trend_stack()] elapsed: 0.06 s
 sim_break$break_time
 #> [1] 5
 terra::global(sim_break$true_break, "sum", na.rm = TRUE)
@@ -561,7 +561,7 @@ spatial_autocorrelation(r1, nperm = 99, seed = 1, verbose = FALSE,
 # standard deviation -- for comparing a rank-based method against OLS.
 sim_heavy <- sim_trend_stack(nrow = 10, ncol = 10, n_time = 10,
                               noise_dist = "t", t_df = 3, seed = 1)
-#> >> [sim_trend_stack()] elapsed: 0.06 s
+#> >> [sim_trend_stack()] elapsed: 0.05 s
 terra::nlyr(sim_heavy$series)
 #> [1] 10
 ```

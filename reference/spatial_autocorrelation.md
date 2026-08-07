@@ -6,7 +6,7 @@ Getis-Ord General G. Local analysis computes a local Moran's I or
 Getis-Ord Gi\* statistic for every valid cell. Local significance is
 assessed by spatial permutation. Its p-value raster can subsequently be
 passed to
-[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
+[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
 for BH, BKY or BY control.
 
 ## Usage
@@ -81,7 +81,7 @@ spatial_autocorrelation(
   One finite number strictly between 0 and 1. Significance level used
   only for the exploratory, unadjusted `significant_raw` map returned by
   local analysis. It does not control multiplicity. Use
-  [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
+  [`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
   on the returned `p` raster and specify its target `q` for BH, BKY or
   BY inference.
 
@@ -105,10 +105,10 @@ spatial_autocorrelation(
   for large rasters" step `n_cores` above already shares across
   permutations) when this function is called repeatedly on the same
   raster geometry – most usefully, together with
-  [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)'s
+  [`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)'s
   own `precomputed_neighbourhood` argument, when both functions are run
   on the same geometry in the same analysis. Accepts the output of
-  [`prepare_cmk_neighbourhood()`](https://olive-r.github.io/sptrends/reference/prepare_cmk_neighbourhood.md)
+  [`prepare_cmk_neighbourhood()`](https://olivergh.github.io/sptrends/reference/prepare_cmk_neighbourhood.md)
   directly when it uses the matching default 3 by 3 adjacency – despite
   the name, both functions then build the identical structure
   underneath. Broader CMK windows have a different signature and are
@@ -146,7 +146,7 @@ retaining the potentially enormous cell-by-permutation matrix.
 the Monte Carlo calculation. `N` is the valid-cell count and `N_tested`
 excludes valid cells without any valid neighbour; their local outputs
 are `NA` and
-[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
+[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
 excludes them from the hypothesis family.
 
 ## Details
@@ -188,7 +188,7 @@ BY, and must not be used as an automatic selector of an FDR procedure.
 Spatial autocorrelation is not itself a temporal trend test. The input
 represents one spatial distribution, not a time series. The optional
 `moran_check` argument of
-[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
+[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
 is only one convenience use of this independent diagnostic and has the
 same interpretive limitation described above.
 
@@ -274,7 +274,7 @@ The returned `significant_raw` raster applies `p_i <= alpha`, treating
 every cell as though it were the only hypothesis. It is exploratory and
 controls neither FDR nor FWER across the map. For multiple-testing
 inference, pass the returned `p` raster to
-[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md).
+[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md).
 That function provides BH, BKY and BY from one independently tested and
 documented implementation. BH and BKY require independent tests or
 suitable positive dependence; BY is valid under arbitrary dependence but
@@ -315,7 +315,7 @@ approximately proportionally.
 comparable across different weight matrices (Cliff & Ord, 1981), so this
 function does not categorise the result into "low/moderate/strong" by
 default (see
-[`classify_moran()`](https://olive-r.github.io/sptrends/reference/classify_moran.md)
+[`classify_moran()`](https://olivergh.github.io/sptrends/reference/classify_moran.md)
 for an explicitly non-standard convenience label, `method = "moran"`
 only – General G's natural range and expected value under H0 differ
 enough from Moran's I that the same low/moderate/strong thresholds would
@@ -325,7 +325,7 @@ number for the complete raster and does not identify where clusters
 occur. Local Moran's I and Getis-Ord Gi\* require one test per cell and,
 consequently, explicit multiple-testing control for confirmatory maps.
 Apply BH, BKY or BY with
-[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
+[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
 and its target `q`; do not interpret the raw per-cell `alpha` map as
 family-level inference. This diagnostic is evidence of spatial
 dependence, not proof that a downstream method's complete dependence
@@ -345,10 +345,10 @@ Local Moran's I is checked through its exact algebraic identity with
 global Moran's I. Gi\* is checked against hand-computed small-raster
 results. Raw permutation p-values, raster geometry, missing values,
 local S3 methods, and forwarding the local p-value raster to
-[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
+[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
 have separate regression tests. BH, BKY and BY are independently tested
 in that function's own suite. See
-[`?sptrends`](https://olive-r.github.io/sptrends/reference/sptrends-package.md)
+[`?sptrends`](https://olivergh.github.io/sptrends/reference/sptrends-package.md)
 for the package-wide release-check protocol.
 
 ## References
@@ -420,9 +420,9 @@ diagnose but cannot establish:
 ## See also
 
 Other Spatial autocorrelation diagnostic functions:
-[`classify_moran()`](https://olive-r.github.io/sptrends/reference/classify_moran.md),
-[`spatial_autocorrelation_null_plot()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation_null_plot.md),
-[`spatial_autocorrelation_summary()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation_summary.md)
+[`classify_moran()`](https://olivergh.github.io/sptrends/reference/classify_moran.md),
+[`spatial_autocorrelation_null_plot()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation_null_plot.md),
+[`spatial_autocorrelation_summary()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation_summary.md)
 
 ## Examples
 

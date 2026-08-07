@@ -17,7 +17,7 @@ fdr_summary(result, path = NULL)
 - result:
 
   Output of
-  [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md).
+  [`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md).
 
 - path:
 
@@ -29,9 +29,10 @@ Invisibly, a data frame.
 
 ## References
 
-See [`fdr_bh()`](https://olive-r.github.io/sptrends/reference/fdr_bh.md)
+See
+[`fdr_bh()`](https://olivergh.github.io/sptrends/reference/fdr_bh.md)
 and
-[`fdr_bky()`](https://olive-r.github.io/sptrends/reference/fdr_bky.md)
+[`fdr_bky()`](https://olivergh.github.io/sptrends/reference/fdr_bky.md)
 for the full reference list and the reasoning behind each citation.
 
 - Benjamini, Y., & Yekutieli, D. (2001) The control of the false
@@ -42,16 +43,16 @@ for the full reference list and the reasoning behind each citation.
 ## See also
 
 Other FDR correction functions:
-[`fdr_bh()`](https://olive-r.github.io/sptrends/reference/fdr_bh.md),
-[`fdr_bky()`](https://olive-r.github.io/sptrends/reference/fdr_bky.md),
-[`fdr_by()`](https://olive-r.github.io/sptrends/reference/fdr_by.md),
-[`fdr_comparison_barplot()`](https://olive-r.github.io/sptrends/reference/fdr_comparison_barplot.md),
-[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md),
-[`fdr_direction_plot()`](https://olive-r.github.io/sptrends/reference/fdr_direction_plot.md),
-[`fdr_direction_summary()`](https://olive-r.github.io/sptrends/reference/fdr_direction_summary.md),
-[`fdr_pvalue_histogram()`](https://olive-r.github.io/sptrends/reference/fdr_pvalue_histogram.md),
-[`fdr_significance_maps()`](https://olive-r.github.io/sptrends/reference/fdr_significance_maps.md),
-[`fdr_threshold_plot()`](https://olive-r.github.io/sptrends/reference/fdr_threshold_plot.md)
+[`fdr_bh()`](https://olivergh.github.io/sptrends/reference/fdr_bh.md),
+[`fdr_bky()`](https://olivergh.github.io/sptrends/reference/fdr_bky.md),
+[`fdr_by()`](https://olivergh.github.io/sptrends/reference/fdr_by.md),
+[`fdr_comparison_barplot()`](https://olivergh.github.io/sptrends/reference/fdr_comparison_barplot.md),
+[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md),
+[`fdr_direction_plot()`](https://olivergh.github.io/sptrends/reference/fdr_direction_plot.md),
+[`fdr_direction_summary()`](https://olivergh.github.io/sptrends/reference/fdr_direction_summary.md),
+[`fdr_pvalue_histogram()`](https://olivergh.github.io/sptrends/reference/fdr_pvalue_histogram.md),
+[`fdr_significance_maps()`](https://olivergh.github.io/sptrends/reference/fdr_significance_maps.md),
+[`fdr_threshold_plot()`](https://olivergh.github.io/sptrends/reference/fdr_threshold_plot.md)
 
 ## Examples
 

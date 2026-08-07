@@ -2,7 +2,7 @@
 
 A single diverging map of the slope raster, zero-centred so the
 palette's midpoint always sits at "no change" – see
-[`trend_maps()`](https://olive-r.github.io/sptrends/reference/trend_maps.md)'s
+[`trend_maps()`](https://olivergh.github.io/sptrends/reference/trend_maps.md)'s
 own internal comment for why this cannot be left to
 [`terra::plot()`](https://rspatial.github.io/terra/reference/plot.html)'s
 automatic range.
@@ -18,7 +18,7 @@ slope_map(slope, path = NULL)
 - slope:
 
   Output of
-  [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)
+  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)
   (a single-layer
   [`terra::SpatRaster`](https://rspatial.github.io/terra/reference/SpatRaster-class.html)).
 
@@ -53,7 +53,7 @@ outside the package via
 ## See also
 
 Other Theil-Sen functions:
-[`slope_summary()`](https://olive-r.github.io/sptrends/reference/slope_summary.md)
+[`slope_summary()`](https://olivergh.github.io/sptrends/reference/slope_summary.md)
 
 ## Examples
 
@@ -106,7 +106,7 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.07 s
+#> >> [read_ordered_stack()] elapsed: 0.06 s
 slope <- slope_estimator(r, report = FALSE, verbose = FALSE)$slope
 sptrends:::slope_map(slope)
 

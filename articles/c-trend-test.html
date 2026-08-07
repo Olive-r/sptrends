@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,7 +64,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>2. Trend inference and statistical significance</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v1.0/vignettes/c-trend-test.Rmd" class="external-link"><code>vignettes/c-trend-test.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/vignettes/c-trend-test.Rmd" class="external-link"><code>vignettes/c-trend-test.Rmd</code></a></small>
       <div class="d-none name"><code>c-trend-test.Rmd</code></div>
     </div>
 
@@ -78,6 +78,11 @@ fluctuations rather than genuine long-term change. Trend inference
 provides a formal framework for assessing whether an observed
 directional pattern is unlikely to have arisen by chance under the null
 hypothesis of no trend.</p>
+<p>In gridded data, this question must be answered separately for every
+valid cell. This is usually done through pixel-wise testing, applying
+the same test independently to each cell’s own time series – amounting
+to simultaneous inference across many hypothesis tests at once, one per
+cell.</p>
 </div>
 <div class="section level2">
 <h2 id="what-trend_test-does">What <code>trend_test()</code> does<a class="anchor" aria-label="anchor" href="#what-trend_test-does"></a>
@@ -94,7 +99,11 @@ based on the underlying logic of the Regionally Averaged Mann-Kendall
 and Kroll (2000)</a>. By default, it evaluates a 3 × 3 queen
 neighbourhood centred on each raster cell, comprising the focal cell and
 its eight immediate neighbours, although other odd neighbourhood sizes
-can be configured.</p>
+can be configured. Because neighbouring cells are themselves correlated
+with one another, simply pooling their evidence would inflate the
+apparent significance of the result; CMK’s variance estimate explicitly
+corrects for this cross-correlation, so its <em>p</em>-values remain
+properly calibrated rather than artificially small.</p>
 </div>
 <div class="section level2">
 <h2 id="basic-workflow">Basic workflow<a class="anchor" aria-label="anchor" href="#basic-workflow"></a>
@@ -134,6 +143,10 @@ can be configured.</p>
 <span>  nc <span class="op">=</span> <span class="fl">2</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="c-trend-test_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="Global comparison of uncorrected MK and CMK trend directions in annual mean NDVI" width="960"></p>
+</div>
+<div class="section level2">
+<h2 id="understanding-the-results">Understanding the results<a class="anchor" aria-label="anchor" href="#understanding-the-results"></a>
+</h2>
 <p>Both maps use the same uncorrected <em>α</em> = 0.05 threshold,
 allowing the effect of incorporating spatial context to be compared
 directly. The cell-wise MK result shows a fragmented salt-and-pepper
@@ -141,10 +154,6 @@ pattern with numerous isolated detections. By accounting for the
 cross-correlation among neighbouring time series, CMK reduces these
 isolated responses and identifies more spatially coherent patterns of
 increasing and decreasing trends.</p>
-</div>
-<div class="section level2">
-<h2 id="understanding-the-results">Understanding the results<a class="anchor" aria-label="anchor" href="#understanding-the-results"></a>
-</h2>
 <p>For CMK, <em>Sm</em> indicates trend direction, while <em>VarSm</em>
 accounts for cross-correlation among neighbouring time series. Its
 <em>p</em>-values are therefore not artificially inflated; this
@@ -224,24 +233,22 @@ justify a broader region.</p>
 <h2 id="common-mistakes">Common mistakes<a class="anchor" aria-label="anchor" href="#common-mistakes"></a>
 </h2>
 <ul>
-<li>Do not describe CMK as a prewhitening procedure. It incorporates
+<li>Do not describe CMK as a prewhitening procedure; it incorporates
 spatial context and cross-correlation but does not correct serial
 autocorrelation.</li>
-<li>Do not interpret <em>Sm</em> as a rate of change or change per year.
-It is a rank-based test statistic whose sign indicates trend
+<li>Do not interpret <em>Sm</em> as a rate of change or change per year;
+it is a rank-based test statistic whose sign indicates trend
 direction.</li>
 <li>Do not combine MMK with prewhitening without a specific
-methodological justification, because both approaches address serial
+methodological justification; both approaches address serial
 autocorrelation.</li>
-<li>Do not describe a raster-wide analysis as a single trend test.
-<code><a href="../reference/trend_test.html">trend_test()</a></code> performs one hypothesis test for every valid
-raster cell. Report the total number of tests performed, because it
-defines the size of the multiple-testing problem.</li>
-<li>Do not interpret raw <em>p</em> &lt; <em>α</em> as raster-wide
-significance. Testing many cells simultaneously creates a
-multiple-testing problem that requires explicit correction.</li>
+<li>Do not treat a raster-wide analysis as a single trend test, nor
+interpret raw <em>p</em> &lt; <em>α</em> as raster-wide significance;
+<code><a href="../reference/trend_test.html">trend_test()</a></code> performs one hypothesis test per valid raster
+cell, and testing many cells simultaneously creates a multiple-testing
+problem that requires explicit correction (see <a href="e-fdr-correction.html">multiple-testing vignette</a>).</li>
 <li>Do not interpret statistical significance as evidence of a large or
-practically important change. Significance and magnitude answer
+practically important change; significance and magnitude answer
 different questions.</li>
 </ul>
 </div>

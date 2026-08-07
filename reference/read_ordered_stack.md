@@ -84,7 +84,7 @@ taken from the (de-duplicated) file names, and the detected order
 numbers stored as proper time metadata (`terra::time(result, "years")`)
 rather than discarded after the verification step above – used, for
 instance, as the default `t` in
-[`inspect_ts_cell()`](https://olive-r.github.io/sptrends/reference/inspect_ts_cell.md),
+[`inspect_ts_cell()`](https://olivergh.github.io/sptrends/reference/inspect_ts_cell.md),
 and by any future function in this package requiring explicit time
 coordinates.
 
@@ -98,7 +98,7 @@ raster, ERDAS Imagine, virtual raster and ASCII-grid extensions; other
 supported formats can be selected through `pattern`. Each file must
 represent one time step. For a single multi-temporal NetCDF file
 instead, use
-[`read_netcdf_stack()`](https://olive-r.github.io/sptrends/reference/read_netcdf_stack.md).
+[`read_netcdf_stack()`](https://olivergh.github.io/sptrends/reference/read_netcdf_stack.md).
 
 **Why this matters more than it looks**: a trend analysis assumes that
 successive raster layers represent the true chronological sequence. If
@@ -111,13 +111,13 @@ unambiguously, rather than silently reverting to alphabetical file
 names. This same philosophy – surface a silent risk rather than let it
 pass unnoticed – recurs throughout this package: multiple-testing
 correction
-([`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)),
+([`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)),
 the spatial-autocorrelation diagnostic behind it
-([`spatial_autocorrelation()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation.md)),
+([`spatial_autocorrelation()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation.md)),
 and the monotonic-trend-only assumption checked informally in "Monotonic
 trends only" sections elsewhere
-([`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md),
-[`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md))
+([`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md),
+[`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md))
 are the same instinct applied to different risks.
 
 This function does not use
@@ -154,12 +154,12 @@ stop the import rather than trigger an undocumented fallback.
 This function only orders layers chronologically – it does not know or
 care whether the data has a seasonal cycle (e.g. monthly values with an
 annual signal). If it does, deseasonalise with
-[`compute_anomalies()`](https://olive-r.github.io/sptrends/reference/compute_anomalies.md)
+[`compute_anomalies()`](https://olivergh.github.io/sptrends/reference/compute_anomalies.md)
 *before* passing the result to
-[`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md),
-[`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md),
+[`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md),
+[`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md),
 or
-[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md),
+[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md),
 all of which assume a monotonic trend, not a periodic one. Ordering and
 deseasonalisation solve different problems.
 
@@ -176,13 +176,13 @@ Tests cover year and year-month filename parsing, chronological
 ordering, duplicate and ambiguous labels, mixed geometries, variable
 selection, preserved `terra` geometry/time metadata, and informative
 failures for empty or invalid inputs. See
-[`?sptrends`](https://olive-r.github.io/sptrends/reference/sptrends-package.md)
+[`?sptrends`](https://olivergh.github.io/sptrends/reference/sptrends-package.md)
 for the package-wide release-check protocol.
 
 ## See also
 
 Other Data import functions:
-[`read_netcdf_stack()`](https://olive-r.github.io/sptrends/reference/read_netcdf_stack.md)
+[`read_netcdf_stack()`](https://olivergh.github.io/sptrends/reference/read_netcdf_stack.md)
 
 ## Examples
 

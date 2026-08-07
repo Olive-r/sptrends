@@ -7,7 +7,7 @@ opposed to trend_maps(), which uses the uncorrected p-value."><meta property="og
 FDR-corrected (or raw) rejection vector to classify each cell as an
 increase, a decrease, or a non-significant result – a binarised map
 for reporting after multiple-comparison correction, as
-opposed to trend_maps(), which uses the uncorrected p-value."><meta property="og:image" content="https://olive-r.github.io/sptrends/logo.png"></head><body>
+opposed to trend_maps(), which uses the uncorrected p-value."><meta property="og:image" content="https://olivergh.github.io/sptrends/logo.png"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -15,7 +15,7 @@ opposed to trend_maps(), which uses the uncorrected p-value."><meta property="og
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,7 +46,7 @@ opposed to trend_maps(), which uses the uncorrected p-value."><meta property="og
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Binarised trend map after multiple-testing correction</h1>
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v1.0/R/direction.R" class="external-link"><code>R/direction.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/R/direction.R" class="external-link"><code>R/direction.R</code></a></small>
       <div class="d-none name"><code>direction_map.Rd</code></div>
     </div>
 
@@ -63,6 +63,7 @@ opposed to <code><a href="trend_maps.html">trend_maps()</a></code>, which uses t
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">direction_map</span><span class="op">(</span></span>
 <span>  <span class="va">trend</span>,</span>
 <span>  <span class="va">fdr_result</span>,</span>
+<span>  slope <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"BH"</span>, <span class="st">"BKY"</span>, <span class="st">"BY"</span>, <span class="st">"raw"</span><span class="op">)</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -78,6 +79,20 @@ opposed to <code><a href="trend_maps.html">trend_maps()</a></code>, which uses t
 
 <dt id="arg-fdr-result">fdr_result<a class="anchor" aria-label="anchor" href="#arg-fdr-result"></a></dt>
 <dd><p>Output of <code><a href="fdr_correction.html">fdr_correction()</a></code>, run on <code>trend$stats$p</code>.</p></dd>
+
+
+<dt id="arg-slope">slope<a class="anchor" aria-label="anchor" href="#arg-slope"></a></dt>
+<dd><p>Optional single-layer <code>SpatRaster</code> (e.g.
+<code><a href="slope_estimator.html">slope_estimator()</a></code>'s own <code>$slope</code>) whose sign determines direction
+instead of the trend test's own statistic. <code>NULL</code> (default): use
+<code>trend</code>'s own <code>Sm</code>/<code>S</code>/<code>beta</code>, as before. Direction from the slope and
+direction from the trend statistic usually agree but are not
+guaranteed to: a cell with a near-flat slope of its own can still
+inherit its neighbours' sign in <code>Sm</code> under CMK's neighbourhood
+averaging. The significance mask (which cells are shown as
+increasing/decreasing at all, from <code>fdr_result</code>) is identical either
+way – only the source of the <em>sign</em> for already-significant cells
+changes.</p></dd>
 
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
@@ -182,7 +197,7 @@ Statistics, 29(4), 1165-1188. <a href="https://doi.org/10.1214/aos/1013699998" c
 <span class="r-in"><span><span class="co"># Combines "is it significant" (from fdr_result) with "which way is</span></span></span>
 <span class="r-in"><span><span class="co"># it going" (from trend) into a single binarised trend map.</span></span></span>
 <span class="r-in"><span><span class="va">direction</span> <span class="op">&lt;-</span> <span class="fu">sptrends</span><span class="fu">:::</span><span class="fu">direction_map</span><span class="op">(</span><span class="va">trend</span><span class="op">$</span><span class="va">stats</span>, <span class="va">fdr_result</span>, method <span class="op">=</span> <span class="st">"BH"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Binarised trend map (BH) -- increase: 6428 | decrease: 1537 | not significant: 7710</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Binarised trend map (BH) [direction from Sm] -- increase: 6428 | decrease: 1537 | not significant: 7710</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

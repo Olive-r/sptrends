@@ -68,9 +68,9 @@ Returns a list with:
   standard deviation field for each position in the cycle).
 
 A plain list, not a classed `"sptrends"` object – unlike
-[`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md)
+[`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md)
 or
-[`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md),
+[`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md),
 this function's output is typically fed straight into the next
 preprocessing or inferential step rather than inspected on its own via
 [`print()`](https://rdrr.io/r/base/print.html)/[`summary()`](https://rdrr.io/r/base/summary.html)/
@@ -84,12 +84,12 @@ position within it (e.g. the mean of all Januaries, all Februaries, ...)
 position, leaving an **anomaly series**: successive observations that
 are directly comparable to one another, with the seasonal pattern
 removed. This is appropriate input for
-[`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)
+[`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)
 or
-[`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md),
+[`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md),
 both of which assume no periodic component – in a typical workflow, this
 function is applied first, before
-[`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md),
+[`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md),
 since prewhitening's own AR(1) model assumes the series it receives has
 no remaining seasonal structure of its own.
 
@@ -108,9 +108,9 @@ trend test or slope estimator.
     prewhiten(), trend_test(), or workflow_trends()
 
 Apply this step only when `x` contains a recurring seasonal cycle.
-[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)
+[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)
 and
-[`workflow_trends()`](https://olive-r.github.io/sptrends/reference/workflow_trends.md)
+[`workflow_trends()`](https://olivergh.github.io/sptrends/reference/workflow_trends.md)
 start from prewhitening or trend analysis, so pass `result$anomalies`,
 rather than the original seasonal series, when deseasonalisation is
 required.
@@ -158,7 +158,7 @@ calculations, centred and standardised anomalies, layer names, retained
 geometry, missing values, zero-variance cycles, and invalid inputs.
 Workflow tests confirm that anomaly outputs remain compatible with later
 preprocessing and trend stages. See
-[`?sptrends`](https://olive-r.github.io/sptrends/reference/sptrends-package.md)
+[`?sptrends`](https://olivergh.github.io/sptrends/reference/sptrends-package.md)
 for the common release-check protocol.
 
 ## References
@@ -176,13 +176,13 @@ climatology and atmospheric science:
 
 ## See also
 
-[`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md)
+[`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md)
 for temporal dependence treatment after anomaly construction;
-[`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)
+[`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)
 and
-[`workflow_trends()`](https://olive-r.github.io/sptrends/reference/workflow_trends.md)
+[`workflow_trends()`](https://olivergh.github.io/sptrends/reference/workflow_trends.md)
 for subsequent trend inference;
-[`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md)
+[`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md)
 for controlled example data.
 
 ## Examples
