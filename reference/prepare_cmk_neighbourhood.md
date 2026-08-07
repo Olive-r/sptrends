@@ -121,7 +121,7 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.07 s
+#> >> [read_ordered_stack()] elapsed: 0.06 s
 
 # A matrix with one row per cell and one column per time step, and a
 # logical vector marking which cells have a complete (no-NA) series --

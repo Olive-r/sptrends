@@ -343,11 +343,11 @@ for (s in 1:10) {
 #> >> [sim_trend_stack()] elapsed: 0.07 s
 #> >> [sim_trend_stack()] elapsed: 0.07 s
 #> >> [sim_trend_stack()] elapsed: 0.06 s
-#> >> [sim_trend_stack()] elapsed: 0.05 s
-#> >> [sim_trend_stack()] elapsed: 0.05 s
 #> >> [sim_trend_stack()] elapsed: 0.06 s
 #> >> [sim_trend_stack()] elapsed: 0.06 s
-#> >> [sim_trend_stack()] elapsed: 0.05 s
+#> >> [sim_trend_stack()] elapsed: 0.06 s
+#> >> [sim_trend_stack()] elapsed: 0.07 s
+#> >> [sim_trend_stack()] elapsed: 0.06 s
 compare_detections(detections_list, truths_list, replicates = TRUE,
                    verbose = FALSE)
 #>   Method n_replicates TP_mean     TP_sd FP_mean    FP_sd TN_mean    TN_sd

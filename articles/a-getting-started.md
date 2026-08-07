@@ -111,7 +111,7 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 ![](a-getting-started_files/figure-html/unnamed-chunk-2-1.png)
 
     #> Stack built: 42 layers, 146 x 338 cells.
-    #> >> [read_ordered_stack()] elapsed: 2.87 s
+    #> >> [read_ordered_stack()] elapsed: 2.96 s
     r
     #> class       : SpatRaster
     #> size        : 146, 338, 42  (nrow, ncol, nlyr)
