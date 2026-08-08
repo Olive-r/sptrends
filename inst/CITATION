@@ -1,0 +1,50 @@
+citHeader("sptrends is a framework for statistical inference of spatiotemporal trends in gridded environmental data, with independent spatial-autocorrelation diagnostics. It currently implements two published workflows: True Significant Trends (TST) -- prewhitening, Contextual Mann-Kendall, Theil-Sen, and adaptive FDR correction, via workflow_tst() -- described in the first reference below; and Robust Trend Analysis (RTA) -- Theil-Sen, Contextual Mann-Kendall, and standard FDR-BH, without prewhitening, via workflow_rta() -- described in the second. User-configured, validated, non-published combinations are available exclusively through workflow_trends(). Please cite whichever published workflow or component methods you used.")
+
+bibentry(
+  bibtype  = "Article",
+  title    = "Uncovering true significant trends in global greening",
+  author   = c(
+    person("Oliver", "Gutiérrez-Hernández",
+           comment = c(ORCID = "0000-0003-2580-5465")),
+    person("Luis V.", "García",
+           comment = c(ORCID = "0000-0002-5514-2941"))
+  ),
+  journal  = "Remote Sensing Applications: Society and Environment",
+  year     = "2025",
+  volume   = "37",
+  pages    = "101377",
+  issn     = "2352-9385",
+  doi      = "10.1016/j.rsase.2024.101377",
+  textVersion = paste(
+    "Gutiérrez-Hernández, O. and García, L.V. (2025).",
+    "Uncovering true significant trends in global greening.",
+    "Remote Sensing Applications: Society and Environment, 37, 101377.",
+    "https://doi.org/10.1016/j.rsase.2024.101377"
+  )
+)
+
+bibentry(
+  bibtype  = "Article",
+  title    = "Robust Trend Analysis in Environmental Remote Sensing: A Case Study of Cork Oak Forest Decline",
+  author   = c(
+    person("Oliver", "Gutiérrez-Hernández",
+           comment = c(ORCID = "0000-0003-2580-5465")),
+    person("Luis V.", "García",
+           comment = c(ORCID = "0000-0002-5514-2941"))
+  ),
+  journal  = "Remote Sensing",
+  year     = "2024",
+  volume   = "16",
+  number   = "20",
+  pages    = "3886",
+  doi      = "10.3390/rs16203886",
+  textVersion = paste(
+    "Gutiérrez-Hernández, O. and García, L.V. (2024).",
+    "Robust Trend Analysis in Environmental Remote Sensing:",
+    "A Case Study of Cork Oak Forest Decline.",
+    "Remote Sensing, 16(20), 3886.",
+    "https://doi.org/10.3390/rs16203886"
+  )
+)
+
+citFooter("Cite the TST reference if you used workflow_tst(), the RTA reference if you used workflow_rta(), or both if you used both. For workflow_trends(), cite the methodological sources for the components selected.")

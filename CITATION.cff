@@ -1,0 +1,59 @@
+cff-version: 1.2.0
+message: >-
+  sptrends provides independent spatial-autocorrelation diagnostics and
+  implements two published trend workflows. Please cite whichever
+  you used: True Significant Trends (TST) -- selective AR(1)
+  prewhitening, Contextual Mann-Kendall, Theil-Sen, and adaptive FDR
+  correction, via workflow_tst() -- described in the first reference
+  below; or Robust Trend Analysis (RTA) -- Theil-Sen, Contextual
+  Mann-Kendall, and standard FDR-BH, without prewhitening, via
+  workflow_rta() -- described in the second. Cite both if you used
+  both. User-configured, validated, non-published combinations of the same
+  trend-analysis components are available exclusively through workflow_trends();
+  cite the component methods actually used.
+type: software
+title: "sptrends: Statistical Inference for Spatiotemporal Trends in Gridded Data"
+version: 1.3.4
+license: GPL-3.0-or-later
+authors:
+  - given-names: Oliver
+    family-names: Gutiérrez-Hernández
+    email: olivergh@uma.es
+    affiliation: "Department of Geography, University of Málaga, Málaga, Spain"
+    orcid: "https://orcid.org/0000-0003-2580-5465"
+  - given-names: "Luis V."
+    family-names: García
+    orcid: "https://orcid.org/0000-0002-5514-2941"
+    affiliation: >-
+      Institute of Natural Resources and Agrobiology of Seville
+      (IRNAS), Spanish National Research Council (CSIC), Seville,
+      Spain
+preferred-citation:
+  type: article
+  title: Uncovering true significant trends in global greening
+  authors:
+    - given-names: Oliver
+      family-names: Gutiérrez-Hernández
+    - given-names: "Luis V."
+      family-names: García
+  journal: "Remote Sensing Applications: Society and Environment"
+  year: 2025
+  volume: "37"
+  start: "101377"
+  doi: 10.1016/j.rsase.2024.101377
+references:
+  - type: article
+    title: >-
+      Robust Trend Analysis in Environmental Remote Sensing: A Case
+      Study of Cork Oak Forest Decline
+    authors:
+      - given-names: Oliver
+        family-names: Gutiérrez-Hernández
+      - given-names: "Luis V."
+        family-names: García
+    journal: "Remote Sensing"
+    year: 2024
+    volume: "16"
+    issue: "20"
+    start: "3886"
+    doi: 10.3390/rs16203886
