@@ -383,14 +383,15 @@ Additional engineering controls include:
   `test-external-validation.R` in the package's own test suite for the
   full detail.
 
-- **Consistent visual identity across every map this package draws**:
-  diverging palettes (Theil-Sen slope, the S/Sm trend statistic,
-  direction-of-change results) always use
-  `hcl.colors(50, "Blue-Red 3")`, deliberately colourblind-safer and
-  domain-neutral – not `"Green-Brown"`, which reads naturally as
+- **Consistent visual identity across every map this package draws,
+  deliberately split into three distinct schemes so no two different
+  questions ever share a colour**: continuous diverging maps (Theil-Sen
+  slope, the S/Sm trend statistic, rho) use a genuine ColorBrewer RdBu
+  ramp (`#2166ac` blue through white to `#b2182b` red, colourblind-safe
+  and domain-neutral – not `"Green-Brown"`, which reads naturally as
   vegetation greening/browning but would be a strange default for, say,
   a temperature or precipitation series; that palette remains available
-  and worth using explicitly for NDVI-like data specifically (see
+  and worth using explicitly for NDVI-like data specifically, see
   [`?trend_maps`](https://olivergh.github.io/sptrends/reference/trend_maps.md)'s
   and
   [`?workflow_rta`](https://olivergh.github.io/sptrends/reference/workflow_rta.md)'s
@@ -398,16 +399,20 @@ Additional engineering controls include:
   range is capped at 2 standard deviations rather than the single most
   extreme cell (`.robust_diverging_range()`, internal), so one outlier
   cannot wash out everyone else's colour into a narrow,
-  barely-distinguishable band near the palette's midpoint. Purely binary
-  significant/non-significant results
+  barely-distinguishable band near the palette's midpoint. Categorical
+  direction-of-change results (decrease/increase) use a separate
+  red/blue pair instead (Tableau's `tab:red`/`tab:blue`,
+  `"#d62728"`/`"#1f77b4"`) – visually distinct from the continuous ramp
+  above, so a categorical result is never mistaken for a continuous one
+  at a glance. Purely binary significant/ non-significant results
   ([`fdr_significance_maps()`](https://olivergh.github.io/sptrends/reference/fdr_significance_maps.md),
   [`fdr_threshold_plot()`](https://olivergh.github.io/sptrends/reference/fdr_threshold_plot.md))
-  use this package's own official brand navy (`"#071D4B"`, one of a
-  fixed 5-colour palette – `.sptrends_brand`, internal – taken from the
-  exact colours used across every version of `man/figures/logo.png`, not
-  re-derived from the image itself) for "significant" against a neutral
-  grey for "not significant" – the one colour a reader learns to
-  recognise as this package's consistent "yes" signal, wherever it
+  use this package's own chosen magenta (`"#bf3688"`,
+  `.sptrends_brand$navy`, internal) for "significant" against a neutral
+  grey for "not significant" – deliberately a third, unrelated colour,
+  so "is this significant" is never confused with either of the other
+  two, direction-related schemes above; the one colour a reader learns
+  to recognise as this package's consistent "yes" signal, wherever it
   appears.
 
 ## References

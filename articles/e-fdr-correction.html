@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,7 +64,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>4. Correcting for multiple testing</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v.1.1/vignettes/e-fdr-correction.Rmd" class="external-link"><code>vignettes/e-fdr-correction.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/vignettes/e-fdr-correction.Rmd" class="external-link"><code>vignettes/e-fdr-correction.Rmd</code></a></small>
       <div class="d-none name"><code>e-fdr-correction.Rmd</code></div>
     </div>
 
@@ -102,7 +102,7 @@ error control and the ability to detect genuine trends (<a href="https://doi.org
 significance claims in gridded environmental analyses, and one that is
 often ignored and omitted in practice – particularly in environmental
 remote sensing (<a href="https://doi.org/10.2139/ssrn.4891512" class="external-link">Gutiérrez-Hernández and
-García, 2025</a>, preprint; <a href="https://doi.org/10.14358/PERS.81.12.921" class="external-link">Heumann, 2015</a>).</p>
+García, 2025d</a>, preprint; <a href="https://doi.org/10.14358/PERS.81.12.921" class="external-link">Heumann, 2015</a>).</p>
 </div>
 <div class="section level2">
 <h2 id="what-fdr_correction-does">What <code>fdr_correction()</code> does<a class="anchor" aria-label="anchor" href="#what-fdr_correction-does"></a>
@@ -217,6 +217,14 @@ convenience, FDR-corrected maps are often described as showing
 significance level <em>α</em>. This shorthand is useful, but it does not
 mean that each highlighted pixel is individually significant at level
 <em>α</em> or has an error probability equal to <em>q</em>.</p>
+<p>It is good practice to always report the number of valid cells
+actually tested (<code>m</code>) alongside any count or percentage of
+significant cells – <code><a href="../reference/fdr_summary.html">fdr_summary()</a></code>’s own table includes it
+as <code>n_valid</code> for exactly this reason. The same percentage
+means something very different depending on whether it comes from 50
+valid cells or 50,000; omitting <code>m</code> leaves that scale
+invisible to anyone reading the result later, including the original
+analyst.</p>
 </div>
 <div class="section level2">
 <h2 id="choosing-the-main-options">Choosing the main options<a class="anchor" aria-label="anchor" href="#choosing-the-main-options"></a>
@@ -320,17 +328,31 @@ Linear Step-Up Procedures That Control the False Discovery Rate.
 Discovery Rate in Multiple Testing Under Dependency. <em>Annals of
 Statistics</em>, 29(4), 1165-1188. <a href="https://doi.org/10.1214/aos/1013699998" class="external-link uri">https://doi.org/10.1214/aos/1013699998</a>
 </li>
-<li>Gutiérrez-Hernández, O. and García, L.V. (2025b) The Ghost of
-Selective Inference in Spatiotemporal Trend Analysis. <em>Science of The
-Total Environment</em>, 958, 177832. <a href="https://doi.org/10.1016/j.scitotenv.2024.177832" class="external-link uri">https://doi.org/10.1016/j.scitotenv.2024.177832</a>
+<li>García, L.V. (2003) Controlling the False Discovery Rate in
+Ecological Research. <em>Trends in Ecology &amp; Evolution</em>, 18(11),
+553-554. <a href="https://doi.org/10.1016/j.tree.2003.08.011" class="external-link uri">https://doi.org/10.1016/j.tree.2003.08.011</a>
+</li>
+<li>García, L.V. (2004) Escaping the Bonferroni Iron Claw in Ecological
+Studies. <em>Oikos</em>, 105(3), 657-663. <a href="https://doi.org/10.1111/j.0030-1299.2004.13046.x" class="external-link uri">https://doi.org/10.1111/j.0030-1299.2004.13046.x</a>
 </li>
 <li>Gutiérrez-Hernández, O. and García, L.V. (2025a) Implementing the
 Linear Adaptive False Discovery Rate Procedure for Spatiotemporal Trend
 Testing. <em>Mathematics</em>, 13(22), 3630. <a href="https://doi.org/10.3390/math13223630" class="external-link uri">https://doi.org/10.3390/math13223630</a>
 </li>
+<li>Gutiérrez-Hernández, O. and García, L.V. (2025b) The Ghost of
+Selective Inference in Spatiotemporal Trend Analysis. <em>Science of The
+Total Environment</em>, 958, 177832. <a href="https://doi.org/10.1016/j.scitotenv.2024.177832" class="external-link uri">https://doi.org/10.1016/j.scitotenv.2024.177832</a>
+</li>
 <li>Gutiérrez-Hernández, O. and García, L.V. (2025c) False Discovery
 Rate Estimation and Control in Remote Sensing. <em>Remote Sensing
 Letters</em>, 16(5), 537-548. <a href="https://doi.org/10.1080/2150704X.2025.2478664" class="external-link uri">https://doi.org/10.1080/2150704X.2025.2478664</a>
+</li>
+<li>Gutiérrez-Hernández, O. and García, L.V. (2025d) Multiple Testing in
+Remote Sensing: Addressing the Elephant in the Room. SSRN preprint. <a href="https://doi.org/10.2139/ssrn.4891512" class="external-link uri">https://doi.org/10.2139/ssrn.4891512</a>
+</li>
+<li>Heumann, B.W. (2015) The Multiple Comparison Problem in Empirical
+Remote Sensing. <em>Photogrammetric Engineering &amp; Remote
+Sensing</em>, 81(12), 921-926. <a href="https://doi.org/10.14358/PERS.81.12.921" class="external-link uri">https://doi.org/10.14358/PERS.81.12.921</a>
 </li>
 </ul>
 </div>

@@ -19,7 +19,7 @@ represents."><meta property="og:image" content="https://olivergh.github.io/sptre
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,7 +50,7 @@ represents."><meta property="og:image" content="https://olivergh.github.io/sptre
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Plot a sptrends result</h1>
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v.1.1/R/sptrends-methods.R" class="external-link"><code>R/sptrends-methods.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/R/sptrends-methods.R" class="external-link"><code>R/sptrends-methods.R</code></a></small>
       <div class="d-none name"><code>plot.sptrends.Rd</code></div>
     </div>
 
@@ -119,7 +119,7 @@ By default, draws a binarised trend map: increases and decreases from
 the selected trend statistic are retained only where the selected
 multiple-testing procedure rejects the null hypothesis (see
 <code><a href="direction_map.html">direction_map()</a></code>).</p>
-<p><code>which</code> – the default and the three main views:</p><table class="table table"><tr><td><code>which</code></td><td>Draws</td></tr><tr><td><code>"direction"</code> (default)</td><td>Binarised trend map after FDR correction</td></tr><tr><td><code>"significance"</code></td><td>FDR-BH/FDR-BKY significance maps side by side</td></tr><tr><td><code>"trend"</code></td><td>Uncorrected trend statistic/p-value/significance/direction</td></tr><tr><td><code>"slope"</code></td><td>Theil-Sen slope, masked to significant cells</td></tr></table><p><code>which = "trend"</code> draws <strong>uncorrected</strong> diagnostics only – see the
+<p><code>which</code> – the default and the three main views:</p><table class="table table"><tr><td><code>which</code></td><td>Draws</td></tr><tr><td><code>"direction"</code> (default)</td><td>Binarised trend map after FDR correction (titled "TST direction map"; "RTA direction map" for the <code>"rta"</code> case below)</td></tr><tr><td><code>"significance"</code></td><td>FDR-BH/FDR-BKY significance maps side by side</td></tr><tr><td><code>"trend"</code></td><td>Uncorrected trend statistic/p-value/significance/direction</td></tr><tr><td><code>"slope"</code></td><td>Theil-Sen slope, masked to significant cells</td></tr></table><p><code>which = "trend"</code> draws <strong>uncorrected</strong> diagnostics only – see the
 "Warning" section of <code><a href="trend_test.html">?trend_test</a></code> before reporting significance
 from this view. <code>which = "slope"</code> is the more reliable source for
 per-cell direction/magnitude than the CMK statistic <code>Sm</code>, since
@@ -289,7 +289,7 @@ their admissible range from zero to one.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>              42            2023 VHP_SMN_annual_ndvi_2023.tif</span>
 <span class="r-plt img"><img src="plot.sptrends-1.png" alt="" width="700" height="433"></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Stack built: 42 layers, 146 x 338 cells.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [read_ordered_stack()] elapsed: 0.06 s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [read_ordered_stack()] elapsed: 0.14 s</span>
 <span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="workflow_tst.html">workflow_tst</a></span><span class="op">(</span><span class="va">r</span>, report <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Default map: direction of change (greening/browning/no change),</span></span></span>

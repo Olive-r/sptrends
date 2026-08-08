@@ -123,6 +123,23 @@ tests, slope estimation, FDR correction and complete workflows:
 browseVignettes("sptrends")
 ```
 
+## Quality assurance
+
+sptrends maintains 100% test coverage across every R source file,
+verified with `covr::package_coverage()`, and passes `R CMD check` with
+0 errors, 0 warnings and 0 notes on multiple platforms (local, and
+win-builder R-devel/release/oldrelease) – confirmed on every release.
+Style, spelling and link integrity are checked periodically with
+`lintr`, `goodpractice`, `spelling` and `urlchecker`.
+
+Beyond the automated `tests/testthat/` suite, the package has been
+validated through an external battery covering all 18 exported functions
+with correctness checks against known-truth simulations, and a
+comprehensive integral audit of code, citations and documentation.
+
+Every change is documented transparently in
+[NEWS.md](https://olivergh.github.io/sptrends/NEWS.md).
+
 ## Citation
 
 To cite the package itself:

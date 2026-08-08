@@ -276,6 +276,15 @@ unadjusted comparison stored as `reject_raw` uses the numerical value of
 `q` only as a visual reference threshold; it is not an FDR-controlled
 result.
 
+It is good practice to always report the number of valid cells actually
+tested (`m` in this function's own output and in
+[`fdr_summary()`](https://olivergh.github.io/sptrends/reference/fdr_summary.md)'s
+table, as `n_valid`) alongside any count or percentage of significant
+cells. The same percentage means a very different thing depending on
+whether it comes from 50 valid cells or 50,000 – omitting `m` leaves
+that scale invisible to the reader, silently expecting them to infer it
+from raster dimensions that may not even be shown alongside the result.
+
 **Quality assurance**
 
 BH and BY adjusted values are required to match
@@ -379,7 +388,7 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.06 s
+#> >> [read_ordered_stack()] elapsed: 0.13 s
 trend <- trend_test(r, report = FALSE, verbose = FALSE)
 
 # Corrects trend$stats$p for the fact that every cell was tested at once

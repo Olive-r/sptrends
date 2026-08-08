@@ -29,7 +29,7 @@ other case.'><meta property="og:image" content="https://olivergh.github.io/sptre
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +60,7 @@ other case.'><meta property="og:image" content="https://olivergh.github.io/sptre
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Plot a binarised trend map</h1>
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v.1.1/R/fdr.R" class="external-link"><code>R/fdr.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/R/fdr.R" class="external-link"><code>R/fdr.R</code></a></small>
       <div class="d-none name"><code>fdr_direction_plot.Rd</code></div>
     </div>
 
@@ -81,7 +81,7 @@ other case.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fdr_direction_plot</span><span class="op">(</span><span class="va">direction</span>, path <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fdr_direction_plot</span><span class="op">(</span><span class="va">direction</span>, path <span class="op">=</span> <span class="cn">NULL</span>, main <span class="op">=</span> <span class="st">"Binarised trend map"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -94,6 +94,11 @@ other case.</p>
 
 <dt id="arg-path">path<a class="anchor" aria-label="anchor" href="#arg-path"></a></dt>
 <dd><p>Character or <code>NULL</code>. If supplied, a PNG is written there.</p></dd>
+
+
+<dt id="arg-main">main<a class="anchor" aria-label="anchor" href="#arg-main"></a></dt>
+<dd><p>Plot title. Defaults to the generic <code>"Binarised trend map"</code>; <code><a href="workflow_tst.html">workflow_tst()</a></code>/<code><a href="workflow_rta.html">workflow_rta()</a></code> results pass their own
+<code>"TST direction map"</code>/<code>"RTA direction map"</code> instead.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -177,7 +182,7 @@ Statistics, 29(4), 1165-1188. <a href="https://doi.org/10.1214/aos/1013699998" c
 <span class="r-msg co"><span class="r-pr">#&gt;</span>              42            2023 VHP_SMN_annual_ndvi_2023.tif</span>
 <span class="r-plt img"><img src="fdr_direction_plot-1.png" alt="" width="700" height="433"></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Stack built: 42 layers, 146 x 338 cells.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [read_ordered_stack()] elapsed: 0.06 s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [read_ordered_stack()] elapsed: 0.13 s</span>
 <span class="r-in"><span><span class="va">trend</span> <span class="op">&lt;-</span> <span class="fu"><a href="trend_test.html">trend_test</a></span><span class="op">(</span><span class="va">r</span>, report <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">fdr_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="fdr_correction.html">fdr_correction</a></span><span class="op">(</span><span class="va">trend</span><span class="op">$</span><span class="va">stats</span><span class="op">$</span><span class="va">p</span>, report <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">direction</span> <span class="op">&lt;-</span> <span class="fu">sptrends</span><span class="fu">:::</span><span class="fu"><a href="direction_map.html">direction_map</a></span><span class="op">(</span><span class="va">trend</span><span class="op">$</span><span class="va">stats</span>, <span class="va">fdr_result</span><span class="op">)</span></span></span>

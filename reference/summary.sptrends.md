@@ -159,19 +159,19 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.06 s
+#> >> [read_ordered_stack()] elapsed: 0.13 s
 result <- workflow_tst(r, report = FALSE, verbose = FALSE)
 summary(result)  # dispatches to the "tst" case above
-#> === Trend test (uncorrected) ===
-#>   alpha n_significant pct_significant
-#> 1  0.05          8091           51.62
+#> === FDR correction (the actual TST result) ===
+#> Valid cells (m): 15675 | target q: 0.05
+#> BKY -- pi0_hat: 0.574992 | m0_hat: 9013.0 | r1 (stage 1): 6662
 #> 
 #> === Theil-Sen slope ===
 #>       Min.    1st Qu.     Median       Mean    3rd Qu.       Max.        NAs 
 #> -0.0112134 -0.0001525  0.0002692  0.0003020  0.0007519  0.0096566      33673 
 #> 
-#> === FDR correction ===
-#> Valid cells (m): 15675 | target q: 0.05
-#> BKY -- pi0_hat: 0.574992 | m0_hat: 9013.0 | r1 (stage 1): 6662
+#> === Trend test, uncorrected (diagnostic only -- not the TST result; see FDR correction above) ===
+#>   alpha n_significant n_not_significant pct_significant n_valid
+#> 1  0.05          8091              7584           51.62   15675
 # }
 ```

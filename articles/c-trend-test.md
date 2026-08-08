@@ -72,8 +72,9 @@ terra::plot(
   direction,
   type = "classes",
   breaks = c(-1.5, -0.5, 0.5, 1.5),
-  col = c("firebrick", "grey85", "forestgreen"),
+  col = c("#1f77b4", "#D9D9D9", "#d62728"),
   plg = list(legend = c("Decrease", "No change", "Increase")),
+  reverse = TRUE,
   nc = 2
 )
 ```

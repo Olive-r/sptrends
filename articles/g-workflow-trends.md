@@ -35,55 +35,48 @@ needs – so not every configuration it can build should be called TST.
 
 ``` r
 
-result <- workflow_trends(
-  r,
-  prewhiten_method = "TFPW_WS",
-  trend_method = "CMK",
-  slope_method = "TS",
-  fdr_method = "BKY",
-  report = FALSE,
-  verbose = FALSE
-)
+result <- workflow_tst(r, report = FALSE, verbose = FALSE)
 result
-#> <workflow_trends result>
-#> Prewhitening (TFPW_WS): 5987 of 15675 cells modified (38.2%)
+#> <True Significant Trends (TST) result>
+#> Prewhitening: 5987 of 15675 cells modified (38.2%)
 #> Trend test: 15675 cells (Sm statistic)
-#> Slope: median 0.0002692 (range -0.01121 to 0.009657)
+#> Theil-Sen slope: median 0.0002692 (range -0.01121 to 0.009657)
 #> Significant after FDR-BKY: 7881 (50.3%)
 #> Use summary() for details, plot() for a map.
 summary(result)
-#> === Trend test (uncorrected) ===
-#>   alpha n_significant pct_significant
-#> 1  0.05          8091           51.62
+#> === FDR correction (the actual TST result) ===
+#> Valid cells (m): 15675 | target q: 0.05
+#> BKY -- pi0_hat: 0.574992 | m0_hat: 9013.0 | r1 (stage 1): 6662
 #> 
-#> === Slope ===
+#> === Theil-Sen slope ===
 #>       Min.    1st Qu.     Median       Mean    3rd Qu.       Max.        NAs 
 #> -0.0112134 -0.0001525  0.0002692  0.0003020  0.0007519  0.0096566      33673 
 #> 
-#> === FDR correction ===
-#> Valid cells (m): 15675 | target q: 0.05
-#> BKY -- pi0_hat: 0.574992 | m0_hat: 9013.0 | r1 (stage 1): 6662
+#> === Trend test, uncorrected (diagnostic only -- not the TST result; see FDR correction above) ===
+#>   alpha n_significant n_not_significant pct_significant n_valid
+#> 1  0.05          8091              7584           51.62   15675
 ```
 
-This configuration combines the same four stages introduced in the
-preceding vignettes: selective trend-preserving prewhitening, Contextual
-Mann-Kendall inference, Theil-Sen trend-magnitude estimation and
-adaptive FDR-BKY correction. This sequence corresponds to the [True
-Significant Trends
+[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)’s
+own published defaults are exactly the same four stages introduced in
+the preceding vignettes: selective trend-preserving prewhitening,
+Contextual Mann-Kendall inference, Theil-Sen trend-magnitude estimation
+and adaptive FDR-BKY correction – this is the [True Significant Trends
 framework](https://doi.org/10.1016/j.rsase.2024.101377), the
-methodological origin of `sptrends`.
+methodological origin of `sptrends`, reproduced with no arguments other
+than the input raster itself.
 
 ``` r
 
 plot(result)
 ```
 
-![Binarised trend map from a complete
-workflow](g-workflow-trends_files/figure-html/unnamed-chunk-3-1.png)
+![TST direction map from
+workflow_tst()](g-workflow-trends_files/figure-html/unnamed-chunk-3-1.png)
 
 ## Understanding the results
 
-Beyond a single plot – a binarised trend map by default, though
+Beyond a single plot – a TST direction map by default, though
 [`plot()`](https://rdrr.io/r/graphics/plot.default.html) accepts other
 representations – the object behind it keeps everything that produced
 and explains that result: the output and elapsed time of each stage, and

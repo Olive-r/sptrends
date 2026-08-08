@@ -27,7 +27,7 @@ comparing and applying methods for spatiotemporal trend analysis."><meta propert
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,7 +58,7 @@ comparing and applying methods for spatiotemporal trend analysis."><meta propert
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>sptrends: Statistical Inference for Spatiotemporal Trends in Gridded Data</h1>
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v.1.1/R/sptrends-package.R" class="external-link"><code>R/sptrends-package.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/R/sptrends-package.R" class="external-link"><code>R/sptrends-package.R</code></a></small>
       <div class="d-none name"><code>sptrends-package.Rd</code></div>
     </div>
 
@@ -331,28 +331,34 @@ the variance-of-S formula under ties. See
 <code>test-external-validation.R</code> in the package's own test suite for
 the full detail.</p></li>
 <li><p><strong>Consistent visual identity across every map this package
-draws</strong>: diverging palettes (Theil-Sen slope, the S/Sm trend
-statistic, direction-of-change results) always use
-<code>hcl.colors(50, "Blue-Red 3")</code>, deliberately colourblind-safer
-and domain-neutral – not <code>"Green-Brown"</code>, which reads naturally
-as vegetation greening/browning but would be a strange default
-for, say, a temperature or precipitation series; that palette
-remains available and worth using explicitly for NDVI-like data
-specifically (see <code><a href="trend_maps.html">?trend_maps</a></code>'s and <code><a href="workflow_rta.html">?workflow_rta</a></code>'s own
+draws, deliberately split into three distinct schemes so no two
+different questions ever share a colour</strong>: continuous diverging
+maps (Theil-Sen slope, the S/Sm trend statistic, rho) use a
+genuine ColorBrewer RdBu ramp (<code>#2166ac</code> blue through white to
+<code>#b2182b</code> red, colourblind-safe and domain-neutral – not
+<code>"Green-Brown"</code>, which reads naturally as vegetation
+greening/browning but would be a strange default for, say, a
+temperature or precipitation series; that palette remains
+available and worth using explicitly for NDVI-like data
+specifically, see <code><a href="trend_maps.html">?trend_maps</a></code>'s and <code><a href="workflow_rta.html">?workflow_rta</a></code>'s own
 <code>@examples</code> for exactly that). Every diverging map's own colour
 range is capped at 2 standard deviations rather than the single
 most extreme cell (<code>.robust_diverging_range()</code>, internal), so one
 outlier cannot wash out everyone else's colour into a narrow,
-barely-distinguishable band near the palette's midpoint. Purely
-binary significant/non-significant results (<code><a href="fdr_significance_maps.html">fdr_significance_maps()</a></code>,
-<code><a href="fdr_threshold_plot.html">fdr_threshold_plot()</a></code>) use this package's own official brand
-navy (<code>"#071D4B"</code>, one of a fixed 5-colour palette –
-<code>.sptrends_brand</code>, internal – taken from the exact colours used
-across every version of <code>man/figures/logo.png</code>, not re-derived
-from the image itself) for "significant" against a neutral grey
-for "not significant" – the one colour a reader learns to
-recognise as this package's consistent "yes" signal, wherever it
-appears.</p></li>
+barely-distinguishable band near the palette's midpoint.
+Categorical direction-of-change results (decrease/increase) use
+a separate red/blue pair instead (Tableau's <code>tab:red</code>/<code>tab:blue</code>,
+<code>"#d62728"</code>/<code>"#1f77b4"</code>) – visually distinct from the continuous
+ramp above, so a categorical result is never mistaken for a
+continuous one at a glance. Purely binary significant/
+non-significant results (<code><a href="fdr_significance_maps.html">fdr_significance_maps()</a></code>,
+<code><a href="fdr_threshold_plot.html">fdr_threshold_plot()</a></code>) use this package's own chosen magenta
+(<code>"#bf3688"</code>, <code>.sptrends_brand$navy</code>, internal) for "significant"
+against a neutral grey for "not significant" – deliberately a
+third, unrelated colour, so "is this significant" is never
+confused with either of the other two, direction-related
+schemes above; the one colour a reader learns to recognise as
+this package's consistent "yes" signal, wherever it appears.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

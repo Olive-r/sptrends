@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,7 +64,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>5. Trend workflows and published methods</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v.1.1/vignettes/g-workflow-trends.Rmd" class="external-link"><code>vignettes/g-workflow-trends.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/vignettes/g-workflow-trends.Rmd" class="external-link"><code>vignettes/g-workflow-trends.Rmd</code></a></small>
       <div class="d-none name"><code>g-workflow-trends.Rmd</code></div>
     </div>
 
@@ -103,48 +103,42 @@ called TST.</p>
 <h2 id="basic-workflow">Basic workflow<a class="anchor" aria-label="anchor" href="#basic-workflow"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/workflow_trends.html">workflow_trends</a></span><span class="op">(</span></span>
-<span>  <span class="va">r</span>,</span>
-<span>  prewhiten_method <span class="op">=</span> <span class="st">"TFPW_WS"</span>,</span>
-<span>  trend_method <span class="op">=</span> <span class="st">"CMK"</span>,</span>
-<span>  slope_method <span class="op">=</span> <span class="st">"TS"</span>,</span>
-<span>  fdr_method <span class="op">=</span> <span class="st">"BKY"</span>,</span>
-<span>  report <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/workflow_tst.html">workflow_tst</a></span><span class="op">(</span><span class="va">r</span>, report <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">result</span></span>
-<span><span class="co">#&gt; &lt;workflow_trends result&gt;</span></span>
-<span><span class="co">#&gt; Prewhitening (TFPW_WS): 5987 of 15675 cells modified (38.2%)</span></span>
+<span><span class="co">#&gt; &lt;True Significant Trends (TST) result&gt;</span></span>
+<span><span class="co">#&gt; Prewhitening: 5987 of 15675 cells modified (38.2%)</span></span>
 <span><span class="co">#&gt; Trend test: 15675 cells (Sm statistic)</span></span>
-<span><span class="co">#&gt; Slope: median 0.0002692 (range -0.01121 to 0.009657)</span></span>
+<span><span class="co">#&gt; Theil-Sen slope: median 0.0002692 (range -0.01121 to 0.009657)</span></span>
 <span><span class="co">#&gt; Significant after FDR-BKY: 7881 (50.3%)</span></span>
 <span><span class="co">#&gt; Use summary() for details, plot() for a map.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
-<span><span class="co">#&gt; === Trend test (uncorrected) ===</span></span>
-<span><span class="co">#&gt;   alpha n_significant pct_significant</span></span>
-<span><span class="co">#&gt; 1  0.05          8091           51.62</span></span>
+<span><span class="co">#&gt; === FDR correction (the actual TST result) ===</span></span>
+<span><span class="co">#&gt; Valid cells (m): 15675 | target q: 0.05</span></span>
+<span><span class="co">#&gt; BKY -- pi0_hat: 0.574992 | m0_hat: 9013.0 | r1 (stage 1): 6662</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; === Slope ===</span></span>
+<span><span class="co">#&gt; === Theil-Sen slope ===</span></span>
 <span><span class="co">#&gt;       Min.    1st Qu.     Median       Mean    3rd Qu.       Max.        NAs </span></span>
 <span><span class="co">#&gt; -0.0112134 -0.0001525  0.0002692  0.0003020  0.0007519  0.0096566      33673 </span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; === FDR correction ===</span></span>
-<span><span class="co">#&gt; Valid cells (m): 15675 | target q: 0.05</span></span>
-<span><span class="co">#&gt; BKY -- pi0_hat: 0.574992 | m0_hat: 9013.0 | r1 (stage 1): 6662</span></span></code></pre></div>
-<p>This configuration combines the same four stages introduced in the
-preceding vignettes: selective trend-preserving prewhitening, Contextual
-Mann-Kendall inference, Theil-Sen trend-magnitude estimation and
-adaptive FDR-BKY correction. This sequence corresponds to the <a href="https://doi.org/10.1016/j.rsase.2024.101377" class="external-link">True Significant
-Trends framework</a>, the methodological origin of
-<code>sptrends</code>.</p>
+<span><span class="co">#&gt; === Trend test, uncorrected (diagnostic only -- not the TST result; see FDR correction above) ===</span></span>
+<span><span class="co">#&gt;   alpha n_significant n_not_significant pct_significant n_valid</span></span>
+<span><span class="co">#&gt; 1  0.05          8091              7584           51.62   15675</span></span></code></pre></div>
+<p><code><a href="../reference/workflow_tst.html">workflow_tst()</a></code>’s own published defaults are exactly the
+same four stages introduced in the preceding vignettes: selective
+trend-preserving prewhitening, Contextual Mann-Kendall inference,
+Theil-Sen trend-magnitude estimation and adaptive FDR-BKY correction –
+this is the <a href="https://doi.org/10.1016/j.rsase.2024.101377" class="external-link">True
+Significant Trends framework</a>, the methodological origin of
+<code>sptrends</code>, reproduced with no arguments other than the input
+raster itself.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></code></pre></div>
-<p><img src="g-workflow-trends_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="Binarised trend map from a complete workflow" width="576"></p>
+<p><img src="g-workflow-trends_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="TST direction map from workflow_tst()" width="576"></p>
 </div>
 <div class="section level2">
 <h2 id="understanding-the-results">Understanding the results<a class="anchor" aria-label="anchor" href="#understanding-the-results"></a>
 </h2>
-<p>Beyond a single plot – a binarised trend map by default, though
+<p>Beyond a single plot – a TST direction map by default, though
 <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> accepts other representations – the object behind it
 keeps everything that produced and explains that result: the output and
 elapsed time of each stage, and the intermediate trend, slope and FDR

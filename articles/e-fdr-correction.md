@@ -37,7 +37,7 @@ This is a real problem that undermines the reliability of significance
 claims in gridded environmental analyses, and one that is often ignored
 and omitted in practice – particularly in environmental remote sensing
 ([Gutiérrez-Hernández and García,
-2025](https://doi.org/10.2139/ssrn.4891512), preprint; [Heumann,
+2025d](https://doi.org/10.2139/ssrn.4891512), preprint; [Heumann,
 2015](https://doi.org/10.14358/PERS.81.12.921)).
 
 ## What `fdr_correction()` does
@@ -181,6 +181,14 @@ This shorthand is useful, but it does not mean that each highlighted
 pixel is individually significant at level *α* or has an error
 probability equal to *q*.
 
+It is good practice to always report the number of valid cells actually
+tested (`m`) alongside any count or percentage of significant cells –
+[`fdr_summary()`](https://olivergh.github.io/sptrends/reference/fdr_summary.md)’s
+own table includes it as `n_valid` for exactly this reason. The same
+percentage means something very different depending on whether it comes
+from 50 valid cells or 50,000; omitting `m` leaves that scale invisible
+to anyone reading the result later, including the original analyst.
+
 ## Choosing the main options
 
 | Method | Main property | Guidance |
@@ -251,14 +259,26 @@ for assumptions, algorithms, diagnostics, limitations and references.
   Discovery Rate in Multiple Testing Under Dependency. *Annals of
   Statistics*, 29(4), 1165-1188.
   <https://doi.org/10.1214/aos/1013699998>
-- Gutiérrez-Hernández, O. and García, L.V. (2025b) The Ghost of
-  Selective Inference in Spatiotemporal Trend Analysis. *Science of The
-  Total Environment*, 958, 177832.
-  <https://doi.org/10.1016/j.scitotenv.2024.177832>
+- García, L.V. (2003) Controlling the False Discovery Rate in Ecological
+  Research. *Trends in Ecology & Evolution*, 18(11), 553-554.
+  <https://doi.org/10.1016/j.tree.2003.08.011>
+- García, L.V. (2004) Escaping the Bonferroni Iron Claw in Ecological
+  Studies. *Oikos*, 105(3), 657-663.
+  <https://doi.org/10.1111/j.0030-1299.2004.13046.x>
 - Gutiérrez-Hernández, O. and García, L.V. (2025a) Implementing the
   Linear Adaptive False Discovery Rate Procedure for Spatiotemporal
   Trend Testing. *Mathematics*, 13(22), 3630.
   <https://doi.org/10.3390/math13223630>
+- Gutiérrez-Hernández, O. and García, L.V. (2025b) The Ghost of
+  Selective Inference in Spatiotemporal Trend Analysis. *Science of The
+  Total Environment*, 958, 177832.
+  <https://doi.org/10.1016/j.scitotenv.2024.177832>
 - Gutiérrez-Hernández, O. and García, L.V. (2025c) False Discovery Rate
   Estimation and Control in Remote Sensing. *Remote Sensing Letters*,
   16(5), 537-548. <https://doi.org/10.1080/2150704X.2025.2478664>
+- Gutiérrez-Hernández, O. and García, L.V. (2025d) Multiple Testing in
+  Remote Sensing: Addressing the Elephant in the Room. SSRN preprint.
+  <https://doi.org/10.2139/ssrn.4891512>
+- Heumann, B.W. (2015) The Multiple Comparison Problem in Empirical
+  Remote Sensing. *Photogrammetric Engineering & Remote Sensing*,
+  81(12), 921-926. <https://doi.org/10.14358/PERS.81.12.921>

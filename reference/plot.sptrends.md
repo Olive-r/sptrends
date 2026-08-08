@@ -74,7 +74,7 @@ null hypothesis (see
 |  |  |
 |----|----|
 | `which` | Draws |
-| `"direction"` (default) | Binarised trend map after FDR correction |
+| `"direction"` (default) | Binarised trend map after FDR correction (titled "TST direction map"; "RTA direction map" for the `"rta"` case below) |
 | `"significance"` | FDR-BH/FDR-BKY significance maps side by side |
 | `"trend"` | Uncorrected trend statistic/p-value/significance/direction |
 | `"slope"` | Theil-Sen slope, masked to significant cells |
@@ -280,7 +280,7 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.06 s
+#> >> [read_ordered_stack()] elapsed: 0.14 s
 result <- workflow_tst(r, report = FALSE, verbose = FALSE)
 
 # Default map: direction of change (greening/browning/no change),

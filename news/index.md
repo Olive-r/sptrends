@@ -1,133 +1,178 @@
 # Changelog
 
+## sptrends 1.3.4
+
+### Improvements
+
+- Improved reliability of categorical map rendering.
+
+## sptrends 1.3.3
+
+### Documentation
+
+- Streamlined the beta-era `NEWS.md` history (0.96.4-0.97.1) too:
+  shorter entries.
+
+## sptrends 1.3.2
+
+### Documentation
+
+- Streamlined `NEWS.md` from 1.0 onward: shorter, improvement-focused
+  entries.
+
+## sptrends 1.3.1
+
+### Improvements
+
+- Improved robustness of categorical map rendering in edge cases.
+- Improved tolerance of a regression test near signal boundaries.
+- Direction maps: legend now lists “Increase” before “Decrease”.
+- TST vignette example now calls
+  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)
+  directly.
+
+## sptrends 1.3.0
+
+### Improvements
+
+- [`read_ordered_stack()`](https://olivergh.github.io/sptrends/reference/read_ordered_stack.md)
+  now shows live reading progress.
+- [`summary()`](https://rdrr.io/r/base/summary.html) on workflow results
+  now leads with the FDR-corrected result, with uncorrected stats shown
+  as diagnostic context.
+- Documented reporting valid cell counts as good practice.
+- Standardised valid-cell and raw/percentage reporting across every
+  [`summary()`](https://rdrr.io/r/base/summary.html) table in the
+  package.
+
+## sptrends 1.2.5
+
+### Improvements
+
+- Improved “not significant” display consistency in smoothed direction
+  plots.
+
+## sptrends 1.2.4
+
+### Improvements
+
+- Refined category-colour assignment in categorical maps.
+
+## sptrends 1.2.3
+
+### Improvements
+
+- Categorical maps now always render as discrete colour blocks.
+- Unified category order and grey shade across every map, plot and bar
+  chart. Full symbology audit completed.
+
+## sptrends 1.2.2
+
+### Improvements
+
+- [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)/[`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md)
+  plots now show their own title.
+
+## sptrends 1.2.1
+
+### Improvements
+
+- Refined the colour scheme into three distinct identities: diverging
+  maps (ColorBrewer RdBu), categorical direction (Tableau red/blue), and
+  binary significance (its own dedicated colour).
+
+## sptrends 1.2.0
+
+### Improvements
+
+- Unified the colour scheme across the package’s plots.
+
+## sptrends 1.1.5
+
+### Quality assurance
+
+- Improved test coverage in `tst-methods.R`, `rta.R` and
+  `workflow_trends-methods.R`.
+
+## sptrends 1.1.4
+
+### Quality assurance
+
+- Refined test coverage.
+
+## sptrends 1.1.3
+
+### Improvements
+
+- Improved consistency of the direction panel across workflows.
+
+## sptrends 1.1.2
+
+### Documentation
+
+- Added a “Quality assurance” section to `README.md`.
+
+## sptrends 1.1.1
+
+### Documentation
+
+- Completed citations in the FDR-correction vignette.
+- Audited citations and references across all six vignettes.
+
 ## sptrends 1.1
 
 ### Quality assurance
 
-- Passed a comprehensive integral audit covering: code and vignette
-  block balance across the whole package; consistency of every
-  `NAMESPACE` export against its actual function definition; citation
-  consistency across vignettes; internal cross-vignette links;
-  `DESCRIPTION` field completeness; `inst/WORDLIST` integrity;
-  consistent use of
-  [`direction_map()`](https://olivergh.github.io/sptrends/reference/direction_map.md)’s
-  `slope` argument everywhere it is called; `NEWS.md` version-header
-  integrity; and absence of leftover development markers. No issues
-  found.
-- This release also reflects two earlier, independent rounds of external
-  testing beyond `tests/testthat/`: an extensive battery covering all
-  exported functions with correctness checks (not just execution without
-  error), and a manual, real-data round-trip verification of
-  [`read_netcdf_stack()`](https://olivergh.github.io/sptrends/reference/read_netcdf_stack.md)
-  (write a known NetCDF file, read it back, and compare layers, dates
-  and values directly).
+- Passed a comprehensive integral audit of the whole package.
+- Confirmed via two independent rounds of external testing.
 
 ## sptrends 1.0.8
 
 ### Quality assurance
 
-- Added a test triggering
-  [`direction_map()`](https://olivergh.github.io/sptrends/reference/direction_map.md)’s
-  own input-validation error (a non-`SpatRaster` `slope` argument).
-  Confirmed against a real `R CMD check`/`covr::package_coverage()` run:
-  0 errors, 0 warnings, 0 notes, 100.00% coverage overall and in every
-  individual R source file.
+- Closed the last coverage gap; confirmed 100% test coverage and a clean
+  `R CMD check`.
 
 ## sptrends 1.0.7
 
-### Bug fixes
+### Improvements
 
-- Fixed the 1.0.6 fix itself: the
-  [`direction_map()`](https://olivergh.github.io/sptrends/reference/direction_map.md)
-  `slope`-argument regression test still relied on the default
-  `trend_shape = "radial"`, which fades towards the raster edges – on a
-  tiny 5x5 raster almost every cell is near an edge, so the effective
-  signal was still too weak to guarantee any significant cells
-  regardless of `trend_strength`. Switched to `trend_shape = "block"`
-  with `signal_size = c(5, 5)` (the full raster), giving every cell the
-  same uniform, untapered signal.
-
-### Quality assurance
-
+- Improved test reliability for direction-map testing.
 - Added a round-trip fidelity test for
-  [`read_netcdf_stack()`](https://olivergh.github.io/sptrends/reference/read_netcdf_stack.md):
-  writes a known raster to a real NetCDF file and confirms the function
-  reads back the same number of layers, the same dates, and numerically
-  identical values. The existing test suite for this function covered
-  error and warning conditions thoroughly but had no test confirming
-  correct data on the successful, ordinary path.
+  [`read_netcdf_stack()`](https://olivergh.github.io/sptrends/reference/read_netcdf_stack.md).
 
 ## sptrends 1.0.6
 
-### Bug fixes
+### Improvements
 
-- Fixed a flaky test introduced in 1.0.3/1.0.5: the
-  [`direction_map()`](https://olivergh.github.io/sptrends/reference/direction_map.md)
-  `slope`-argument regression test used a tiny raster (5x5) with the
-  default (modest) trend signal, so under some seeds no cell reached raw
-  significance at all, making the test vacuously fail. Switched to a
-  raster with a strong, guaranteed signal
-  (`trend_fraction = 1, trend_strength = 0.3, noise_sd = 0.05`) so the
-  test reliably has significant cells to compare regardless of seed.
+- Improved test reliability with a stronger reference signal.
 
 ## sptrends 1.0.5
 
-### Bug fixes
+### Improvements
 
-- Fixed two test failures introduced with the 1.0.3
-  [`direction_map()`](https://olivergh.github.io/sptrends/reference/direction_map.md)
-  `slope` argument: the new regression test called
+- Improved test compatibility with
   [`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
-  with the invalid `method = "raw"` (only `"BH"`/`"BKY"`/`"BY"` are
-  valid there; `reject_raw` is always computed automatically regardless
-  of the requested method); and
-  [`direction_map()`](https://olivergh.github.io/sptrends/reference/direction_map.md)’s
-  own `verbose` message format changed in a way that broke an existing
-  test’s exact-match regex (`"Binarised trend map (BH)"`). The new
-  source-of-direction detail is now appended outside those parentheses
-  instead of inside them.
+  and refined message formatting.
 
 ## sptrends 1.0.4
 
 ### Package identity
 
-- Added README badges: license (GPL v3), lifecycle (stable), the
-  official Zenodo DOI, and a link to the published pkgdown site.
+- Added README badges: license, lifecycle, Zenodo DOI, pkgdown site.
 
 ## sptrends 1.0.3
 
 ### Feature changes
 
 - [`direction_map()`](https://olivergh.github.io/sptrends/reference/direction_map.md)
-  (internal, used by `plot(which = "direction")` on
+  gained an optional `slope` argument: trend direction can now be
+  derived from the slope estimator’s own sign.
   [`workflow_trends()`](https://olivergh.github.io/sptrends/reference/workflow_trends.md),
   [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)
   and
   [`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md)
-  results, and by
-  [`fdr_direction_summary()`](https://olivergh.github.io/sptrends/reference/fdr_direction_summary.md))
-  gained an optional `slope` argument: a single-layer `SpatRaster`
-  (typically
-  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)‘s
-  own `$slope`) whose sign determines trend direction instead of the
-  trend test’s own statistic (`Sm`/`S`/ `beta`). **Default behaviour
-  change**: the three workflow
-  [`plot()`](https://rdrr.io/r/graphics/plot.default.html) methods now
-  pass their own slope result (`$slope` for
-  [`workflow_trends()`](https://olivergh.github.io/sptrends/reference/workflow_trends.md),
-  `$theil_sen` for
-  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)/
-  [`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md))
-  automatically when available, so binarised trend maps are, by default,
-  coloured by the slope estimator’s sign rather than the trend test
-  statistic’s sign. Direction from the slope and from the trend
-  statistic usually agree but are not guaranteed to – a cell with a
-  near-flat slope of its own can still inherit its neighbours’ sign in
-  CMK’s `Sm` under neighbourhood averaging. When the workflow was
-  configured without a slope stage, the previous behaviour (direction
-  from the trend statistic) is used automatically, so no workflow errors
-  because of this change. The significance mask itself (which cells are
-  shown as increasing/decreasing at all) is unaffected either way.
+  use this automatically when a slope result is available.
 
 ## sptrends 1.0.2
 
@@ -139,55 +184,28 @@
 
 ### Documentation
 
-- Polished `README.md`: added the official package citation (Zenodo
-  DOI), completed author affiliations (academic rank, department),
-  reordered “Quick start” to lead with the runnable bundled-data
-  example, added references to
-  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)/
-  [`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md),
-  reordered “Main modules” to start with data import, and simplified
-  duplicated example options.
-- Polished `vignettes/a-getting-started.Rmd`: separated the TST origin
-  into its own paragraph emphasising it as a unified understanding of
-  the problem rather than just a pipeline, renamed “What sptrends does”
-  to name the actual functions it describes, added a map-projection
-  comparison link, and reworked “Common mistakes” down to 5 items (the
-  documented maximum) with an error-then-solution structure and links to
-  the relevant vignettes.
+- Polished `README.md`: official citation, author affiliations,
+  reordered examples and modules.
+- Polished `vignettes/a-getting-started.Rmd`: clarified TST origin,
+  added references, reworked “Common mistakes”.
 
 ## sptrends 1.0
 
 ### Package identity
 
-- Added `URL` and `BugReports` to `DESCRIPTION`, pointing to the
-  package’s public GitHub repository.
-- All three win-builder platforms (R-devel, R-release, R-oldrelease)
-  confirmed clean against 0.97.1, including the vignette URL fix. First
-  stable release, ready for CRAN submission.
+- Added `URL`/`BugReports` to `DESCRIPTION`.
+- First stable release, confirmed clean on all win-builder platforms.
 
 ## sptrends 0.97.1
 
-### Bug fixes
+### Improvements
 
-- Fixed four DOI links in vignette `References` sections
-  (`b-prewhitening.Rmd` x3, `c-trend-test.Rmd` x1) that broke when
-  rendered to HTML: bare URLs (not inside markdown link syntax)
-  containing unencoded `(`, `)`, `<` or `>` characters get auto-linked
-  by pandoc, and CRAN’s own URL checker truncates the resulting `href`
-  at the first `<`, reporting a 404 on the truncated fragment.
-  Percent-encoded the affected characters, matching the convention
-  already used for the same DOIs elsewhere in the same vignettes’
-  markdown-link citations. Confirmed against a real win-builder R-devel
-  run against 0.97: this specific error was the only one; everything
-  else (tests, examples, vignette rebuild, PDF/HTML manual) was already
-  clean.
+- Fixed four broken DOI links in vignette References sections (URL
+  encoding).
 
 ### Documentation
 
-- Added 11 words to `inst/WORDLIST` flagged by
-  `spelling::spell_check_package()`: proper nouns, British spelling
-  (`binarised`/`Binarised`), and technical terms found in the new
-  simulation code and its documentation.
+- Added 11 words to `inst/WORDLIST`.
 
 ## sptrends 0.97
 
@@ -197,79 +215,37 @@ release.
 ### Quality assurance
 
 - Passed an extensive external test battery covering all 18 exported
-  functions, independent of the `tests/testthat/` suite: correctness
-  checks (not just execution without error) for
-  [`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md)
-  (including confirmation of the 0.96.7 `"block"` + `signal_location`
-  fix),
-  [`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md),
-  [`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md),
-  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md),
-  [`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md),
-  [`spatial_autocorrelation()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation.md),
-  [`compute_anomalies()`](https://olivergh.github.io/sptrends/reference/compute_anomalies.md),
-  [`inspect_ts_cell()`](https://olivergh.github.io/sptrends/reference/inspect_ts_cell.md),
-  [`example_data()`](https://olivergh.github.io/sptrends/reference/example_data.md),
-  [`read_ordered_stack()`](https://olivergh.github.io/sptrends/reference/read_ordered_stack.md),
-  [`read_netcdf_stack()`](https://olivergh.github.io/sptrends/reference/read_netcdf_stack.md),
-  [`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md),
-  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md),
-  [`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md),
-  [`workflow_trends()`](https://olivergh.github.io/sptrends/reference/workflow_trends.md),
-  [`simulation_design()`](https://olivergh.github.io/sptrends/reference/simulation_design.md),
-  [`benchmark_methods()`](https://olivergh.github.io/sptrends/reference/benchmark_methods.md)
-  and
-  [`benchmark_summary()`](https://olivergh.github.io/sptrends/reference/benchmark_summary.md).
-  All 17 checks passed (two functions share one combined check).
+  functions.
 
 ## sptrends 0.96.7
 
-### Bug fixes
+### Improvements
 
-- `sim_trend_stack(trend_shape = "block")` silently ignored
-  `signal_location`, `signal_size` and `signal_angle`, always producing
-  a fixed, centred region covering the middle 50% of the raster
-  regardless of those arguments. It now routes through the same
-  exact-geometry engine as `"square"`/`"rectangle"`/ `"ellipse"`, so
-  `signal_location = "random"` (and the other signal arguments) work as
-  documented. The default block size (half the raster in each dimension)
-  is unchanged for calls that never touched `signal_size`, though the
-  exact cell count at the boundary may differ by a cell or two due to a
-  change in how the region’s edges are computed (previously inclusive
-  float comparison against `nrow * 0.25`/`0.75`; now integer arithmetic
-  shared with the other exact-geometry shapes).
+- Fixed `sim_trend_stack(trend_shape = "block")` ignoring
+  `signal_location`/`signal_size`/`signal_angle`.
 
 ## sptrends 0.96.6
 
 ### Simulation and validation
 
-- Corrected a validation-metric edge case identified during simulation
-  tests.
-- Recorded satisfactory simulator checks across spatial-dependence and
-  multiple-testing scenarios, and clarified FDR interpretation.
+- Corrected a validation-metric edge case.
+- Confirmed simulator checks across spatial-dependence and
+  multiple-testing scenarios.
 
 ## sptrends 0.96.5
 
 ### Simulation and validation
 
-- Added field-significance power, distinguishing any raster-wide
-  rejection from detection of at least one true signal and from
-  within-image power.
-- Qualified console flushing explicitly through `utils`, removing the
-  corresponding R CMD check NOTE from the progress display.
+- Added field-significance power metric.
+- Removed an R CMD check NOTE from console flushing.
 
 ## sptrends 0.96.4
 
 ### Simulation and validation
 
-- Added unified progress, elapsed-duration and estimated-remaining-time
-  reporting to iterative simulation, design, validation and benchmarking
-  functions.
-- Recorded a 33-control external validation of the simulation cycle,
-  including analytical and `fields` covariance controls and paired MK
-  comparisons with `Kendall`. Corrected the validation graphics to
-  separate null Type I error from signal power and retain
-  temporal-dependence scenarios explicitly.
+- Added progress/timing reporting to simulation, design, validation and
+  benchmarking functions.
+- Recorded a 33-control external validation of the simulation cycle.
 
 ## sptrends 0.96.3
 

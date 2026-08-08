@@ -19,7 +19,7 @@ are reachable with `:::` for any other case.
 ## Usage
 
 ``` r
-fdr_direction_plot(direction, path = NULL)
+fdr_direction_plot(direction, path = NULL, main = "Binarised trend map")
 ```
 
 ## Arguments
@@ -32,6 +32,13 @@ fdr_direction_plot(direction, path = NULL)
 - path:
 
   Character or `NULL`. If supplied, a PNG is written there.
+
+- main:
+
+  Plot title. Defaults to the generic `"Binarised trend map"`;
+  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)/[`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md)
+  results pass their own `"TST direction map"`/`"RTA direction map"`
+  instead.
 
 ## Value
 
@@ -121,7 +128,7 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.06 s
+#> >> [read_ordered_stack()] elapsed: 0.13 s
 trend <- trend_test(r, report = FALSE, verbose = FALSE)
 fdr_result <- fdr_correction(trend$stats$p, report = FALSE, verbose = FALSE)
 direction <- sptrends:::direction_map(trend$stats, fdr_result)
