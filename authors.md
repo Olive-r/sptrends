@@ -14,7 +14,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/Olive-r/sptrends/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/Olive-r/sptrends/blob/v1.3.4/inst/CITATION)
 
 Gutiérrez-Hernández, O. and García, L.V. (2025). Uncovering true
 significant trends in global greening. Remote Sensing Applications:

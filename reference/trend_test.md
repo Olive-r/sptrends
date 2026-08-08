@@ -861,7 +861,7 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.14 s
+#> >> [read_ordered_stack()] elapsed: 0.12 s
 
 # Test every cell for a monotonic trend, borrowing strength from each
 # cell's spatial neighbourhood (method = "CMK", the default).

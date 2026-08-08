@@ -186,9 +186,9 @@ scenarios <- list(null = list(nrow = 6, ncol = 6, n_time = 8,
 result <- benchmark_methods(scenarios, methods, n_replicates = 2,
                             seed = 1, verbose = FALSE)
 #> >> [compare_detections()] elapsed: 0.01 s
-#> >> [compare_detections()] elapsed: 0.00 s
+#> >> [compare_detections()] elapsed: 0.01 s
 result
 #> <sptrends benchmark>
 #> Stage: trend_test | scenarios: 1 | methods: 1 | replicates: 2
-#> Rows: 2 | elapsed method time: 0.080 s
+#> Rows: 2 | elapsed method time: 0.082 s
 ```

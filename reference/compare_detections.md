@@ -298,7 +298,7 @@ Other validation functions:
 # data has no equivalent "true" answer to compare a detection against.
 # \donttest{
 sim <- sim_trend_stack(nrow = 15, ncol = 15, n_time = 15, seed = 1)
-#> >> [sim_trend_stack()] elapsed: 0.06 s
+#> >> [sim_trend_stack()] elapsed: 0.07 s
 
 # Two variants of the same test: classic Mann-Kendall (no
 # neighbourhood averaging) vs. the Contextual version.
@@ -338,11 +338,11 @@ for (s in 1:10) {
                                 CMK = cmk_s$stats$p <= 0.05)
   truths_list[[s]] <- sim_s$true_slope
 }
-#> >> [sim_trend_stack()] elapsed: 0.13 s
-#> >> [sim_trend_stack()] elapsed: 0.05 s
+#> >> [sim_trend_stack()] elapsed: 0.12 s
 #> >> [sim_trend_stack()] elapsed: 0.06 s
+#> >> [sim_trend_stack()] elapsed: 0.07 s
+#> >> [sim_trend_stack()] elapsed: 0.07 s
 #> >> [sim_trend_stack()] elapsed: 0.06 s
-#> >> [sim_trend_stack()] elapsed: 0.05 s
 #> >> [sim_trend_stack()] elapsed: 0.05 s
 #> >> [sim_trend_stack()] elapsed: 0.05 s
 #> >> [sim_trend_stack()] elapsed: 0.05 s
