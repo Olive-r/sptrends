@@ -9,7 +9,7 @@ showing the sorted p-values against their step-up rejection threshold.
 Following Benjamini &amp;amp; Hochberg (1995), p-values are shown in increasing
 order as p_(i): the x-axis is the rank i (from 1 to the total
 number of valid cells m), and the y-axis is the ordered p-value
-p_(i) itself."><meta property="og:image" content="https://olivergh.github.io/sptrends/logo.png"></head><body>
+p_(i) itself."><meta property="og:image" content="https://olive-r.github.io/sptrends/logo.png"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -17,7 +17,7 @@ p_(i) itself."><meta property="og:image" content="https://olivergh.github.io/spt
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +48,7 @@ p_(i) itself."><meta property="og:image" content="https://olivergh.github.io/spt
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Rejection-threshold plot for FDR-BH and FDR-BKY</h1>
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v1.3.4/R/fdr.R" class="external-link"><code>R/fdr.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/R/fdr.R" class="external-link"><code>R/fdr.R</code></a></small>
       <div class="d-none name"><code>fdr_threshold_plot.Rd</code></div>
     </div>
 
@@ -88,8 +88,8 @@ number of valid cells <code>m</code>), and the y-axis is the ordered p-value
     <p>In the left panel, the line is the BH linear step-up threshold,
 <code>p_(i) = (i / m) * q</code>; in the right panel, it is the adaptive BKY
 threshold, <code>p_(i) = (i / m) * q_star</code>, which uses <code>q_star</code> – rescaled
-from <code>q</code> using the estimated proportion of true nulls, <code>pi0_hat = m0_hat / m</code> – rather than a fixed <code>q</code>. Points below their panel's
-Every rank at or before the final cutoff is drawn in blue (rejected),
+from <code>q</code> using the estimated proportion of true nulls, <code>pi0_hat = m0_hat / m</code> – rather than a fixed <code>q</code>. Every rank at or before the
+final cutoff is drawn in blue (rejected),
 whereas ranks after it are drawn in grey (not rejected). The
 dashed vertical line marks the cutoff rank <code>k</code>: the step-up rule
 rejects every hypothesis from rank 1 up to <code>k</code>, not just the

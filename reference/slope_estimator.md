@@ -2,7 +2,7 @@
 
 Estimates the magnitude of a monotonic trend, independently of its
 statistical significance.
-[`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)
+[`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)
 primarily tells you *whether* there is evidence of a trend and its
 direction; although its `"OLS"` branch necessarily returns a fitted
 coefficient, this function provides the dedicated and method-independent
@@ -116,9 +116,9 @@ slope_estimator(
 - report:
 
   Logical. If `TRUE` (default), automatically print the summary
-  ([`slope_summary()`](https://olivergh.github.io/sptrends/reference/slope_summary.md))
+  ([`slope_summary()`](https://olive-r.github.io/sptrends/reference/slope_summary.md))
   and draw the map
-  ([`slope_map()`](https://olivergh.github.io/sptrends/reference/slope_map.md))
+  ([`slope_map()`](https://olive-r.github.io/sptrends/reference/slope_map.md))
   once the slope finishes computing.
 
 - verbose:
@@ -130,7 +130,7 @@ slope_estimator(
   Advanced; most users never need this directly. An already-running
   [`parallel::makeCluster()`](https://rdrr.io/r/parallel/makeCluster.html)
   PSOCK cluster (e.g. from
-  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)'s
+  [`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)'s
   own `n_cores`) to reuse instead of building a new one from `n_cores`
   above. When supplied, `n_cores` is ignored – the shared cluster's own
   size was already decided by whoever built it. `NULL` (default): builds
@@ -175,21 +175,21 @@ Returns an object of class `c("slope", "sptrends")`: a list with
 Use
 [`print()`](https://rdrr.io/r/base/print.html)/[`summary()`](https://rdrr.io/r/base/summary.html)/[`plot()`](https://rdrr.io/r/graphics/plot.default.html)
 – see
-[`print.sptrends()`](https://olivergh.github.io/sptrends/reference/print.sptrends.md),
-[`summary.sptrends()`](https://olivergh.github.io/sptrends/reference/summary.sptrends.md),
+[`print.sptrends()`](https://olive-r.github.io/sptrends/reference/print.sptrends.md),
+[`summary.sptrends()`](https://olive-r.github.io/sptrends/reference/summary.sptrends.md),
 and
-[`plot.sptrends()`](https://olivergh.github.io/sptrends/reference/plot.sptrends.md).
+[`plot.sptrends()`](https://olive-r.github.io/sptrends/reference/plot.sptrends.md).
 
 ## Details
 
 **Function type:** **Companion function to
-[`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)**
+[`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)**
 – one of the three quantities a standard trend analysis normally reports
 (alongside significance and multiple-testing correction), not a mere
 supporting utility, though not one of
-[`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)
+[`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)
 or
-[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)'s
+[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)'s
 own inferential building blocks either.
 
 ## Typical use
@@ -201,7 +201,7 @@ own inferential building blocks either.
     change per time unit (`result$slope`)
 
 Run this beside
-[`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)
+[`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)
 on the same analytical series: the slope measures magnitude, whereas the
 trend test assesses evidence. If the test uses a prewhitened series,
 choose deliberately whether the scientific estimand is the slope of that
@@ -215,7 +215,7 @@ Statistical significance and effect size answer different questions. A
 statistically significant trend may be negligible in magnitude, whereas
 a large estimated slope may fail to reach significance when uncertainty
 is high. For this reason, sptrends separates trend testing
-([`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md))
+([`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md))
 from slope estimation (this function), allowing each quantity to be
 interpreted independently – neither substitutes for the other.
 
@@ -286,7 +286,7 @@ outliers and influential observations.
 These estimators quantify an overall linear rate of change; they do not
 model seasonal cycles or nonlinear temporal structure. For strongly
 seasonal series, consider estimating the slope from anomalies (see
-[`compute_anomalies()`](https://olivergh.github.io/sptrends/reference/compute_anomalies.md))
+[`compute_anomalies()`](https://olive-r.github.io/sptrends/reference/compute_anomalies.md))
 or using an appropriate seasonal model instead.
 
 **Computational considerations**
@@ -344,7 +344,7 @@ focal median), computed *after* the per-cell Theil-Sen estimation above
 – it does not change how any individual cell's own slope is estimated.
 
 **What it does not inherit**: this is **not the same thing as**
-[`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)'s
+[`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)'s
 `neighbourhood` argument, and does not carry the same justification.
 CMK's neighbourhood-adjusted statistic follows a published, validated
 method (Neeti & Eastman, 2011) for the specific question "is there a
@@ -364,9 +364,9 @@ the underlying statistic.
 
 **Warnings**: off by default for the reasons above. If you use it,
 validate it first for your own data and resolution using
-[`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md)
+[`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md)
 and
-[`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md)
+[`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md)
 against known ground truth, rather than judging it only by whether the
 smoothed map looks visually more coherent – a smoother-looking map is
 not the same as a more accurate one.
@@ -398,7 +398,7 @@ slopes and intercepts are checked against direct hand implementations.
 Automated tests also cover irregular time coordinates, missing and
 constant series, optional neighbourhood smoothing, raster return types,
 and sequential/parallel equivalence. See
-[`?sptrends`](https://olivergh.github.io/sptrends/reference/sptrends-package.md)
+[`?sptrends`](https://olive-r.github.io/sptrends/reference/sptrends-package.md)
 for the common release-check protocol.
 
 ## References
@@ -453,9 +453,9 @@ median convention this port was verified against:
 
 This function is used (not authored) by both of this package's own
 integrated workflows,
-[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)
+[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)
 and
-[`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md),
+[`workflow_rta()`](https://olive-r.github.io/sptrends/reference/workflow_rta.md),
 and by the studies behind them:
 
 - Gutiérrez-Hernández, O. and García, L.V. (2025) Uncovering true
@@ -470,12 +470,12 @@ and by the studies behind them:
 
 ## See also
 
-[`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)
+[`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)
 for statistical evidence of temporal change;
-[`workflow_trends()`](https://olivergh.github.io/sptrends/reference/workflow_trends.md),
-[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md),
+[`workflow_trends()`](https://olive-r.github.io/sptrends/reference/workflow_trends.md),
+[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md),
 and
-[`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md)
+[`workflow_rta()`](https://olive-r.github.io/sptrends/reference/workflow_rta.md)
 for workflows combining significance and magnitude.
 
 ## Examples

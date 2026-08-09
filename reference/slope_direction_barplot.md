@@ -2,7 +2,7 @@
 
 A bar chart of how many valid cells have a positive, negative, or
 exactly zero Theil-Sen slope – the same classification
-[`slope_direction_map()`](https://olivergh.github.io/sptrends/reference/slope_direction_map.md)
+[`slope_direction_map()`](https://olive-r.github.io/sptrends/reference/slope_direction_map.md)
 draws spatially, summarised here as raw counts (or percentages).
 
 ## Usage
@@ -16,7 +16,7 @@ slope_direction_barplot(slope, probability = FALSE, ...)
 - slope:
 
   A `SpatRaster` of Theil-Sen slopes, e.g.
-  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)'s
+  [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)'s
   own `$slope`.
 
 - probability:
@@ -45,8 +45,8 @@ outside the package via
 ## See also
 
 Other Theil-Sen slope functions:
-[`slope_direction_map()`](https://olivergh.github.io/sptrends/reference/slope_direction_map.md),
-[`slope_histogram()`](https://olivergh.github.io/sptrends/reference/slope_histogram.md)
+[`slope_direction_map()`](https://olive-r.github.io/sptrends/reference/slope_direction_map.md),
+[`slope_histogram()`](https://olive-r.github.io/sptrends/reference/slope_histogram.md)
 
 ## Examples
 

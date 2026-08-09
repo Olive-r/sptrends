@@ -21,7 +21,7 @@ just logical vectors (or objects that reduce to one): this works
 equally well comparing workflow_tst()
 against a classic Mann-Kendall, a linear model, a method from another
 package, or an algorithm you implemented yourself – as long as each is
-reduced to a &quot;significant / not significant&quot; call per cell."><meta property="og:image" content="https://olivergh.github.io/sptrends/logo.png"></head><body>
+reduced to a &quot;significant / not significant&quot; call per cell."><meta property="og:image" content="https://olive-r.github.io/sptrends/logo.png"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -29,7 +29,7 @@ reduced to a &quot;significant / not significant&quot; call per cell."><meta pro
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +60,7 @@ reduced to a &quot;significant / not significant&quot; call per cell."><meta pro
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Compare detection methods against a known ground truth</h1>
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v1.3.4/R/validation.R" class="external-link"><code>R/validation.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/R/validation.R" class="external-link"><code>R/validation.R</code></a></small>
       <div class="d-none name"><code>compare_detections.Rd</code></div>
     </div>
 
@@ -340,7 +340,7 @@ of the Royal Statistical Society: Series B, 57, 289-300.
 <span class="r-in"><span><span class="co"># data has no equivalent "true" answer to compare a detection against.</span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="sim_trend_stack.html">sim_trend_stack</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">15</span>, ncol <span class="op">=</span> <span class="fl">15</span>, n_time <span class="op">=</span> <span class="fl">15</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [sim_trend_stack()] elapsed: 0.07 s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [sim_trend_stack()] elapsed: 0.08 s</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Two variants of the same test: classic Mann-Kendall (no</span></span></span>
 <span class="r-in"><span><span class="co"># neighbourhood averaging) vs. the Contextual version.</span></span></span>
@@ -380,16 +380,16 @@ of the Royal Statistical Society: Series B, 57, 289-300.
 <span class="r-in"><span>                                CMK <span class="op">=</span> <span class="va">cmk_s</span><span class="op">$</span><span class="va">stats</span><span class="op">$</span><span class="va">p</span> <span class="op">&lt;=</span> <span class="fl">0.05</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">truths_list</span><span class="op">[[</span><span class="va">s</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">sim_s</span><span class="op">$</span><span class="va">true_slope</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [sim_trend_stack()] elapsed: 0.12 s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [sim_trend_stack()] elapsed: 0.27 s</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [sim_trend_stack()] elapsed: 0.06 s</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [sim_trend_stack()] elapsed: 0.07 s</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [sim_trend_stack()] elapsed: 0.07 s</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [sim_trend_stack()] elapsed: 0.06 s</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [sim_trend_stack()] elapsed: 0.05 s</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [sim_trend_stack()] elapsed: 0.05 s</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [sim_trend_stack()] elapsed: 0.05 s</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [sim_trend_stack()] elapsed: 0.06 s</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [sim_trend_stack()] elapsed: 0.05 s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [sim_trend_stack()] elapsed: 0.06 s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [sim_trend_stack()] elapsed: 0.06 s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [sim_trend_stack()] elapsed: 0.06 s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [sim_trend_stack()] elapsed: 0.06 s</span>
 <span class="r-in"><span><span class="fu">compare_detections</span><span class="op">(</span><span class="va">detections_list</span>, <span class="va">truths_list</span>, replicates <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>                   verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Method n_replicates TP_mean     TP_sd FP_mean    FP_sd TN_mean    TN_sd</span>

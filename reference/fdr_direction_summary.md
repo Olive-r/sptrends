@@ -11,7 +11,7 @@ fdr_direction_summary(
   trend,
   fdr_result,
   slope = NULL,
-  methods = c("raw", "BH", "BKY"),
+  methods = c("raw", "BH", "BKY", "BY"),
   path = NULL
 )
 ```
@@ -21,29 +21,29 @@ fdr_direction_summary(
 - trend:
 
   The `$stats` field of
-  [`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)'s
+  [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)'s
   output.
 
 - fdr_result:
 
   Output of
-  [`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md),
+  [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md),
   run on `trend$stats$p`.
 
 - slope:
 
   Optional single-layer `SpatRaster` (e.g.
-  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)'s
+  [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)'s
   own `$slope`) whose sign determines direction instead of the trend
   test's own statistic. `NULL` (default): use `trend`'s own
   `Sm`/`S`/`beta`, matching
-  [`direction_map()`](https://olivergh.github.io/sptrends/reference/direction_map.md)'s
+  [`direction_map()`](https://olive-r.github.io/sptrends/reference/direction_map.md)'s
   own default.
 
 - methods:
 
   Character vector of methods to include, matching whichever rejection
-  vectors are present in `fdr_result` (`c("raw", "BH", "BKY")` by
+  vectors are present in `fdr_result` (`c("raw", "BH", "BKY", "BY")` by
   default – methods not present in `fdr_result` are skipped with a
   message, not an error).
 
@@ -80,30 +80,30 @@ significance is based on:
   Statistics, 29(4), 1165-1188.
   [doi:10.1214/aos/1013699998](https://doi.org/10.1214/aos/1013699998)
   Not exported. Same reasoning as
-  [`fdr_direction_plot()`](https://olivergh.github.io/sptrends/reference/fdr_direction_plot.md):
+  [`fdr_direction_plot()`](https://olive-r.github.io/sptrends/reference/fdr_direction_plot.md):
   it takes `trend`/`fdr_result` as two separate objects rather than one
   classed object, so there is nothing for a single S3 method to dispatch
   on. Unlike every other function internalised alongside it, no S3
   method calls this one either – it has no reporting/derived function
   equivalent left reachable at all from outside the package (other than
   `:::`).
-  [`direction_map()`](https://olivergh.github.io/sptrends/reference/direction_map.md)
+  [`direction_map()`](https://olive-r.github.io/sptrends/reference/direction_map.md)
   (also not exported) plus your own tabulation is the closest standalone
   alternative.
 
 ## See also
 
 Other FDR correction functions:
-[`fdr_bh()`](https://olivergh.github.io/sptrends/reference/fdr_bh.md),
-[`fdr_bky()`](https://olivergh.github.io/sptrends/reference/fdr_bky.md),
-[`fdr_by()`](https://olivergh.github.io/sptrends/reference/fdr_by.md),
-[`fdr_comparison_barplot()`](https://olivergh.github.io/sptrends/reference/fdr_comparison_barplot.md),
-[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md),
-[`fdr_direction_plot()`](https://olivergh.github.io/sptrends/reference/fdr_direction_plot.md),
-[`fdr_pvalue_histogram()`](https://olivergh.github.io/sptrends/reference/fdr_pvalue_histogram.md),
-[`fdr_significance_maps()`](https://olivergh.github.io/sptrends/reference/fdr_significance_maps.md),
-[`fdr_summary()`](https://olivergh.github.io/sptrends/reference/fdr_summary.md),
-[`fdr_threshold_plot()`](https://olivergh.github.io/sptrends/reference/fdr_threshold_plot.md)
+[`fdr_bh()`](https://olive-r.github.io/sptrends/reference/fdr_bh.md),
+[`fdr_bky()`](https://olive-r.github.io/sptrends/reference/fdr_bky.md),
+[`fdr_by()`](https://olive-r.github.io/sptrends/reference/fdr_by.md),
+[`fdr_comparison_barplot()`](https://olive-r.github.io/sptrends/reference/fdr_comparison_barplot.md),
+[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md),
+[`fdr_direction_plot()`](https://olive-r.github.io/sptrends/reference/fdr_direction_plot.md),
+[`fdr_pvalue_histogram()`](https://olive-r.github.io/sptrends/reference/fdr_pvalue_histogram.md),
+[`fdr_significance_maps()`](https://olive-r.github.io/sptrends/reference/fdr_significance_maps.md),
+[`fdr_summary()`](https://olive-r.github.io/sptrends/reference/fdr_summary.md),
+[`fdr_threshold_plot()`](https://olive-r.github.io/sptrends/reference/fdr_threshold_plot.md)
 
 ## Examples
 
@@ -165,6 +165,7 @@ fdr_result <- fdr_correction(trend$stats$p, report = FALSE, verbose = FALSE)
 # methods side by side (BH and BKY by default; BY when explicitly
 # requested).
 sptrends:::fdr_direction_summary(trend$stats, fdr_result)
+#> Skipping (not present in fdr_result): BY
 #>  method n_increase n_decrease n_not_significant pct_increase pct_decrease
 #>     raw       7167       1837              6671        45.72        11.72
 #>      BH       6428       1537              7710        41.01         9.81

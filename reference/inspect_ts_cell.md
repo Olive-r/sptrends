@@ -36,13 +36,13 @@ inspect_ts_cell(
 - prewhitened:
 
   Optional. The full list returned by
-  [`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md)
+  [`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md)
   (not just its `$series`) – if supplied, a second panel shows the same
   location's prewhitened series, its own Theil-Sen fit and confidence
   interval, and whether that location was actually modified by
   prewhitening (many cells are not, if their own Durbin-Watson statistic
   never crossed the gating threshold; see
-  [`?prewhiten`](https://olivergh.github.io/sptrends/reference/prewhiten.md)).
+  [`?prewhiten`](https://olive-r.github.io/sptrends/reference/prewhiten.md)).
   Default `NULL`: only the raw-data panel is drawn.
 
 - selection_type:
@@ -56,7 +56,7 @@ inspect_ts_cell(
   (default), the clicked cell and its queen (or rook) neighbours are
   combined – see the "How each mode aggregates its series" section below
   – before estimating anything, borrowing spatial context the same way
-  [`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)
+  [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)
   does for significance. If `FALSE`, only the clicked cell's own series
   is used. Ignored when `selection_type = "polygon"` (a polygon is
   already an explicit choice of area). Intended for exploratory
@@ -102,7 +102,7 @@ inspect_ts_cell(
 - slope_method:
 
   Which estimator
-  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)
+  [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)
   uses for the fitted line(s) shown here. `"TS"` (default): robust to
   outliers, matches this package's own default trend workflow. `"OLS"`:
   ordinary least squares – faster, but sensitive to outliers the way a
@@ -111,7 +111,7 @@ inspect_ts_cell(
   is shown (none implemented for it in this package). Ignored when
   `compare_slopes = TRUE`. This only affects this function's own quick
   single-cell fit; it has no bearing on which method a
-  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)/[`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md)
+  [`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)/[`workflow_rta()`](https://olive-r.github.io/sptrends/reference/workflow_rta.md)
   run itself used.
 
 - compare_slopes:
@@ -171,11 +171,11 @@ a map you have already produced.
 
 **Built from the package's own pieces**: this function is not a separate
 implementation of its own – the fitted line calls
-[`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)'s
+[`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)'s
 own estimator, the neighbourhood aggregation follows
-[`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)'s
+[`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)'s
 own logic, and the prewhitened panel reads
-[`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md)'s
+[`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md)'s
 own output directly. It is, in that sense, less a standalone utility
 than a visual demonstration of how the rest of sptrends' pieces fit
 together, applied to one location at a time.
@@ -193,7 +193,7 @@ location; it introduces no new inferential method.
     selected cell or area -> temporal plot + fitted slope
 
 Optionally supply the complete
-[`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md)
+[`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md)
 result to compare the raw and transformed series at the same location.
 
 ## Methodological details
@@ -268,9 +268,9 @@ raw/prewhitened comparisons, all slope choices, confidence intervals,
 time metadata, incomplete series, interactive selection failures and
 silent operation. Core numerical results are compared with direct
 calculations and
-[`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md).
+[`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md).
 See
-[`?sptrends`](https://olivergh.github.io/sptrends/reference/sptrends-package.md)
+[`?sptrends`](https://olive-r.github.io/sptrends/reference/sptrends-package.md)
 for the common release-check protocol.
 
 ## References
@@ -287,7 +287,7 @@ Confidence interval method:
 
 Origin of the Var(S) formula reused for the confidence interval (the
 same one
-[`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)
+[`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)
 builds on for CMK's adjusted variance; see its own references for that
 extension):
 
@@ -299,11 +299,11 @@ extension):
 
 ## See also
 
-[`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md)
+[`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md)
 for transformed time series,
-[`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)
+[`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)
 for trend significance, and
-[`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)
+[`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)
 for raster-wide magnitude estimation.
 
 ## Examples

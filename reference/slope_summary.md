@@ -15,7 +15,7 @@ slope_summary(slope, path = NULL)
 - slope:
 
   Output of
-  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)
+  [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)
   (a single-layer
   [`terra::SpatRaster`](https://rspatial.github.io/terra/reference/SpatRaster-class.html)).
 
@@ -50,7 +50,7 @@ outside the package via
 ## See also
 
 Other Theil-Sen functions:
-[`slope_map()`](https://olivergh.github.io/sptrends/reference/slope_map.md)
+[`slope_map()`](https://olive-r.github.io/sptrends/reference/slope_map.md)
 
 ## Examples
 
@@ -103,7 +103,7 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.13 s
+#> >> [read_ordered_stack()] elapsed: 0.12 s
 slope <- slope_estimator(r, report = FALSE, verbose = FALSE)$slope
 sptrends:::slope_summary(slope)
 #> Valid cells: 15675

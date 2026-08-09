@@ -17,17 +17,17 @@ trend_summary(trend, alpha = c(0.1, 0.05, 0.01), path = NULL, verbose = TRUE)
 - trend:
 
   The `$stats` field of
-  [`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)'s
+  [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)'s
   output (a 3-layer `SpatRaster` with `p` and `Sm`/`S`).
 
 - alpha:
 
   Numeric vector of significance thresholds to report. **Uncorrected**
   for multiple testing across cells – run
-  [`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
+  [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
   on `trend$p` before treating any of this as a final significance
   result (see
-  [`?trend_test`](https://olivergh.github.io/sptrends/reference/trend_test.md),
+  [`?trend_test`](https://olive-r.github.io/sptrends/reference/trend_test.md),
   section "Warning"). The returned table has one row per value in
   `alpha`; the printed increase/decrease/no-change message uses a single
   reference threshold from among them – `0.05` if present (the default
@@ -47,11 +47,11 @@ trend_summary(trend, alpha = c(0.1, 0.05, 0.01), path = NULL, verbose = TRUE)
   Logical. Print the narrative messages (cell count,
   increase/decrease/no-change breakdown). Default `TRUE`. Set to `FALSE`
   to get the returned table silently – used internally by
-  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)/[`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md)
+  [`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)/[`workflow_rta()`](https://olive-r.github.io/sptrends/reference/workflow_rta.md)
   when they call this function only to populate their own
   `trend_summary_table` field, independent of their own `report`
   argument (which already governs whether
-  [`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)
+  [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)
   printed this same summary once, earlier in the same call).
 
 ## Value
@@ -68,9 +68,9 @@ Invisibly, a data frame with one row per `alpha`.
 ## See also
 
 Other Contextual Mann-Kendall functions:
-[`prepare_cmk_neighbourhood()`](https://olivergh.github.io/sptrends/reference/prepare_cmk_neighbourhood.md),
-[`trend_histograms()`](https://olivergh.github.io/sptrends/reference/trend_histograms.md),
-[`trend_maps()`](https://olivergh.github.io/sptrends/reference/trend_maps.md)
+[`prepare_cmk_neighbourhood()`](https://olive-r.github.io/sptrends/reference/prepare_cmk_neighbourhood.md),
+[`trend_histograms()`](https://olive-r.github.io/sptrends/reference/trend_histograms.md),
+[`trend_maps()`](https://olive-r.github.io/sptrends/reference/trend_maps.md)
 
 ## Examples
 

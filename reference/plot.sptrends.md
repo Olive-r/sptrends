@@ -4,7 +4,7 @@ The graphical exploration counterpart to
 [`print()`](https://rdrr.io/r/base/print.html)'s one-line overview and
 [`summary()`](https://rdrr.io/r/base/summary.html)'s textual report –
 see
-[`print.sptrends()`](https://olivergh.github.io/sptrends/reference/print.sptrends.md)
+[`print.sptrends()`](https://olive-r.github.io/sptrends/reference/print.sptrends.md)
 for the full class list and the rationale for one shared entry point per
 generic. What `which` (and any other named argument) accepts depends
 entirely on `x`'s own class – see the sections below, grouped by what
@@ -26,19 +26,19 @@ plot(x, ...)
   `"fdr"`, `"spatial_autocorrelation"`, `"compare_detections"`,
   `"sptrends_simulation"`, `"sptrends_simulation_design"`, or
   `"sptrends_benchmark"`), from
-  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md),
-  [`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md),
-  [`workflow_trends()`](https://olivergh.github.io/sptrends/reference/workflow_trends.md),
-  [`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md),
-  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md),
-  [`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md),
-  [`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md),
-  [`spatial_autocorrelation()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation.md),
-  [`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md),
-  [`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md),
-  [`simulation_design()`](https://olivergh.github.io/sptrends/reference/simulation_design.md),
+  [`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md),
+  [`workflow_rta()`](https://olive-r.github.io/sptrends/reference/workflow_rta.md),
+  [`workflow_trends()`](https://olive-r.github.io/sptrends/reference/workflow_trends.md),
+  [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md),
+  [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md),
+  [`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md),
+  [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md),
+  [`spatial_autocorrelation()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation.md),
+  [`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md),
+  [`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md),
+  [`simulation_design()`](https://olive-r.github.io/sptrends/reference/simulation_design.md),
   or
-  [`benchmark_methods()`](https://olivergh.github.io/sptrends/reference/benchmark_methods.md).
+  [`benchmark_methods()`](https://olive-r.github.io/sptrends/reference/benchmark_methods.md).
 
 - ...:
 
@@ -67,7 +67,7 @@ default; use `which` for an alternative diagnostic view where supported.
 map: increases and decreases from the selected trend statistic are
 retained only where the selected multiple-testing procedure rejects the
 null hypothesis (see
-[`direction_map()`](https://olivergh.github.io/sptrends/reference/direction_map.md)).
+[`direction_map()`](https://olive-r.github.io/sptrends/reference/direction_map.md)).
 
 `which` – the default and the three main views:
 
@@ -81,7 +81,7 @@ null hypothesis (see
 
 `which = "trend"` draws **uncorrected** diagnostics only – see the
 "Warning" section of
-[`?trend_test`](https://olivergh.github.io/sptrends/reference/trend_test.md)
+[`?trend_test`](https://olive-r.github.io/sptrends/reference/trend_test.md)
 before reporting significance from this view. `which = "slope"` is the
 more reliable source for per-cell direction/magnitude than the CMK
 statistic `Sm`, since `Sm`'s neighbourhood averaging can occasionally
@@ -107,7 +107,7 @@ result to report:
 
 `slope_map`/`slope_direction`/`slope_hist`/`slope_bar` need
 `x$theil_sen` (i.e.
-[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)
+[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)
 must have been run with `theil_sen = TRUE`); the four `pvalue_*` views
 always work, since `x$trend` is never `NULL`. `slope_bar`/`pvalue_bar`
 accept `probability = TRUE` for percentages instead of counts;
@@ -115,19 +115,19 @@ accept `probability = TRUE` for percentages instead of counts;
 multiple testing.
 
 `method`: `"BKY"` (default, matching
-[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)'s
+[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)'s
 default `fdr_method`) or `"BH"` – which correction to use for
 `which = "direction"` or `which = "slope"`. Ignored otherwise. If `x`
 only has the other one (e.g.
-[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)
+[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)
 was called with `fdr_method = "BH"`), set `method` to match. **Published
 workflow: `"rta"`.** By default, draws the map you actually want to
 report: direction of change masked by FDR-BH significance (see
-[`direction_map()`](https://olivergh.github.io/sptrends/reference/direction_map.md)).
+[`direction_map()`](https://olive-r.github.io/sptrends/reference/direction_map.md)).
 Unlike the `"tst"` case above, there is no `method` argument –
-[`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md)
+[`workflow_rta()`](https://olive-r.github.io/sptrends/reference/workflow_rta.md)
 always uses FDR-BH (see
-[`?workflow_rta`](https://olivergh.github.io/sptrends/reference/workflow_rta.md)'s
+[`?workflow_rta`](https://olive-r.github.io/sptrends/reference/workflow_rta.md)'s
 "How RTA differs from TST, and why"), so there is nothing to choose
 between.
 
@@ -141,15 +141,15 @@ optional slope and FDR stages were selected. **Display smoothing
 `smooth`: logical. If `TRUE` (default) and `x$theil_sen` (`x$slope` for
 a `"workflow_trends"` object – same mechanism, different field name) was
 **not** already smoothed at source (via
-[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)'s
+[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)'s
 own `theil_sen_args = list(smooth_neighbourhood = TRUE)`, which is *not*
-[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)'s
+[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)'s
 own default – see
-[`?workflow_tst`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)'s
+[`?workflow_tst`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)'s
 "Computational considerations" section for why
-[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)
+[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)
 and
-[`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md)
+[`workflow_rta()`](https://olive-r.github.io/sptrends/reference/workflow_rta.md)
 deliberately do not differ here), the significant-cells-only slope map
 is smoothed with a queen-3x3 median filter **for this plot only**; if it
 was already smoothed at source, this is not applied a second time.
@@ -162,27 +162,27 @@ this is an expected consequence of masking before smoothing, not a bug
 (see `.mask_and_smooth_slope()`'s own `na.policy = "omit"` for the
 related, and separate, fix ensuring a non-significant cell is never
 itself painted with a colour). Setting `smooth = FALSE` when
-[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)
+[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)
 already smoothed at source cannot recover the unsmoothed values (they
 were never kept) – a message explains this if it happens. The plot title
 always states which stage (if any) applied smoothing, so the display is
 never ambiguous about what it shows. See
-[`?slope_estimator`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)'s
+[`?slope_estimator`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)'s
 "Optional queen-neighbourhood smoothing" section for why this is a
 display convenience, not a validated estimator, and is not applied to
 the value returned by
-[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md).
+[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md).
 **Trend estimation: `"trend_test"`.** `which`: `"maps"` (default), all
 four uncorrected diagnostic maps (trend statistic, p-value,
 significance, and direction), via
-[`trend_maps()`](https://olivergh.github.io/sptrends/reference/trend_maps.md);
+[`trend_maps()`](https://olive-r.github.io/sptrends/reference/trend_maps.md);
 `"histograms"`, histograms of the trend statistic and p-value, via
-[`trend_histograms()`](https://olivergh.github.io/sptrends/reference/trend_histograms.md).
+[`trend_histograms()`](https://olive-r.github.io/sptrends/reference/trend_histograms.md).
 These are the **uncorrected** result; see the "Warning" section of
-[`?trend_test`](https://olivergh.github.io/sptrends/reference/trend_test.md)
+[`?trend_test`](https://olive-r.github.io/sptrends/reference/trend_test.md)
 before reporting significance from them without a multiple-testing
 correction (see
-[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
+[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
 and the `"fdr"` case below).
 
 `alpha`: significance threshold, only used when `which = "maps"`.
@@ -199,12 +199,12 @@ BKY was requested). **Diagnostic: `"spatial_autocorrelation"`.** Global
 results draw the null distribution with the observed statistic marked.
 Local results draw the statistic, empirical z, raw permutation p-value
 and exploratory raw-significance map. Apply and plot
-[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
+[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
 separately for BH, BKY or BY inference. **Validation:
 `"compare_detections"`.** Intended mainly for simulation studies – not
 typically the plot an analyst runs on a real dataset, since it needs a
 known ground truth to have been scored against in the first place (see
-[`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md)).
+[`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md)).
 
 A grouped bar chart of the comparison table – one group of bars per
 method, one bar per metric; no `which` argument (only one view exists
@@ -222,9 +222,9 @@ admissible range from zero to one.
 
 ## See also
 
-[`print.sptrends()`](https://olivergh.github.io/sptrends/reference/print.sptrends.md)
+[`print.sptrends()`](https://olive-r.github.io/sptrends/reference/print.sptrends.md)
 for a concise overview and
-[`summary.sptrends()`](https://olivergh.github.io/sptrends/reference/summary.sptrends.md)
+[`summary.sptrends()`](https://olive-r.github.io/sptrends/reference/summary.sptrends.md)
 for detailed textual output.
 
 ## Examples
@@ -280,7 +280,7 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.12 s
+#> >> [read_ordered_stack()] elapsed: 0.13 s
 result <- workflow_tst(r, report = FALSE, verbose = FALSE)
 
 # Default map: direction of change (greening/browning/no change),

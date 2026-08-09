@@ -31,7 +31,7 @@ with TST&quot; below before choosing between them. Both are implemented
 here because both are genuinely published methods, not because one
 supersedes the other – this package aims to be a platform for
 comparing such methods (see compare_detections()), not a vehicle
-for only its own authors' preferred one."><meta property="og:image" content="https://olivergh.github.io/sptrends/logo.png"></head><body>
+for only its own authors' preferred one."><meta property="og:image" content="https://olive-r.github.io/sptrends/logo.png"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -39,7 +39,7 @@ for only its own authors' preferred one."><meta property="og:image" content="htt
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,7 +70,7 @@ for only its own authors' preferred one."><meta property="og:image" content="htt
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Robust Trend Analysis (RTA): the full pipeline in one call</h1>
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v1.3.4/R/rta.R" class="external-link"><code>R/rta.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/R/rta.R" class="external-link"><code>R/rta.R</code></a></small>
       <div class="d-none name"><code>workflow_rta.Rd</code></div>
     </div>
 
@@ -125,7 +125,14 @@ region, or <code>list(method = "MK", n_cores = 4)</code>). The default empty
 list preserves the 3 by 3 CMK region described by Neeti and Eastman
 (2011), as implemented in TerrSet's Kendall module;
 changing it creates an RTA-inspired variant rather than an exact
-reproduction of the published workflow.</p></dd>
+reproduction of the published workflow.</p>
+<p><strong>Known limitation with irregular time spacing:</strong> this workflow
+has no top-level <code>t</code> argument of its own – if your observation
+times are irregularly spaced and you need a genuine time axis for
+<code><a href="trend_test.html">trend_test()</a></code>/<code><a href="slope_estimator.html">slope_estimator()</a></code> rather than the default <code>1:n</code>
+layer index, you must supply the same correct <code>t</code> yourself in
+both <code>cmk_args</code> and <code>theil_sen_args</code>, and keep them consistent by
+hand.</p></dd>
 
 
 <dt id="arg-theil-sen-args">theil_sen_args<a class="anchor" aria-label="anchor" href="#arg-theil-sen-args"></a></dt>
@@ -133,7 +140,8 @@ reproduction of the published workflow.</p></dd>
 <code><a href="slope_estimator.html">slope_estimator()</a></code> (e.g. <code>list(max_pairs = 20000, n_cores = 4)</code>).
 <code>smooth_neighbourhood</code> is left at <code><a href="slope_estimator.html">slope_estimator()</a></code>'s own default
 (<code>FALSE</code>, same as <code><a href="workflow_tst.html">workflow_tst()</a></code>) unless you set it yourself – see
-"Computational considerations" above.</p></dd>
+"Computational considerations" above. See <code>cmk_args</code> above for a
+known limitation with irregular time spacing if you pass <code>t</code> here.</p></dd>
 
 
 <dt id="arg-alpha">alpha<a class="anchor" aria-label="anchor" href="#arg-alpha"></a></dt>
@@ -195,16 +203,19 @@ with <code><a href="workflow_tst.html">workflow_tst()</a></code>'s own return va
 <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> – see <code><a href="print.sptrends.html">print.sptrends()</a></code>): a list
 with</p>
 <dl><dt>theil_sen</dt>
-<dd><p>The output of <code><a href="slope_estimator.html">slope_estimator()</a></code>. Not smoothed
-by default – check <code>theil_sen_smoothed</code> if you need to know
-whether it was (e.g. because you set it yourself).</p></dd>
+<dd><p>The <code>$slope</code> field of <code><a href="slope_estimator.html">slope_estimator()</a></code>'s own
+output (a <code>SpatRaster</code>) – not the full return value. Not
+smoothed by default – check <code>theil_sen_smoothed</code> if you need
+to know whether it was (e.g. because you set it yourself).</p></dd>
 
 <dt>theil_sen_smoothed</dt>
 <dd><p>Logical: whether <code>theil_sen</code> was computed
 with <code>smooth_neighbourhood = TRUE</code>. <code>FALSE</code> by default.</p></dd>
 
 <dt>trend</dt>
-<dd><p>The output of <code><a href="trend_test.html">trend_test()</a></code>.</p></dd>
+<dd><p>The <code>$stats</code> field of <code><a href="trend_test.html">trend_test()</a></code>'s own output (a
+<code>SpatRaster</code>) – not the full return value, which also includes
+<code>neighbourhood</code>/<code>window_size</code>.</p></dd>
 
 <dt>trend_summary_table</dt>
 <dd><p>The output of <code><a href="trend_summary.html">trend_summary()</a></code>
@@ -215,7 +226,7 @@ with <code>smooth_neighbourhood = TRUE</code>. <code>FALSE</code> by default.</p
 
 <dt>timing</dt>
 <dd><p>A named list of elapsed seconds per step
-(<code>theil_sen</code>, <code>cmk</code>, <code>fdr</code>), each measured with <code><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time()</a></code>
+(<code>theil_sen</code>, <code>CMK</code>, <code>fdr</code>), each measured with <code><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time()</a></code>
 around that step's own function call. Coarse (whole-step, not
 line-by-line) and not a substitute for a proper profiler, but
 enough for noticing which step dominates on your own data.</p></dd>

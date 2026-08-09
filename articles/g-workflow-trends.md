@@ -22,7 +22,7 @@ challenges above.
 
 ## What `workflow_trends()` does
 
-[`workflow_trends()`](https://olivergh.github.io/sptrends/reference/workflow_trends.md)
+[`workflow_trends()`](https://olive-r.github.io/sptrends/reference/workflow_trends.md)
 coordinates the selected stages and returns one `sptrends` object
 compatible with [`print()`](https://rdrr.io/r/base/print.html),
 [`summary()`](https://rdrr.io/r/base/summary.html) and
@@ -57,7 +57,7 @@ summary(result)
 #> 1  0.05          8091              7584           51.62   15675
 ```
 
-[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)’s
+[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)’s
 own published defaults are exactly the same four stages introduced in
 the preceding vignettes: selective trend-preserving prewhitening,
 Contextual Mann-Kendall inference, Theil-Sen trend-magnitude estimation
@@ -105,19 +105,19 @@ Stage-specific arguments are supplied through `prewhiten_args`,
 
 ### Published workflows
 
-[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)
+[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)
 and
-[`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md)
+[`workflow_rta()`](https://olive-r.github.io/sptrends/reference/workflow_rta.md)
 run an entire published analysis in one line of code, each reproducing
 one specific, citable method exactly – use them, rather than assembling
 the same sequence by hand through
-[`workflow_trends()`](https://olivergh.github.io/sptrends/reference/workflow_trends.md),
+[`workflow_trends()`](https://olive-r.github.io/sptrends/reference/workflow_trends.md),
 whenever the goal is to reproduce a published result:
 
 | Workflow | Published sequence | Function |
 |----|----|----|
-| TST ([Gutiérrez-Hernández & García, 2025](https://doi.org/10.1016/j.rsase.2024.101377)) | Selective prewhitening, CMK, Theil-Sen, FDR-BKY | [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md) |
-| RTA ([Gutiérrez-Hernández & García, 2024](https://doi.org/10.3390/rs16203886)) | CMK, Theil-Sen, FDR-BH; no prewhitening | [`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md) |
+| TST ([Gutiérrez-Hernández & García, 2025](https://doi.org/10.1016/j.rsase.2024.101377)) | Selective prewhitening, CMK, Theil-Sen, FDR-BKY | [`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md) |
+| RTA ([Gutiérrez-Hernández & García, 2024](https://doi.org/10.3390/rs16203886)) | CMK, Theil-Sen, FDR-BH; no prewhitening | [`workflow_rta()`](https://olive-r.github.io/sptrends/reference/workflow_rta.md) |
 
 ``` r
 
@@ -128,13 +128,13 @@ rta <- workflow_rta(r, report = FALSE, verbose = FALSE)
 Both functions permit documented extensions, but changing their
 published defaults produces a derived variant rather than an exact
 reproduction. Use
-[`workflow_trends()`](https://olivergh.github.io/sptrends/reference/workflow_trends.md)
+[`workflow_trends()`](https://olive-r.github.io/sptrends/reference/workflow_trends.md)
 when the scientific question requires a genuinely custom combination.
 
 ## Common mistakes
 
 - Do not label every complete custom workflow as TST; only
-  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)’s
+  [`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)’s
   own published defaults reproduce that exact method (see [Published
   workflows](#published-workflows) above).
 - Do not correct temporal autocorrelation twice by combining
@@ -167,11 +167,11 @@ trends.
 ## Further details
 
 See
-[`?workflow_trends`](https://olivergh.github.io/sptrends/reference/workflow_trends.md)
+[`?workflow_trends`](https://olive-r.github.io/sptrends/reference/workflow_trends.md)
 for configuration rules and
-[`?workflow_tst`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)
+[`?workflow_tst`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)
 and
-[`?workflow_rta`](https://olivergh.github.io/sptrends/reference/workflow_rta.md)
+[`?workflow_rta`](https://olive-r.github.io/sptrends/reference/workflow_rta.md)
 for the complete published methods, assumptions, limitations, quality
 assurance and references.
 

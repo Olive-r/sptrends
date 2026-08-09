@@ -17,7 +17,7 @@ slope_direction_map(slope, ...)
 - slope:
 
   A `SpatRaster` of Theil-Sen slopes, e.g.
-  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)'s
+  [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)'s
   own `$slope`.
 
 - ...:
@@ -41,8 +41,8 @@ outside the package via
 ## See also
 
 Other Theil-Sen slope functions:
-[`slope_direction_barplot()`](https://olivergh.github.io/sptrends/reference/slope_direction_barplot.md),
-[`slope_histogram()`](https://olivergh.github.io/sptrends/reference/slope_histogram.md)
+[`slope_direction_barplot()`](https://olive-r.github.io/sptrends/reference/slope_direction_barplot.md),
+[`slope_histogram()`](https://olive-r.github.io/sptrends/reference/slope_histogram.md)
 
 ## Examples
 

@@ -1,7 +1,7 @@
 # Bar plot of a compare_detections() comparison
 
 A grouped bar plot of the metric columns from a
-[`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md)
+[`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md)
 result (either a single run, or the mean columns of a
 `replicates = TRUE` aggregated result), one group of bars per method.
 
@@ -20,17 +20,17 @@ plot_detection_comparison(
 - comparison:
 
   Output of
-  [`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md),
+  [`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md),
   or a data frame with the same plain (non-suffixed) metric column names
   – e.g. the mean-columns view
-  [`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md)'s
+  [`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md)'s
   own `replicates = TRUE` plot dispatch constructs internally.
 
 - metrics:
 
   Character vector of column names in `comparison` to plot. Default: the
   six proportion-based metrics from
-  [`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md)
+  [`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md)
   (`TP`/`FP`/`TN`/`FN` are counts on a different scale and are not
   plotted by default).
 
@@ -52,10 +52,10 @@ Not exported – reachable from outside the package via
 ## See also
 
 Other validation functions:
-[`benchmark_methods()`](https://olivergh.github.io/sptrends/reference/benchmark_methods.md),
-[`benchmark_summary()`](https://olivergh.github.io/sptrends/reference/benchmark_summary.md),
-[`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md),
-[`simulation_design()`](https://olivergh.github.io/sptrends/reference/simulation_design.md)
+[`benchmark_methods()`](https://olive-r.github.io/sptrends/reference/benchmark_methods.md),
+[`benchmark_summary()`](https://olive-r.github.io/sptrends/reference/benchmark_summary.md),
+[`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md),
+[`simulation_design()`](https://olive-r.github.io/sptrends/reference/simulation_design.md)
 
 ## Examples
 

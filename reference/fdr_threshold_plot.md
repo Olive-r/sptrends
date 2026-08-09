@@ -18,7 +18,7 @@ fdr_threshold_plot(result, path = NULL)
 - result:
 
   Output of
-  [`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
+  [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
   (must include BKY, since `threshold_data` is only populated then).
 
 - path:
@@ -35,19 +35,18 @@ In the left panel, the line is the BH linear step-up threshold,
 `p_(i) = (i / m) * q`; in the right panel, it is the adaptive BKY
 threshold, `p_(i) = (i / m) * q_star`, which uses `q_star` – rescaled
 from `q` using the estimated proportion of true nulls,
-`pi0_hat = m0_hat / m` – rather than a fixed `q`. Points below their
-panel's Every rank at or before the final cutoff is drawn in blue
-(rejected), whereas ranks after it are drawn in grey (not rejected). The
-dashed vertical line marks the cutoff rank `k`: the step-up rule rejects
-every hypothesis from rank 1 up to `k`, not just the individual points
-that happen to fall under the line – `k` is the *last* point (in
-increasing p order) still below the threshold, and everything at or
-before it is rejected even if a point in between sits slightly above the
-line by chance. Because BKY's threshold adapts to `pi0_hat`, it
-typically sits above BH's fixed-slope line whenever `pi0_hat < 1` – i.e.
-whenever some cells are estimated to have a real trend – which is why
-the right panel usually shows more rejections than the left one for the
-same nominal `q`.
+`pi0_hat = m0_hat / m` – rather than a fixed `q`. Every rank at or
+before the final cutoff is drawn in blue (rejected), whereas ranks after
+it are drawn in grey (not rejected). The dashed vertical line marks the
+cutoff rank `k`: the step-up rule rejects every hypothesis from rank 1
+up to `k`, not just the individual points that happen to fall under the
+line – `k` is the *last* point (in increasing p order) still below the
+threshold, and everything at or before it is rejected even if a point in
+between sits slightly above the line by chance. Because BKY's threshold
+adapts to `pi0_hat`, it typically sits above BH's fixed-slope line
+whenever `pi0_hat < 1` – i.e. whenever some cells are estimated to have
+a real trend – which is why the right panel usually shows more
+rejections than the left one for the same nominal `q`.
 
 **Function type:** **Reporting/derived function** – summarises or plots
 the output of another function; it does not compute any new statistic.
@@ -56,10 +55,9 @@ outside the package via `plot(x, which = "threshold")`.
 
 ## References
 
-See
-[`fdr_bh()`](https://olivergh.github.io/sptrends/reference/fdr_bh.md)
+See [`fdr_bh()`](https://olive-r.github.io/sptrends/reference/fdr_bh.md)
 and
-[`fdr_bky()`](https://olivergh.github.io/sptrends/reference/fdr_bky.md)
+[`fdr_bky()`](https://olive-r.github.io/sptrends/reference/fdr_bky.md)
 for the full reference list and the reasoning behind each citation.
 
 - Benjamini, Y., & Hochberg, Y. (1995) Controlling the False Discovery
@@ -83,16 +81,16 @@ simulation study of the stability of `pi0_hat` across resamples:
 ## See also
 
 Other FDR correction functions:
-[`fdr_bh()`](https://olivergh.github.io/sptrends/reference/fdr_bh.md),
-[`fdr_bky()`](https://olivergh.github.io/sptrends/reference/fdr_bky.md),
-[`fdr_by()`](https://olivergh.github.io/sptrends/reference/fdr_by.md),
-[`fdr_comparison_barplot()`](https://olivergh.github.io/sptrends/reference/fdr_comparison_barplot.md),
-[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md),
-[`fdr_direction_plot()`](https://olivergh.github.io/sptrends/reference/fdr_direction_plot.md),
-[`fdr_direction_summary()`](https://olivergh.github.io/sptrends/reference/fdr_direction_summary.md),
-[`fdr_pvalue_histogram()`](https://olivergh.github.io/sptrends/reference/fdr_pvalue_histogram.md),
-[`fdr_significance_maps()`](https://olivergh.github.io/sptrends/reference/fdr_significance_maps.md),
-[`fdr_summary()`](https://olivergh.github.io/sptrends/reference/fdr_summary.md)
+[`fdr_bh()`](https://olive-r.github.io/sptrends/reference/fdr_bh.md),
+[`fdr_bky()`](https://olive-r.github.io/sptrends/reference/fdr_bky.md),
+[`fdr_by()`](https://olive-r.github.io/sptrends/reference/fdr_by.md),
+[`fdr_comparison_barplot()`](https://olive-r.github.io/sptrends/reference/fdr_comparison_barplot.md),
+[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md),
+[`fdr_direction_plot()`](https://olive-r.github.io/sptrends/reference/fdr_direction_plot.md),
+[`fdr_direction_summary()`](https://olive-r.github.io/sptrends/reference/fdr_direction_summary.md),
+[`fdr_pvalue_histogram()`](https://olive-r.github.io/sptrends/reference/fdr_pvalue_histogram.md),
+[`fdr_significance_maps()`](https://olive-r.github.io/sptrends/reference/fdr_significance_maps.md),
+[`fdr_summary()`](https://olive-r.github.io/sptrends/reference/fdr_summary.md)
 
 ## Examples
 

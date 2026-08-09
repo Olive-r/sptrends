@@ -180,7 +180,7 @@ prewhiten(
   diagnostic histograms and maps after computing (which functions,
   exactly, depends on `method` – see "Value" below). Set to `FALSE` for
   programmatic use (e.g. inside a loop, or when called from
-  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md))
+  [`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md))
   where you don't want console output or plots as a side effect.
 
 - verbose:
@@ -227,8 +227,8 @@ Returns a list of class `"prewhiten"`, with:
   needed correcting in the first place. Reachable via
   [`summary()`](https://rdrr.io/r/base/summary.html)/[`plot()`](https://rdrr.io/r/graphics/plot.default.html)
   as
-  [`prewhiten_summary()`](https://olivergh.github.io/sptrends/reference/prewhiten_summary.md)/[`prewhiten_histograms()`](https://olivergh.github.io/sptrends/reference/prewhiten_histograms.md)/
-  [`prewhiten_maps()`](https://olivergh.github.io/sptrends/reference/prewhiten_maps.md).
+  [`prewhiten_summary()`](https://olive-r.github.io/sptrends/reference/prewhiten_summary.md)/[`prewhiten_histograms()`](https://olive-r.github.io/sptrends/reference/prewhiten_histograms.md)/
+  [`prewhiten_maps()`](https://olive-r.github.io/sptrends/reference/prewhiten_maps.md).
   For `method = "TFPW_Y"`: 2 layers, `Beta_TheilSen` (the slope removed
   and restored) and `Rho` (lag-1 autocorrelation of the detrended
   residuals); reachable via internal reporting functions specific to
@@ -257,29 +257,29 @@ Returns a list of class `"prewhiten"`, with:
 
 **Function type:** **Preprocessing function** – prepares the raw raster
 time series before trend estimation or significance testing (see
-[`compute_anomalies()`](https://olivergh.github.io/sptrends/reference/compute_anomalies.md)
+[`compute_anomalies()`](https://olive-r.github.io/sptrends/reference/compute_anomalies.md)
 for the other preprocessing step this package offers). Not one of the
 core trend-analysis pillars itself. This function typically precedes
 trend estimation
-([`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md))
+([`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md))
 and slope estimation
-([`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md))
+([`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md))
 within the standard sptrends workflow.
 
 ## Typical use
 
 This function is the preprocessing step between reading data and testing
 it for a trend:
-[`read_ordered_stack()`](https://olivergh.github.io/sptrends/reference/read_ordered_stack.md)/[`read_netcdf_stack()`](https://olivergh.github.io/sptrends/reference/read_netcdf_stack.md)
+[`read_ordered_stack()`](https://olive-r.github.io/sptrends/reference/read_ordered_stack.md)/[`read_netcdf_stack()`](https://olive-r.github.io/sptrends/reference/read_netcdf_stack.md)
 -\>
-[`compute_anomalies()`](https://olivergh.github.io/sptrends/reference/compute_anomalies.md)
+[`compute_anomalies()`](https://olive-r.github.io/sptrends/reference/compute_anomalies.md)
 (optional) -\> `prewhiten()` -\>
-[`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)
+[`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)
 -\>
-[`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)
+[`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)
 -\>
-[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md).
-[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)
+[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md).
+[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)
 runs this whole chain in one call.
 
     raster time series
@@ -291,7 +291,7 @@ runs this whole chain in one call.
     trend_test() and slope_estimator()
 
 If the input has a seasonal cycle, remove it first with
-[`compute_anomalies()`](https://olivergh.github.io/sptrends/reference/compute_anomalies.md).
+[`compute_anomalies()`](https://olive-r.github.io/sptrends/reference/compute_anomalies.md).
 Pass `result$series` to later stages; the original input object is not
 modified and remains available under the name supplied by the caller.
 
@@ -458,7 +458,7 @@ require identical sequential and parallel results. Yue-Pilon trend-free
 prewhitening is additionally compared with
 [`modifiedmk::tfpwmk()`](https://rdrr.io/pkg/modifiedmk/man/tfpwmk.html)
 for the quantities both implementations define identically. See
-[`?sptrends`](https://olivergh.github.io/sptrends/reference/sptrends-package.md)
+[`?sptrends`](https://olive-r.github.io/sptrends/reference/sptrends-package.md)
 for the package-wide release-check protocol; current check results
 belong only in `cran-comments.md`.
 
@@ -570,9 +570,9 @@ This function is used (not authored) by the following study:
 ## See also
 
 Other Prewhitening functions:
-[`prewhiten_histograms()`](https://olivergh.github.io/sptrends/reference/prewhiten_histograms.md),
-[`prewhiten_maps()`](https://olivergh.github.io/sptrends/reference/prewhiten_maps.md),
-[`prewhiten_summary()`](https://olivergh.github.io/sptrends/reference/prewhiten_summary.md)
+[`prewhiten_histograms()`](https://olive-r.github.io/sptrends/reference/prewhiten_histograms.md),
+[`prewhiten_maps()`](https://olive-r.github.io/sptrends/reference/prewhiten_maps.md),
+[`prewhiten_summary()`](https://olive-r.github.io/sptrends/reference/prewhiten_summary.md)
 
 ## Examples
 
@@ -627,7 +627,7 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.12 s
+#> >> [read_ordered_stack()] elapsed: 0.14 s
 
 # Remove serial autocorrelation before testing for a trend -- only
 # cells that actually show relevant autocorrelation are modified;

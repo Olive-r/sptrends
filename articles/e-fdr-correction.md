@@ -42,7 +42,7 @@ and omitted in practice – particularly in environmental remote sensing
 
 ## What `fdr_correction()` does
 
-[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
+[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
 implements three procedures for controlling the false discovery rate.
 [Benjamini-Hochberg
 (`BH`)](https://doi.org/10.1111/j.2517-6161.1995.tb02031.x) is the
@@ -183,7 +183,7 @@ probability equal to *q*.
 
 It is good practice to always report the number of valid cells actually
 tested (`m`) alongside any count or percentage of significant cells –
-[`fdr_summary()`](https://olivergh.github.io/sptrends/reference/fdr_summary.md)’s
+[`fdr_summary()`](https://olive-r.github.io/sptrends/reference/fdr_summary.md)’s
 own table includes it as `n_valid` for exactly this reason. The same
 percentage means something very different depending on whether it comes
 from 50 valid cells or 50,000; omitting `m` leaves that scale invisible
@@ -195,7 +195,7 @@ to anyone reading the result later, including the original analyst.
 |----|----|----|
 | `BH` ([Benjamini & Hochberg, 1995](https://doi.org/10.1111/j.2517-6161.1995.tb02031.x)) | FDR control under independence or positive dependence | Recommended general starting point |
 | `BKY` ([Benjamini, Krieger & Yekutieli, 2006](https://doi.org/10.1093/biomet/93.3.491)) | Adaptive FDR control under independence or positive dependence | Recommended when adaptation is expected to increase power |
-| `BY` ([Benjamini & Yekutieli, 2001](https://doi.org/10.1214/aos/1013699998)) | FDR control under arbitrary dependence | Usually discard; retain only when required |
+| `BY` ([Benjamini & Yekutieli, 2001](https://doi.org/10.1214/aos/1013699998)) | FDR control under arbitrary dependence | Usually conservative; use when arbitrary-dependence control is required |
 
 BH ([Benjamini and Hochberg,
 1995](https://doi.org/10.1111/j.2517-6161.1995.tb02031.x)) and BKY
@@ -205,7 +205,7 @@ tests are independent or positively dependent. Positive spatial
 dependence is often expected in gridded environmental data because
 neighbouring cells tend to share similar conditions, but it should be
 examined rather than assumed.
-[`spatial_autocorrelation()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation.md)
+[`spatial_autocorrelation()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation.md)
 can be used to assess whether the spatial pattern is consistent with
 positive dependence. BH and BKY are the recommended procedures: BH
 provides a standard and reliable starting point ([Gutiérrez-Hernández
@@ -233,17 +233,17 @@ correction itself is usually very fast relative to trend testing.
 ## Next steps
 
 Continue to
-[`vignette("g-workflow-trends")`](https://olivergh.github.io/sptrends/articles/g-workflow-trends.md)
+[`vignette("g-workflow-trends")`](https://olive-r.github.io/sptrends/articles/g-workflow-trends.md)
 to combine preprocessing, trend testing, slope estimation and FDR in one
 workflow.
 
 ## Further details
 
 See
-[`?fdr_correction`](https://olivergh.github.io/sptrends/reference/fdr_correction.md),
-[`?fdr_bh`](https://olivergh.github.io/sptrends/reference/fdr_bh.md),
-[`?fdr_bky`](https://olivergh.github.io/sptrends/reference/fdr_bky.md)
-and [`?fdr_by`](https://olivergh.github.io/sptrends/reference/fdr_by.md)
+[`?fdr_correction`](https://olive-r.github.io/sptrends/reference/fdr_correction.md),
+[`?fdr_bh`](https://olive-r.github.io/sptrends/reference/fdr_bh.md),
+[`?fdr_bky`](https://olive-r.github.io/sptrends/reference/fdr_bky.md)
+and [`?fdr_by`](https://olive-r.github.io/sptrends/reference/fdr_by.md)
 for assumptions, algorithms, diagnostics, limitations and references.
 
 ## References

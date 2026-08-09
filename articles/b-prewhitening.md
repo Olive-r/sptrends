@@ -16,7 +16,7 @@ and Wang, 2002](https://doi.org/10.1029/2001WR000861)).
 
 ## What `prewhiten()` does
 
-[`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md)
+[`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md)
 receives a raster time series and returns a transformed series together
 with cell-level diagnostics. Its default method is selective: only cells
 whose diagnostic indicates relevant serial autocorrelation are modified.
@@ -107,7 +107,7 @@ raw series can attenuate the trend that the analysis seeks to detect
 - Do not combine prewhitening with modified Mann-Kendall (`MMK`) without
   a clear methodological justification; both approaches address temporal
   autocorrelation (see [trend-test
-  vignette](https://olivergh.github.io/sptrends/articles/c-trend-test.md)).
+  vignette](https://olive-r.github.io/sptrends/articles/c-trend-test.md)).
 - Do not assume `TFPW_Y` preserves the input series length; it returns
   one fewer temporal observation, so verify the output dimensions before
   proceeding to later analytical stages.
@@ -115,14 +115,14 @@ raw series can attenuate the trend that the analysis seeks to detect
 ## Next steps
 
 Continue to
-[`vignette("c-trend-test")`](https://olivergh.github.io/sptrends/articles/c-trend-test.md)
+[`vignette("c-trend-test")`](https://olive-r.github.io/sptrends/articles/c-trend-test.md)
 and pass either the transformed series or the original series, according
 to the analytical decision.
 
 ## Further details
 
 See
-[`?prewhiten`](https://olivergh.github.io/sptrends/reference/prewhiten.md)
+[`?prewhiten`](https://olive-r.github.io/sptrends/reference/prewhiten.md)
 for equations, statistical assumptions, diagnostics, method comparisons,
 limitations, external validation and references.
 

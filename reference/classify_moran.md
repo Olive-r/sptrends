@@ -8,7 +8,7 @@ justification in a formal write-up. `method = "moran"` results only –
 Getis-Ord General G's natural range and expected value under H0 differ
 enough from Moran's I that these same thresholds would not transfer
 meaningfully (see
-[`?spatial_autocorrelation`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation.md)'s
+[`?spatial_autocorrelation`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation.md)'s
 "Limitations" section).
 
 ## Usage
@@ -35,9 +35,9 @@ the output of another function; it does not compute any new statistic.
 Not exported – folded into
 [`print()`](https://rdrr.io/r/base/print.html)/[`summary()`](https://rdrr.io/r/base/summary.html)
 of a `"spatial_autocorrelation"` object (see
-[`?print.sptrends`](https://olivergh.github.io/sptrends/reference/print.sptrends.md)),
+[`?print.sptrends`](https://olive-r.github.io/sptrends/reference/print.sptrends.md)),
 the category now shown there for every `method = "moran"`
-[`spatial_autocorrelation()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation.md)
+[`spatial_autocorrelation()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation.md)
 result automatically, without a separate call.
 
 ## References
@@ -49,9 +49,9 @@ result automatically, without a separate call.
 ## See also
 
 Other Spatial autocorrelation diagnostic functions:
-[`spatial_autocorrelation()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation.md),
-[`spatial_autocorrelation_null_plot()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation_null_plot.md),
-[`spatial_autocorrelation_summary()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation_summary.md)
+[`spatial_autocorrelation()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation.md),
+[`spatial_autocorrelation_null_plot()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation_null_plot.md),
+[`spatial_autocorrelation_summary()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation_summary.md)
 
 ## Examples
 

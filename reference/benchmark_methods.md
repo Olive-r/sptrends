@@ -73,7 +73,7 @@ benchmark_methods(
 - metrics:
 
   Metrics passed to
-  [`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md)
+  [`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md)
   for detection benchmarks.
 
 - evaluation_mask:
@@ -159,16 +159,16 @@ by future users is equivalent.
 
 ## See also
 
-[`simulation_design()`](https://olivergh.github.io/sptrends/reference/simulation_design.md),
-[`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md),
-[`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md),
-[`benchmark_summary()`](https://olivergh.github.io/sptrends/reference/benchmark_summary.md)
+[`simulation_design()`](https://olive-r.github.io/sptrends/reference/simulation_design.md),
+[`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md),
+[`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md),
+[`benchmark_summary()`](https://olive-r.github.io/sptrends/reference/benchmark_summary.md)
 
 Other validation functions:
-[`benchmark_summary()`](https://olivergh.github.io/sptrends/reference/benchmark_summary.md),
-[`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md),
-[`plot_detection_comparison()`](https://olivergh.github.io/sptrends/reference/plot_detection_comparison.md),
-[`simulation_design()`](https://olivergh.github.io/sptrends/reference/simulation_design.md)
+[`benchmark_summary()`](https://olive-r.github.io/sptrends/reference/benchmark_summary.md),
+[`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md),
+[`plot_detection_comparison()`](https://olive-r.github.io/sptrends/reference/plot_detection_comparison.md),
+[`simulation_design()`](https://olive-r.github.io/sptrends/reference/simulation_design.md)
 
 ## Examples
 
@@ -190,5 +190,5 @@ result <- benchmark_methods(scenarios, methods, n_replicates = 2,
 result
 #> <sptrends benchmark>
 #> Stage: trend_test | scenarios: 1 | methods: 1 | replicates: 2
-#> Rows: 2 | elapsed method time: 0.082 s
+#> Rows: 2 | elapsed method time: 0.086 s
 ```

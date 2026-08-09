@@ -61,20 +61,20 @@ A list with `q_value` (or `NA` under `implementation = "original"`),
 `reject`, `pi0_hat` (estimated proportion of true null hypotheses),
 `m0_hat`, `m`, `r1` (Stage 1 figures), and `p_sorted`, `thresh_bh`,
 `thresh_bky` (for
-[`fdr_threshold_plot()`](https://olivergh.github.io/sptrends/reference/fdr_threshold_plot.md)).
+[`fdr_threshold_plot()`](https://olive-r.github.io/sptrends/reference/fdr_threshold_plot.md)).
 
 ## Details
 
 **Function type:** **Support function** – computes the adaptive BKY
 procedure used internally by
-[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md).
+[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md).
 It is not exported; call `fdr_correction(p, method = "BKY")` for a
 BKY-only result.
 
 ## Typical use
 
 Supply one family of raw p-values to
-[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
+[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
 with `method = "BKY"`. Choose `bky_implementation = "original"` there
 only when the literal Definition 6 procedure is required.
 
@@ -92,9 +92,9 @@ only when the literal Definition 6 procedure is required.
 - **Typical applications**: correcting for multiple testing when a lot
   of real signal is expected to be present (the common case in gridded
   environmental data) and the extra statistical power over
-  [`fdr_bh()`](https://olivergh.github.io/sptrends/reference/fdr_bh.md)'s
+  [`fdr_bh()`](https://olive-r.github.io/sptrends/reference/fdr_bh.md)'s
   fixed threshold is worth the added complexity – see
-  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)
+  [`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)
   for a workflow that defaults to this method for that reason.
 
 **Statistical assumptions**
@@ -103,7 +103,7 @@ BKY is adaptive, not a safeguard against arbitrary dependence. Its FDR
 interpretation requires the assumptions of the selected two-stage
 procedure; estimating `pi0` does not itself remove dependence among
 tests. Use
-[`fdr_by()`](https://olivergh.github.io/sptrends/reference/fdr_by.md)
+[`fdr_by()`](https://olive-r.github.io/sptrends/reference/fdr_by.md)
 when an arbitrary-dependence guarantee is needed.
 
 **Computational considerations**
@@ -171,16 +171,16 @@ trend testing (directly motivates this function):
 ## See also
 
 Other FDR correction functions:
-[`fdr_bh()`](https://olivergh.github.io/sptrends/reference/fdr_bh.md),
-[`fdr_by()`](https://olivergh.github.io/sptrends/reference/fdr_by.md),
-[`fdr_comparison_barplot()`](https://olivergh.github.io/sptrends/reference/fdr_comparison_barplot.md),
-[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md),
-[`fdr_direction_plot()`](https://olivergh.github.io/sptrends/reference/fdr_direction_plot.md),
-[`fdr_direction_summary()`](https://olivergh.github.io/sptrends/reference/fdr_direction_summary.md),
-[`fdr_pvalue_histogram()`](https://olivergh.github.io/sptrends/reference/fdr_pvalue_histogram.md),
-[`fdr_significance_maps()`](https://olivergh.github.io/sptrends/reference/fdr_significance_maps.md),
-[`fdr_summary()`](https://olivergh.github.io/sptrends/reference/fdr_summary.md),
-[`fdr_threshold_plot()`](https://olivergh.github.io/sptrends/reference/fdr_threshold_plot.md)
+[`fdr_bh()`](https://olive-r.github.io/sptrends/reference/fdr_bh.md),
+[`fdr_by()`](https://olive-r.github.io/sptrends/reference/fdr_by.md),
+[`fdr_comparison_barplot()`](https://olive-r.github.io/sptrends/reference/fdr_comparison_barplot.md),
+[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md),
+[`fdr_direction_plot()`](https://olive-r.github.io/sptrends/reference/fdr_direction_plot.md),
+[`fdr_direction_summary()`](https://olive-r.github.io/sptrends/reference/fdr_direction_summary.md),
+[`fdr_pvalue_histogram()`](https://olive-r.github.io/sptrends/reference/fdr_pvalue_histogram.md),
+[`fdr_significance_maps()`](https://olive-r.github.io/sptrends/reference/fdr_significance_maps.md),
+[`fdr_summary()`](https://olive-r.github.io/sptrends/reference/fdr_summary.md),
+[`fdr_threshold_plot()`](https://olive-r.github.io/sptrends/reference/fdr_threshold_plot.md)
 
 ## Examples
 

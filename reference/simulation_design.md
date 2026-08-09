@@ -1,7 +1,7 @@
 # Build a factorial design of simulation scenarios
 
 Creates named argument lists for
-[`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md)
+[`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md)
 by crossing temporal, spatial, signal and noise conditions. It separates
 experimental design from data generation so the complete scenario grid
 can be inspected and retained.
@@ -34,7 +34,7 @@ simulation_design(..., constants = list(), prefix = "scenario", verbose = TRUE)
 ## Value
 
 A named list of argument lists suitable for the `scenarios` argument of
-[`benchmark_methods()`](https://olivergh.github.io/sptrends/reference/benchmark_methods.md),
+[`benchmark_methods()`](https://olive-r.github.io/sptrends/reference/benchmark_methods.md),
 with classes `"sptrends_simulation_design"` and `"sptrends"` for unified
 printing, summaries, and plotting.
 
@@ -47,7 +47,7 @@ scenarios; it does not generate data or perform inference.
 
 Define the factors that should vary, add shared settings through
 `constants`, and pass the returned list to
-[`benchmark_methods()`](https://olivergh.github.io/sptrends/reference/benchmark_methods.md).
+[`benchmark_methods()`](https://olive-r.github.io/sptrends/reference/benchmark_methods.md).
 
 ## Methodological details
 
@@ -64,7 +64,7 @@ list.
 This function only constructs argument lists. Memory use grows with the
 product of the numbers of supplied factor levels; data generation
 remains deferred to
-[`benchmark_methods()`](https://olivergh.github.io/sptrends/reference/benchmark_methods.md).
+[`benchmark_methods()`](https://olive-r.github.io/sptrends/reference/benchmark_methods.md).
 
 **Limitations**
 
@@ -81,14 +81,14 @@ controls; see `inst/validation/` for the retained protocol and results.
 
 ## See also
 
-[`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md),
-[`benchmark_methods()`](https://olivergh.github.io/sptrends/reference/benchmark_methods.md)
+[`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md),
+[`benchmark_methods()`](https://olive-r.github.io/sptrends/reference/benchmark_methods.md)
 
 Other validation functions:
-[`benchmark_methods()`](https://olivergh.github.io/sptrends/reference/benchmark_methods.md),
-[`benchmark_summary()`](https://olivergh.github.io/sptrends/reference/benchmark_summary.md),
-[`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md),
-[`plot_detection_comparison()`](https://olivergh.github.io/sptrends/reference/plot_detection_comparison.md)
+[`benchmark_methods()`](https://olive-r.github.io/sptrends/reference/benchmark_methods.md),
+[`benchmark_summary()`](https://olive-r.github.io/sptrends/reference/benchmark_summary.md),
+[`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md),
+[`plot_detection_comparison()`](https://olive-r.github.io/sptrends/reference/plot_detection_comparison.md)
 
 ## Examples
 

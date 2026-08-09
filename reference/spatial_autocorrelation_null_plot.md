@@ -17,7 +17,7 @@ spatial_autocorrelation_null_plot(result, path = NULL)
 - result:
 
   Output of
-  [`spatial_autocorrelation()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation.md).
+  [`spatial_autocorrelation()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation.md).
 
 - path:
 
@@ -40,9 +40,9 @@ spatial_autocorrelation_null_plot(result, path = NULL)
 ## See also
 
 Other Spatial autocorrelation diagnostic functions:
-[`classify_moran()`](https://olivergh.github.io/sptrends/reference/classify_moran.md),
-[`spatial_autocorrelation()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation.md),
-[`spatial_autocorrelation_summary()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation_summary.md)
+[`classify_moran()`](https://olive-r.github.io/sptrends/reference/classify_moran.md),
+[`spatial_autocorrelation()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation.md),
+[`spatial_autocorrelation_summary()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation_summary.md)
 
 ## Examples
 

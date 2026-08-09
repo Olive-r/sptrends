@@ -17,7 +17,7 @@ prewhiten_summary(diagnostics, path = NULL)
 - diagnostics:
 
   The `diagnostics` element returned by
-  [`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md).
+  [`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md).
 
 - path:
 
@@ -37,9 +37,9 @@ Invisibly, a data frame with summary metrics.
 ## See also
 
 Other Prewhitening functions:
-[`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md),
-[`prewhiten_histograms()`](https://olivergh.github.io/sptrends/reference/prewhiten_histograms.md),
-[`prewhiten_maps()`](https://olivergh.github.io/sptrends/reference/prewhiten_maps.md)
+[`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md),
+[`prewhiten_histograms()`](https://olive-r.github.io/sptrends/reference/prewhiten_histograms.md),
+[`prewhiten_maps()`](https://olive-r.github.io/sptrends/reference/prewhiten_maps.md)
 
 ## Examples
 

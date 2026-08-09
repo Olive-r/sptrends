@@ -20,7 +20,7 @@ fdr_by(p, q = 0.05)
 - q:
 
   Numeric. Target FDR level – see
-  [`fdr_bh()`](https://olivergh.github.io/sptrends/reference/fdr_bh.md)'s
+  [`fdr_bh()`](https://olive-r.github.io/sptrends/reference/fdr_bh.md)'s
   own `q` documentation for the distinction between this and a per-test
   `alpha`, which applies identically here.
 
@@ -32,14 +32,14 @@ A list with `q_value` (BY-adjusted p-values) and `reject` (logical).
 
 **Function type:** **Support function** – computes the BY safeguard used
 internally by
-[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md).
+[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md).
 It is not exported; call `fdr_correction(p, method = "BY")` for a
 BY-only result.
 
 ## Typical use
 
 Supply one family of raw p-values to
-[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
+[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
 with `method = "BY"` when arbitrary dependence is a material concern, or
 compare it with BH as a sensitivity analysis.
 
@@ -47,7 +47,7 @@ compare it with BH as a sensitivity analysis.
 
 **Methods and method selection**
 
-[`fdr_bh()`](https://olivergh.github.io/sptrends/reference/fdr_bh.md)
+[`fdr_bh()`](https://olive-r.github.io/sptrends/reference/fdr_bh.md)
 controls FDR under independence and specified forms of positive
 dependence. A positive Moran statistic can be compatible with that
 setting, but it does not prove the formal PRDS condition. BY remains
@@ -82,16 +82,16 @@ Primary method reference:
 ## See also
 
 Other FDR correction functions:
-[`fdr_bh()`](https://olivergh.github.io/sptrends/reference/fdr_bh.md),
-[`fdr_bky()`](https://olivergh.github.io/sptrends/reference/fdr_bky.md),
-[`fdr_comparison_barplot()`](https://olivergh.github.io/sptrends/reference/fdr_comparison_barplot.md),
-[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md),
-[`fdr_direction_plot()`](https://olivergh.github.io/sptrends/reference/fdr_direction_plot.md),
-[`fdr_direction_summary()`](https://olivergh.github.io/sptrends/reference/fdr_direction_summary.md),
-[`fdr_pvalue_histogram()`](https://olivergh.github.io/sptrends/reference/fdr_pvalue_histogram.md),
-[`fdr_significance_maps()`](https://olivergh.github.io/sptrends/reference/fdr_significance_maps.md),
-[`fdr_summary()`](https://olivergh.github.io/sptrends/reference/fdr_summary.md),
-[`fdr_threshold_plot()`](https://olivergh.github.io/sptrends/reference/fdr_threshold_plot.md)
+[`fdr_bh()`](https://olive-r.github.io/sptrends/reference/fdr_bh.md),
+[`fdr_bky()`](https://olive-r.github.io/sptrends/reference/fdr_bky.md),
+[`fdr_comparison_barplot()`](https://olive-r.github.io/sptrends/reference/fdr_comparison_barplot.md),
+[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md),
+[`fdr_direction_plot()`](https://olive-r.github.io/sptrends/reference/fdr_direction_plot.md),
+[`fdr_direction_summary()`](https://olive-r.github.io/sptrends/reference/fdr_direction_summary.md),
+[`fdr_pvalue_histogram()`](https://olive-r.github.io/sptrends/reference/fdr_pvalue_histogram.md),
+[`fdr_significance_maps()`](https://olive-r.github.io/sptrends/reference/fdr_significance_maps.md),
+[`fdr_summary()`](https://olive-r.github.io/sptrends/reference/fdr_summary.md),
+[`fdr_threshold_plot()`](https://olive-r.github.io/sptrends/reference/fdr_threshold_plot.md)
 
 ## Examples
 

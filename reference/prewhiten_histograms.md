@@ -16,7 +16,7 @@ prewhiten_histograms(diagnostics, path = NULL)
 - diagnostics:
 
   The `diagnostics` element returned by
-  [`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md).
+  [`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md).
 
 - path:
 
@@ -37,9 +37,9 @@ prewhiten_histograms(diagnostics, path = NULL)
 ## See also
 
 Other Prewhitening functions:
-[`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md),
-[`prewhiten_maps()`](https://olivergh.github.io/sptrends/reference/prewhiten_maps.md),
-[`prewhiten_summary()`](https://olivergh.github.io/sptrends/reference/prewhiten_summary.md)
+[`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md),
+[`prewhiten_maps()`](https://olive-r.github.io/sptrends/reference/prewhiten_maps.md),
+[`prewhiten_summary()`](https://olive-r.github.io/sptrends/reference/prewhiten_summary.md)
 
 ## Examples
 

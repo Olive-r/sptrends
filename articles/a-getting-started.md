@@ -35,9 +35,9 @@ The usual analytical input is a
 [`terra::SpatRaster`](https://rspatial.github.io/terra/reference/SpatRaster-class.html)
 with one layer per time step, ordered from earliest to latest. It can be
 created from chronologically ordered raster files with
-[`read_ordered_stack()`](https://olivergh.github.io/sptrends/reference/read_ordered_stack.md)
+[`read_ordered_stack()`](https://olive-r.github.io/sptrends/reference/read_ordered_stack.md)
 or imported from NetCDF datasets with
-[`read_netcdf_stack()`](https://olivergh.github.io/sptrends/reference/read_netcdf_stack.md).
+[`read_netcdf_stack()`](https://olive-r.github.io/sptrends/reference/read_netcdf_stack.md).
 Across these layers, each valid raster cell defines an individual time
 series embedded within a spatially structured dataset. Analytical
 results are returned as structured `sptrends` objects with familiar
@@ -111,7 +111,7 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 ![](a-getting-started_files/figure-html/unnamed-chunk-2-1.png)
 
     #> Stack built: 42 layers, 146 x 338 cells.
-    #> >> [read_ordered_stack()] elapsed: 2.98 s
+    #> >> [read_ordered_stack()] elapsed: 3.03 s
     r
     #> class       : SpatRaster
     #> size        : 146, 338, 42  (nrow, ncol, nlyr)
@@ -187,11 +187,11 @@ black box.
 
 | Your question | Where to continue |
 |----|----|
-| Is temporal dependence a problem? | [Prewhitening vignette](https://olivergh.github.io/sptrends/articles/b-prewhitening.md) |
-| Is there evidence of a trend? | [Trend-test vignette](https://olivergh.github.io/sptrends/articles/c-trend-test.md) |
-| How large is the change? | [Slope-estimation vignette](https://olivergh.github.io/sptrends/articles/d-slope-estimation.md) |
-| Which findings survive multiple testing? | [Multiple-testing vignette](https://olivergh.github.io/sptrends/articles/e-fdr-correction.md) |
-| How do I combine the stages? | [Trend-workflows vignette](https://olivergh.github.io/sptrends/articles/g-workflow-trends.md) |
+| Is temporal dependence a problem? | [Prewhitening vignette](https://olive-r.github.io/sptrends/articles/b-prewhitening.md) |
+| Is there evidence of a trend? | [Trend-test vignette](https://olive-r.github.io/sptrends/articles/c-trend-test.md) |
+| How large is the change? | [Slope-estimation vignette](https://olive-r.github.io/sptrends/articles/d-slope-estimation.md) |
+| Which findings survive multiple testing? | [Multiple-testing vignette](https://olive-r.github.io/sptrends/articles/e-fdr-correction.md) |
+| How do I combine the stages? | [Trend-workflows vignette](https://olive-r.github.io/sptrends/articles/g-workflow-trends.md) |
 
 ## Common mistakes
 
@@ -203,34 +203,34 @@ black box.
   grid when area-based comparisons or summaries are required.
 - Do not assume that observations are independent, whether across time
   (serial correlation, see [prewhitening
-  vignette](https://olivergh.github.io/sptrends/articles/b-prewhitening.md))
+  vignette](https://olive-r.github.io/sptrends/articles/b-prewhitening.md))
   or across neighbouring cells (spatial dependence, see [trend-test
-  vignette](https://olivergh.github.io/sptrends/articles/c-trend-test.md));
+  vignette](https://olive-r.github.io/sptrends/articles/c-trend-test.md));
   both are common in gridded environmental time series and affect
   inference.
 - Do not treat cell-wise tests as isolated analyses; testing many raster
   cells simultaneously creates a large-scale multiple-testing problem
   (see [multiple-testing
-  vignette](https://olivergh.github.io/sptrends/articles/e-fdr-correction.md)).
+  vignette](https://olive-r.github.io/sptrends/articles/e-fdr-correction.md)).
 
 ## Next steps
 
 Continue to
-[`vignette("b-prewhitening")`](https://olivergh.github.io/sptrends/articles/b-prewhitening.md),
+[`vignette("b-prewhitening")`](https://olive-r.github.io/sptrends/articles/b-prewhitening.md),
 or go directly to
-[`vignette("c-trend-test")`](https://olivergh.github.io/sptrends/articles/c-trend-test.md)
+[`vignette("c-trend-test")`](https://olive-r.github.io/sptrends/articles/c-trend-test.md)
 if temporal preprocessing is unnecessary.
 
 ## Further details
 
 See
-[`?sptrends`](https://olivergh.github.io/sptrends/reference/sptrends-package.md)
+[`?sptrends`](https://olive-r.github.io/sptrends/reference/sptrends-package.md)
 for the function index and quality-assurance protocol,
-[`?read_ordered_stack`](https://olivergh.github.io/sptrends/reference/read_ordered_stack.md)
+[`?read_ordered_stack`](https://olive-r.github.io/sptrends/reference/read_ordered_stack.md)
 and
-[`?read_netcdf_stack`](https://olivergh.github.io/sptrends/reference/read_netcdf_stack.md)
+[`?read_netcdf_stack`](https://olive-r.github.io/sptrends/reference/read_netcdf_stack.md)
 for data import, and
-[`?inspect_ts_cell`](https://olivergh.github.io/sptrends/reference/inspect_ts_cell.md)
+[`?inspect_ts_cell`](https://olive-r.github.io/sptrends/reference/inspect_ts_cell.md)
 for interactive exploration.
 
 ## References

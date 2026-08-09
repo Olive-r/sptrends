@@ -8,7 +8,7 @@ magnitude and rate over time.
 
 Having established whether a trend exists in the previous vignette, this
 one turns to the second question: how large is it?
-[`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)
+[`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)
 answers that question directly, independently of whether the trend
 reached statistical significance.
 
@@ -17,7 +17,7 @@ reached statistical significance.
 Trend magnitude describes how rapidly a variable changes over time. In
 `sptrends`, it is quantified through slope estimation and expressed in
 the units of the input variable per unit of time.
-[`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)
+[`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)
 estimates one temporal slope for each valid raster cell and returns a
 raster representing the rate of change across the study area. Theil-Sen
 (`TS`) ([Theil, 1950](https://doi.org/10.1007/978-94-011-2546-8_20);
@@ -81,13 +81,13 @@ repeated median (`RM`) is more resistant but substantially slower.
 - Do not interpret a slope estimate as statistically significant by
   itself; combine it with a trend test and multiple-testing correction
   for inferential interpretation (see [trend-test
-  vignette](https://olivergh.github.io/sptrends/articles/c-trend-test.md)
+  vignette](https://olive-r.github.io/sptrends/articles/c-trend-test.md)
   and [multiple-testing
-  vignette](https://olivergh.github.io/sptrends/articles/e-fdr-correction.md)).
+  vignette](https://olive-r.github.io/sptrends/articles/e-fdr-correction.md)).
 - Do not ignore serial correlation when combining slope estimates with
   significance results; diagnose and treat temporal dependence when
   necessary (see [prewhitening
-  vignette](https://olivergh.github.io/sptrends/articles/b-prewhitening.md)).
+  vignette](https://olive-r.github.io/sptrends/articles/b-prewhitening.md)).
 - Do not compare slopes expressed in different units without appropriate
   standardisation; supply actual observation times when measurements are
   irregularly spaced.
@@ -95,14 +95,14 @@ repeated median (`RM`) is more resistant but substantially slower.
 ## Next steps
 
 Continue to
-[`vignette("e-fdr-correction")`](https://olivergh.github.io/sptrends/articles/e-fdr-correction.md)
+[`vignette("e-fdr-correction")`](https://olive-r.github.io/sptrends/articles/e-fdr-correction.md)
 to decide which trend-test results remain reliable after testing many
 cells.
 
 ## Further details
 
 See
-[`?slope_estimator`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)
+[`?slope_estimator`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)
 for formulas, assumptions, computational costs, robustness, optional
 smoothing, validation and complete references.
 

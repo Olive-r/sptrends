@@ -3,24 +3,24 @@
 Implements the complete Robust Trend Analysis workflow for monotonic
 trends in gridded raster time series. One of sptrends' two entry points:
 chains
-[`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md),
-[`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md),
+[`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md),
+[`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md),
 and
-[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
+[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
 (`method = "BH"` only), in that order, into the **Robust Trend Analysis
 (RTA)** workflow. Each step's underlying parameters remain available
 directly on the individual functions – `workflow_rta()` does not replace
 them, it saves wiring the calls together for the common case, and
 returns a single `"rta"` object recognised by
-[`print.sptrends()`](https://olivergh.github.io/sptrends/reference/print.sptrends.md).
+[`print.sptrends()`](https://olive-r.github.io/sptrends/reference/print.sptrends.md).
 RTA is a **different, shorter** published workflow from this package's
 other integrated pipeline,
-[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)
+[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)
 – see "Methodological comparison with TST" below before choosing between
 them. Both are implemented here because both are genuinely published
 methods, not because one supersedes the other – this package aims to be
 a platform for comparing such methods (see
-[`compare_detections()`](https://olivergh.github.io/sptrends/reference/compare_detections.md)),
+[`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md)),
 not a vehicle for only its own authors' preferred one.
 
 ## Usage
@@ -51,7 +51,7 @@ workflow_rta(
 - cmk_args:
 
   A named list of extra arguments passed to
-  [`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)
+  [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)
   (e.g. `list(window_size = 5L)` for a broader CMK region, or
   `list(method = "MK", n_cores = 4)`). The default empty list preserves
   the 3 by 3 CMK region described by Neeti and Eastman (2011), as
@@ -59,24 +59,34 @@ workflow_rta(
   RTA-inspired variant rather than an exact reproduction of the
   published workflow.
 
+  **Known limitation with irregular time spacing:** this workflow has no
+  top-level `t` argument of its own – if your observation times are
+  irregularly spaced and you need a genuine time axis for
+  [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)/[`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)
+  rather than the default `1:n` layer index, you must supply the same
+  correct `t` yourself in both `cmk_args` and `theil_sen_args`, and keep
+  them consistent by hand.
+
 - theil_sen_args:
 
   A named list of extra arguments passed to
-  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)
+  [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)
   (e.g. `list(max_pairs = 20000, n_cores = 4)`). `smooth_neighbourhood`
   is left at
-  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)'s
+  [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)'s
   own default (`FALSE`, same as
-  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md))
+  [`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md))
   unless you set it yourself – see "Computational considerations" above.
+  See `cmk_args` above for a known limitation with irregular time
+  spacing if you pass `t` here.
 
 - alpha:
 
   Numeric vector of significance thresholds used for reporting the
   (uncorrected) trend result – passed to
-  [`trend_summary()`](https://olivergh.github.io/sptrends/reference/trend_summary.md)
+  [`trend_summary()`](https://olive-r.github.io/sptrends/reference/trend_summary.md)
   as `alpha`, and used as the single threshold for
-  [`trend_maps()`](https://olivergh.github.io/sptrends/reference/trend_maps.md):
+  [`trend_maps()`](https://olive-r.github.io/sptrends/reference/trend_maps.md):
   `0.05` if it is one of the values in `alpha` (the default vector
   includes it), otherwise the strictest (smallest) value supplied. The
   three default values are not interchangeable: `0.05` is the
@@ -88,10 +98,10 @@ workflow_rta(
 - q:
 
   Numeric. Target FDR level, passed to
-  [`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
+  [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
   – not an adjusted or renamed `alpha`: it limits the expected false
   discovery proportion among rejected hypotheses. See
-  [`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
+  [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
   for the full distinction.
 
 - report:
@@ -123,25 +133,26 @@ workflow_rta(
   when both are set, this one wins and the per-step `n_cores` inside
   `cmk_args`/`theil_sen_args` is ignored, since a single shared cluster
   and per-step separate ones cannot both apply to the same call. Mirrors
-  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)'s
+  [`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)'s
   own identical `n_cores` argument exactly.
 
 ## Value
 
 An object of class `c("rta", "sptrends")` (the second, shared with
-[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)'s
+[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)'s
 own return value, is for
 [`print()`](https://rdrr.io/r/base/print.html)/[`summary()`](https://rdrr.io/r/base/summary.html)/
 [`plot()`](https://rdrr.io/r/graphics/plot.default.html) – see
-[`print.sptrends()`](https://olivergh.github.io/sptrends/reference/print.sptrends.md)):
+[`print.sptrends()`](https://olive-r.github.io/sptrends/reference/print.sptrends.md)):
 a list with
 
 - theil_sen:
 
-  The output of
-  [`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md).
-  Not smoothed by default – check `theil_sen_smoothed` if you need to
-  know whether it was (e.g. because you set it yourself).
+  The `$slope` field of
+  [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)'s
+  own output (a `SpatRaster`) – not the full return value. Not smoothed
+  by default – check `theil_sen_smoothed` if you need to know whether it
+  was (e.g. because you set it yourself).
 
 - theil_sen_smoothed:
 
@@ -150,24 +161,26 @@ a list with
 
 - trend:
 
-  The output of
-  [`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md).
+  The `$stats` field of
+  [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)'s
+  own output (a `SpatRaster`) – not the full return value, which also
+  includes `neighbourhood`/`window_size`.
 
 - trend_summary_table:
 
   The output of
-  [`trend_summary()`](https://olivergh.github.io/sptrends/reference/trend_summary.md)
+  [`trend_summary()`](https://olive-r.github.io/sptrends/reference/trend_summary.md)
   (invisible data frame).
 
 - fdr:
 
   The output of
-  [`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md),
+  [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md),
   `method = "BH"` only.
 
 - timing:
 
-  A named list of elapsed seconds per step (`theil_sen`, `cmk`, `fdr`),
+  A named list of elapsed seconds per step (`theil_sen`, `CMK`, `fdr`),
   each measured with
   [`Sys.time()`](https://rdrr.io/r/base/Sys.time.html) around that
   step's own function call. Coarse (whole-step, not line-by-line) and
@@ -175,7 +188,7 @@ a list with
   step dominates on your own data.
 
 Use
-[`print.sptrends()`](https://olivergh.github.io/sptrends/reference/print.sptrends.md)
+[`print.sptrends()`](https://olive-r.github.io/sptrends/reference/print.sptrends.md)
 for a one-line summary.
 
 ## Details
@@ -184,14 +197,14 @@ for a one-line summary.
 workflow exactly -\> use `workflow_rta()`. Want the more recent
 workflow, including selective prewhitening and the adaptive BKY
 correction -\> use
-[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md).
+[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md).
 See "Methodological comparison with TST" below for the reasoning behind
 each design choice.
 
 Moran's I
-([`spatial_autocorrelation()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation.md))
+([`spatial_autocorrelation()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation.md))
 is **not** part of this pipeline, for the same reason it is not part of
-[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md):
+[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md):
 it is a separate diagnostic for the spatial dependence assumption behind
 FDR-BH, meant to be run independently (before or after) rather than
 chained automatically, and pulling it in here would add a dependency
@@ -212,7 +225,7 @@ published workflows in sptrends.
 
 RTA analyses the supplied series without prewhitening. If the input has
 a seasonal cycle, first use
-[`compute_anomalies()`](https://olivergh.github.io/sptrends/reference/compute_anomalies.md)
+[`compute_anomalies()`](https://olive-r.github.io/sptrends/reference/compute_anomalies.md)
 and pass its `anomalies` raster.
 
 ## Methodological details
@@ -230,7 +243,7 @@ and pass its `anomalies` raster.
     "rta" object
 
 All three steps always run – unlike
-[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md),
+[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md),
 none of them is optional here, matching the published RTA method exactly
 (see "Comparison with TST" under "Methodological details" for what is
 deliberately different between the two workflows). Each step's own
@@ -242,7 +255,7 @@ here (the Contextual Mann-Kendall test, Theil-Sen) is designed around a
 **monotonic** trend – a consistent tendency to increase or decrease –
 not a periodic/seasonal cycle. If `x` has a seasonal cycle (e.g. raw
 monthly data with an annual signal), remove it first with
-[`compute_anomalies()`](https://olivergh.github.io/sptrends/reference/compute_anomalies.md)
+[`compute_anomalies()`](https://olive-r.github.io/sptrends/reference/compute_anomalies.md)
 and pass the anomalies to `workflow_rta()`, not the raw seasonal series.
 
 **Computational considerations.** Unlike the Mann-Kendall S statistic,
@@ -253,13 +266,13 @@ few dozen time steps) this is unnoticeable; for long series (hundreds to
 thousands of steps, e.g. multi-decade monthly data) it can become the
 slowest step in the whole workflow. Tune `theil_sen_args` (`max_pairs`
 to subsample pairs, `n_cores` to parallelise) – see
-[`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md).
+[`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md).
 `smooth_neighbourhood` is left at
-[`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)'s
+[`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)'s
 own default (`FALSE`) unless you set it yourself – neither RTA nor TST
 originally included any such smoothing (it is this package's own
 optional addition on top of both published methods), so
-[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)
+[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)
 does not default to it either, for the same reason.
 
 **Statistical assumptions: `alpha` and `q`.** This is one of the most
@@ -269,7 +282,7 @@ raster is not one test – it is one test per cell, potentially thousands
 of them run simultaneously. Applying `alpha` cell by cell, as if each
 cell were the only test being run, is exactly the multiple-testing error
 this package's FDR step exists to fix (see the "Warning" section of
-[`?trend_test`](https://olivergh.github.io/sptrends/reference/trend_test.md));
+[`?trend_test`](https://olive-r.github.io/sptrends/reference/trend_test.md));
 it is not a harmless simplification.
 
 It is common practice to set `q` equal to `alpha` (e.g. both `0.05`) for
@@ -279,7 +292,7 @@ results reported here – this function does not enforce that, `alpha` and
 meaning: `alpha` bounds the error rate of each individual cell's test,
 while `q` bounds the expected proportion of false positives among all
 the cells called significant after correction (see
-[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
+[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
 for the full distinction). Do not read `trend_summary_table` (based on
 `alpha`, uncorrected) and the FDR results (based on `q`) as answering
 the same question just because the numbers match. `q = 0.05` has little
@@ -290,7 +303,7 @@ guarantee.
 
 **Comparison with TST.** RTA (Gutiérrez-Hernández & García, 2024) and
 TST (Gutiérrez-Hernández & García, 2025; see
-[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md))
+[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md))
 share two pillars – Theil-Sen and Contextual Mann-Kendall – but differ
 in two deliberate, independent ways that this function keeps faithful to
 the published RTA method, rather than silently reusing TST's later
@@ -307,22 +320,22 @@ argue the opposite case: skipping prewhitening when autocorrelation is
 genuinely present can inflate the false-positive rate. RTA does not
 prewhiten; TST prewhitens selectively, touching only cells whose own
 Durbin-Watson statistic crosses a gating threshold (see
-[`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md)),
+[`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md)),
 specifically to limit unnecessary power loss. Neither position is
 implemented here as universally correct.
 
 **Difference 2: FDR-BH only, not adaptive BKY.**
-[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)
+[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)
 defaults to the two-stage adaptive BKY correction, which estimates how
 many tested hypotheses are likely genuinely non-null (\\\hat\pi_0\\) and
 relaxes its threshold when substantial real signal is detected; see
-[`fdr_bky()`](https://olivergh.github.io/sptrends/reference/fdr_bky.md).
+[`fdr_bky()`](https://olive-r.github.io/sptrends/reference/fdr_bky.md).
 RTA instead uses the original, non-adaptive Benjamini-Hochberg
 procedure, which does not estimate \\\pi_0\\ and is derived to control
 FDR under the global null: the least favourable case in which every
 tested hypothesis could be truly null. It therefore keeps a more
 conservative guarantee that does not relax as more signal is found. See
-[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
+[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
 for the procedure itself.
 
 These differences are independent: RTA's choice on one does not imply or
@@ -333,7 +346,7 @@ other.
 **Limitations.** RTA is intentionally faithful to its published method:
 it does not prewhiten, it always estimates a Theil-Sen slope, and it
 uses FDR-BH rather than exposing alternative corrections. Use
-[`workflow_trends()`](https://olivergh.github.io/sptrends/reference/workflow_trends.md)
+[`workflow_trends()`](https://olive-r.github.io/sptrends/reference/workflow_trends.md)
 when those stages or methods need to be configured.
 
 **Quality assurance.** CMK, slope estimation, and FDR correction are
@@ -341,7 +354,7 @@ validated independently in their module functions. Integration tests
 verify the RTA stage sequence, argument forwarding, shared parallel
 resources, timing fields, S3 return structure, reporting, and agreement
 between direct module calls and workflow outputs. See
-[`?sptrends`](https://olivergh.github.io/sptrends/reference/sptrends-package.md)
+[`?sptrends`](https://olive-r.github.io/sptrends/reference/sptrends-package.md)
 for the complete internal and external quality-assurance strategy.
 
 ## References
@@ -355,7 +368,7 @@ implementation of it):
   [doi:10.3390/rs16203886](https://doi.org/10.3390/rs16203886)
 
 Step 1, Theil-Sen slope (see
-[`slope_estimator()`](https://olivergh.github.io/sptrends/reference/slope_estimator.md)
+[`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)
 for the full reference list):
 
 - Theil, H. (1950) A rank-invariant method of linear and polynomial
@@ -368,7 +381,7 @@ for the full reference list):
   [doi:10.1080/01621459.1968.10480934](https://doi.org/10.1080/01621459.1968.10480934)
 
 Step 2, Contextual Mann-Kendall (see
-[`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)
+[`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)
 for the full reference list, including the foundational Mann-Kendall
 statistic it builds on):
 
@@ -378,7 +391,7 @@ statistic it builds on):
   [doi:10.1111/j.1467-9671.2011.01280.x](https://doi.org/10.1111/j.1467-9671.2011.01280.x)
 
 Step 3, FDR-BH correction (see
-[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
+[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
 for the complete reference list):
 
 - Benjamini, Y. and Hochberg, Y. (1995) Controlling the False Discovery
@@ -401,8 +414,8 @@ On whether to prewhiten before a Mann-Kendall-family trend test (see
 ## See also
 
 Other pipeline functions:
-[`workflow_trends()`](https://olivergh.github.io/sptrends/reference/workflow_trends.md),
-[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)
+[`workflow_trends()`](https://olive-r.github.io/sptrends/reference/workflow_trends.md),
+[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)
 
 ## Examples
 

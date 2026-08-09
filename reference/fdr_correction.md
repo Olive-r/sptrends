@@ -6,9 +6,9 @@ single-layer `SpatRaster` or a numeric vector. This function does not
 compute p-values itself – it is the final inferential step of the
 standard sptrends workflow, applied once one raw p-value has already
 been obtained for every spatial cell (e.g. with
-[`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)
+[`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)
 or local
-[`spatial_autocorrelation()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation.md)),
+[`spatial_autocorrelation()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation.md)),
 and it controls the expected false discovery rate across the complete
 set of simultaneous tests.
 
@@ -41,19 +41,19 @@ fdr_correction(
   supported values, `c("BH", "BKY", "BY")`; when `method` is omitted,
   the established default remains `c("BH", "BKY")`. BH is the classic,
   fixed-threshold procedure – see
-  [`fdr_bh()`](https://olivergh.github.io/sptrends/reference/fdr_bh.md)
+  [`fdr_bh()`](https://olive-r.github.io/sptrends/reference/fdr_bh.md)
   for the full detail. BKY is the adaptive method originally used in the
   TST methodology (Gutiérrez-Hernández & García, 2025): it adapts to the
   estimated proportion of true nulls, gaining statistical power over BH
   while still controlling the false discovery rate – see
-  [`fdr_bky()`](https://olivergh.github.io/sptrends/reference/fdr_bky.md)
+  [`fdr_bky()`](https://olive-r.github.io/sptrends/reference/fdr_bky.md)
   for the full distinction. `"BY"` (Benjamini and Yekutieli, 2001) is a
   third, deliberately opt-in option – it is never computed unless
   explicitly requested (e.g. `method = "BY"` or
   `method = c("BH", "BY")`) – offered as a comparison point and
   theoretical safeguard against arbitrary dependence structures, not as
   a routine recommendation; see
-  [`fdr_by()`](https://olivergh.github.io/sptrends/reference/fdr_by.md)
+  [`fdr_by()`](https://olive-r.github.io/sptrends/reference/fdr_by.md)
   for why.
 
 - q:
@@ -63,21 +63,21 @@ fdr_correction(
   *q* bounds the expected proportion of false discoveries among all
   discoveries. A cell is declared significant when its FDR-adjusted
   *p*-value is at or below *q*. See
-  [`fdr_bh()`](https://olivergh.github.io/sptrends/reference/fdr_bh.md)
+  [`fdr_bh()`](https://olive-r.github.io/sptrends/reference/fdr_bh.md)
   for the full distinction.
 
 - bky_implementation:
 
   `"multtest"` (default, unchanged from previous versions) or
   `"original"`, passed straight to
-  [`fdr_bky()`](https://olivergh.github.io/sptrends/reference/fdr_bky.md)
+  [`fdr_bky()`](https://olive-r.github.io/sptrends/reference/fdr_bky.md)
   – see its own documentation for the difference. Ignored if `"BKY"` is
   not in `method`.
 
 - moran_check:
 
   Logical. If `TRUE`, and `p` is a `SpatRaster`, automatically run
-  [`spatial_autocorrelation()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation.md)
+  [`spatial_autocorrelation()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation.md)
   on the p-value raster.
 
   **What it does**: computes Moran's I on the p-value raster as a
@@ -99,28 +99,28 @@ fdr_correction(
 
   **More control**: for full control over the test (custom `nperm`,
   `connectivity`, `n_cores`, `alternative`), call
-  [`spatial_autocorrelation()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation.md)
+  [`spatial_autocorrelation()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation.md)
   directly instead – this argument only covers the common case.
 
 - moran_args:
 
   A named list of extra arguments, passed unchanged to
-  [`spatial_autocorrelation()`](https://olivergh.github.io/sptrends/reference/spatial_autocorrelation.md)
+  [`spatial_autocorrelation()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation.md)
   when `moran_check = TRUE` (e.g. `list(nperm = 999, n_cores = 4)`) – no
   intermediate processing.
 
 - report:
 
   Logical. If `TRUE` (default), automatically print the summary table
-  ([`fdr_summary()`](https://olivergh.github.io/sptrends/reference/fdr_summary.md))
+  ([`fdr_summary()`](https://olive-r.github.io/sptrends/reference/fdr_summary.md))
   and draw the diagnostic maps/plots
-  ([`fdr_significance_maps()`](https://olivergh.github.io/sptrends/reference/fdr_significance_maps.md),
-  [`fdr_comparison_barplot()`](https://olivergh.github.io/sptrends/reference/fdr_comparison_barplot.md),
+  ([`fdr_significance_maps()`](https://olive-r.github.io/sptrends/reference/fdr_significance_maps.md),
+  [`fdr_comparison_barplot()`](https://olive-r.github.io/sptrends/reference/fdr_comparison_barplot.md),
   and, if `BKY` was requested,
-  [`fdr_threshold_plot()`](https://olivergh.github.io/sptrends/reference/fdr_threshold_plot.md))
+  [`fdr_threshold_plot()`](https://olive-r.github.io/sptrends/reference/fdr_threshold_plot.md))
   after computing. Set to `FALSE` for programmatic use (e.g. when called
   from
-  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)).
+  [`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)).
 
 - verbose:
 
@@ -138,7 +138,7 @@ separately), and, for each requested method (`BH`, `BKY`, and/or `BY` –
 respectively), numeric vectors of FDR-adjusted p-values and rejection
 decisions, plus `summary_bky` (Stage-1 figures, if BKY was requested)
 and `threshold_data` (for
-[`fdr_threshold_plot()`](https://olivergh.github.io/sptrends/reference/fdr_threshold_plot.md)),
+[`fdr_threshold_plot()`](https://olive-r.github.io/sptrends/reference/fdr_threshold_plot.md)),
 and `reject_raw` (the unadjusted comparison at the same numerical
 threshold). When the input is a raster, `rasters` additionally contains
 the raw p-value raster and corresponding adjusted-value and significance
@@ -150,16 +150,16 @@ association and `NA` otherwise. Neither field establishes the
 positive-regression-dependence condition required by BH. Use
 [`print()`](https://rdrr.io/r/base/print.html)/[`summary()`](https://rdrr.io/r/base/summary.html)/[`plot()`](https://rdrr.io/r/graphics/plot.default.html)
 – see
-[`print.sptrends()`](https://olivergh.github.io/sptrends/reference/print.sptrends.md),
-[`summary.sptrends()`](https://olivergh.github.io/sptrends/reference/summary.sptrends.md),
+[`print.sptrends()`](https://olive-r.github.io/sptrends/reference/print.sptrends.md),
+[`summary.sptrends()`](https://olive-r.github.io/sptrends/reference/summary.sptrends.md),
 and
-[`plot.sptrends()`](https://olivergh.github.io/sptrends/reference/plot.sptrends.md).
+[`plot.sptrends()`](https://olive-r.github.io/sptrends/reference/plot.sptrends.md).
 
 ## Details
 
 **Function type:** **Core function** – one of the core building blocks
 of TST and RTA. Typically follows
-[`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)
+[`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)
 or another inferential function, once one raw p-value exists per spatial
 cell.
 
@@ -251,13 +251,12 @@ function provides a common interface returning comparable outputs
 regardless of the chosen correction – the same
 one-interface-many-methods philosophy this package uses throughout (see,
 e.g.,
-[`prewhiten()`](https://olivergh.github.io/sptrends/reference/prewhiten.md)'s
+[`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md)'s
 `method` argument). This function wraps three distinct, individually
 citable methods – see
-[`fdr_bh()`](https://olivergh.github.io/sptrends/reference/fdr_bh.md),
-[`fdr_bky()`](https://olivergh.github.io/sptrends/reference/fdr_bky.md)
-and
-[`fdr_by()`](https://olivergh.github.io/sptrends/reference/fdr_by.md)
+[`fdr_bh()`](https://olive-r.github.io/sptrends/reference/fdr_bh.md),
+[`fdr_bky()`](https://olive-r.github.io/sptrends/reference/fdr_bky.md)
+and [`fdr_by()`](https://olive-r.github.io/sptrends/reference/fdr_by.md)
 for their methodological background, original publications and full
 reference lists. In short: Benjamini & Hochberg (1995) for BH,
 Benjamini, Krieger & Yekutieli (2006) for the adaptive BKY extension.
@@ -278,7 +277,7 @@ result.
 
 It is good practice to always report the number of valid cells actually
 tested (`m` in this function's own output and in
-[`fdr_summary()`](https://olivergh.github.io/sptrends/reference/fdr_summary.md)'s
+[`fdr_summary()`](https://olive-r.github.io/sptrends/reference/fdr_summary.md)'s
 table, as `n_valid`) alongside any count or percentage of significant
 cells. The same percentage means a very different thing depending on
 whether it comes from 50 valid cells or 50,000 – omitting `m` leaves
@@ -294,16 +293,15 @@ and degenerate inputs, and the equivalence of numeric-vector and
 `SpatRaster` interfaces are covered by automated tests. Integration
 tests verify that workflow printing, maps, and summaries report only
 methods actually requested. See
-[`?sptrends`](https://olivergh.github.io/sptrends/reference/sptrends-package.md)
+[`?sptrends`](https://olive-r.github.io/sptrends/reference/sptrends-package.md)
 for the package-wide release-check protocol.
 
 ## References
 
 Combines the three methods below – see
-[`fdr_bh()`](https://olivergh.github.io/sptrends/reference/fdr_bh.md),
-[`fdr_bky()`](https://olivergh.github.io/sptrends/reference/fdr_bky.md)
-and
-[`fdr_by()`](https://olivergh.github.io/sptrends/reference/fdr_by.md)
+[`fdr_bh()`](https://olive-r.github.io/sptrends/reference/fdr_bh.md),
+[`fdr_bky()`](https://olive-r.github.io/sptrends/reference/fdr_bky.md)
+and [`fdr_by()`](https://olive-r.github.io/sptrends/reference/fdr_by.md)
 for the full reference list and the reasoning behind each citation,
 including why `BY` is offered but not run by default.
 
@@ -325,16 +323,16 @@ including why `BY` is offered but not run by default.
 ## See also
 
 Other FDR correction functions:
-[`fdr_bh()`](https://olivergh.github.io/sptrends/reference/fdr_bh.md),
-[`fdr_bky()`](https://olivergh.github.io/sptrends/reference/fdr_bky.md),
-[`fdr_by()`](https://olivergh.github.io/sptrends/reference/fdr_by.md),
-[`fdr_comparison_barplot()`](https://olivergh.github.io/sptrends/reference/fdr_comparison_barplot.md),
-[`fdr_direction_plot()`](https://olivergh.github.io/sptrends/reference/fdr_direction_plot.md),
-[`fdr_direction_summary()`](https://olivergh.github.io/sptrends/reference/fdr_direction_summary.md),
-[`fdr_pvalue_histogram()`](https://olivergh.github.io/sptrends/reference/fdr_pvalue_histogram.md),
-[`fdr_significance_maps()`](https://olivergh.github.io/sptrends/reference/fdr_significance_maps.md),
-[`fdr_summary()`](https://olivergh.github.io/sptrends/reference/fdr_summary.md),
-[`fdr_threshold_plot()`](https://olivergh.github.io/sptrends/reference/fdr_threshold_plot.md)
+[`fdr_bh()`](https://olive-r.github.io/sptrends/reference/fdr_bh.md),
+[`fdr_bky()`](https://olive-r.github.io/sptrends/reference/fdr_bky.md),
+[`fdr_by()`](https://olive-r.github.io/sptrends/reference/fdr_by.md),
+[`fdr_comparison_barplot()`](https://olive-r.github.io/sptrends/reference/fdr_comparison_barplot.md),
+[`fdr_direction_plot()`](https://olive-r.github.io/sptrends/reference/fdr_direction_plot.md),
+[`fdr_direction_summary()`](https://olive-r.github.io/sptrends/reference/fdr_direction_summary.md),
+[`fdr_pvalue_histogram()`](https://olive-r.github.io/sptrends/reference/fdr_pvalue_histogram.md),
+[`fdr_significance_maps()`](https://olive-r.github.io/sptrends/reference/fdr_significance_maps.md),
+[`fdr_summary()`](https://olive-r.github.io/sptrends/reference/fdr_summary.md),
+[`fdr_threshold_plot()`](https://olive-r.github.io/sptrends/reference/fdr_threshold_plot.md)
 
 ## Examples
 

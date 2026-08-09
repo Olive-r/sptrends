@@ -14,7 +14,20 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/Olive-r/sptrends/blob/v1.3.4/inst/CITATION)
+[`inst/CITATION`](https://github.com/Olive-r/sptrends/blob/main/inst/CITATION)
+
+Gutiérrez-Hernández, O., & García, L. V. (2026). sptrends: Statistical
+Inference for Spatiotemporal Trends in Gridded Data \[R package\].
+Zenodo. https://doi.org/10.5281/zenodo.21822842
+
+    @Manual{,
+      title = {sptrends: Statistical Inference for Spatiotemporal Trends in Gridded Data},
+      author = {Oliver Gutiérrez-Hernández and Luis V. García},
+      year = {2026},
+      note = {R package},
+      doi = {10.5281/zenodo.21822842},
+      url = {https://doi.org/10.5281/zenodo.21822842},
+    }
 
 Gutiérrez-Hernández, O. and García, L.V. (2025). Uncovering true
 significant trends in global greening. Remote Sensing Applications:

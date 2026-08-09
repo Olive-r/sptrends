@@ -22,7 +22,7 @@ trend_maps(
 - trend:
 
   The `$stats` field of
-  [`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)'s
+  [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)'s
   output.
 
 - alpha:
@@ -31,9 +31,9 @@ trend_maps(
   direction-of-change maps. **Uncorrected** for multiple testing across
   cells – these maps are diagnostic, not a final significance result;
   run
-  [`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md)
+  [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
   on `trend$p` (and consider
-  [`direction_map()`](https://olivergh.github.io/sptrends/reference/direction_map.md)
+  [`direction_map()`](https://olive-r.github.io/sptrends/reference/direction_map.md)
   instead) before reporting which cells are significant.
 
 - panels:
@@ -45,7 +45,7 @@ trend_maps(
   `"significance"`: which cells cross `alpha` (binary). `"direction"`:
   increase/decrease/no-change among the significant cells. Reachable via
   `plot(x, panels = ...)` on a
-  [`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)
+  [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)
   result, which forwards this argument through.
 
 - path:
@@ -69,9 +69,9 @@ Invisibly, a list with `significant` and `classes` (both `SpatRaster`,
 ## See also
 
 Other Contextual Mann-Kendall functions:
-[`prepare_cmk_neighbourhood()`](https://olivergh.github.io/sptrends/reference/prepare_cmk_neighbourhood.md),
-[`trend_histograms()`](https://olivergh.github.io/sptrends/reference/trend_histograms.md),
-[`trend_summary()`](https://olivergh.github.io/sptrends/reference/trend_summary.md)
+[`prepare_cmk_neighbourhood()`](https://olive-r.github.io/sptrends/reference/prepare_cmk_neighbourhood.md),
+[`trend_histograms()`](https://olive-r.github.io/sptrends/reference/trend_histograms.md),
+[`trend_summary()`](https://olive-r.github.io/sptrends/reference/trend_summary.md)
 
 ## Examples
 

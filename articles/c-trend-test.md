@@ -16,7 +16,7 @@ cell.
 
 ## What `trend_test()` does
 
-[`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)
+[`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)
 applies one of four inferential methods to every valid raster cell. Each
 method tests its corresponding null hypothesis of no temporal trend
 against a two-sided alternative hypothesis of an increasing or
@@ -145,11 +145,11 @@ a broader region.
   justification; both approaches address serial autocorrelation.
 - Do not treat a raster-wide analysis as a single trend test, nor
   interpret raw *p* \< *α* as raster-wide significance;
-  [`trend_test()`](https://olivergh.github.io/sptrends/reference/trend_test.md)
+  [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)
   performs one hypothesis test per valid raster cell, and testing many
   cells simultaneously creates a multiple-testing problem that requires
   explicit correction (see [multiple-testing
-  vignette](https://olivergh.github.io/sptrends/articles/e-fdr-correction.md)).
+  vignette](https://olive-r.github.io/sptrends/articles/e-fdr-correction.md)).
 - Do not interpret statistical significance as evidence of a large or
   practically important change; significance and magnitude answer
   different questions.
@@ -157,15 +157,15 @@ a broader region.
 ## Next steps
 
 Use
-[`vignette("d-slope-estimation")`](https://olivergh.github.io/sptrends/articles/d-slope-estimation.md)
+[`vignette("d-slope-estimation")`](https://olive-r.github.io/sptrends/articles/d-slope-estimation.md)
 for magnitude and
-[`vignette("e-fdr-correction")`](https://olivergh.github.io/sptrends/articles/e-fdr-correction.md)
+[`vignette("e-fdr-correction")`](https://olive-r.github.io/sptrends/articles/e-fdr-correction.md)
 before reporting significant cells.
 
 ## Further details
 
 See
-[`?trend_test`](https://olivergh.github.io/sptrends/reference/trend_test.md)
+[`?trend_test`](https://olive-r.github.io/sptrends/reference/trend_test.md)
 for equations, assumptions, continuity conventions, RAMK foundations,
 CMK validation, limitations and complete references.
 

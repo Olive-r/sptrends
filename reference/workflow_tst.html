@@ -15,7 +15,7 @@ Trends (TST) workflow. Each step is optional and all underlying
 parameters remain available directly on the individual functions –
 workflow_tst() does not replace them, it saves wiring the calls
 together for the common case, and returns a single "tst" object
-with its own print(), summary(), and plot() methods.'><meta property="og:image" content="https://olivergh.github.io/sptrends/logo.png"></head><body>
+with its own print(), summary(), and plot() methods.'><meta property="og:image" content="https://olive-r.github.io/sptrends/logo.png"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -23,7 +23,7 @@ with its own print(), summary(), and plot() methods.'><meta property="og:image" 
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,7 +54,7 @@ with its own print(), summary(), and plot() methods.'><meta property="og:image" 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>True Significant Trends (TST): the full pipeline in one call</h1>
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v1.3.4/R/workflow_tst.R" class="external-link"><code>R/workflow_tst.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/R/workflow_tst.R" class="external-link"><code>R/workflow_tst.R</code></a></small>
       <div class="d-none name"><code>workflow_tst.Rd</code></div>
     </div>
 
@@ -109,7 +109,21 @@ test unmodified.</p></dd>
 <dt id="arg-prewhiten-args">prewhiten_args<a class="anchor" aria-label="anchor" href="#arg-prewhiten-args"></a></dt>
 <dd><p>A named list of extra arguments forwarded to
 <code><a href="prewhiten.html">prewhiten()</a></code> (e.g. <code>list(dw_method = "test")</code>). Workflow-managed
-transport and reporting arguments cannot be overridden here.</p></dd>
+transport and reporting arguments cannot be overridden here.</p>
+<p><strong>Known limitation with irregular time spacing and <code>TFPW_Y</code>:</strong> this
+workflow has no top-level <code>t</code> argument of its own – if your
+observation times are irregularly spaced (not one evenly-spaced
+step per layer) and you need a genuine time axis for
+<code><a href="trend_test.html">trend_test()</a></code>/<code><a href="slope_estimator.html">slope_estimator()</a></code> rather than the default
+<code>1:n</code> layer index, you must supply the correct <code>t</code> yourself in
+<code>prewhiten_args</code>, <code>cmk_args</code> and <code>theil_sen_args</code> separately, and
+keep them consistent by hand. <code>TFPW_Y</code> specifically drops the
+first observation (see <code><a href="prewhiten.html">prewhiten()</a></code>'s own "Value" section), so
+the <code>t</code> you pass to <code>cmk_args</code>/<code>theil_sen_args</code> after using
+<code>TFPW_Y</code> must itself have its own first element dropped to stay
+aligned with the one-layer-shorter prewhitened series – this
+workflow does not do that adjustment for you. Not an issue for
+<code>TFPW_WS</code> (default), which keeps every layer.</p></dd>
 
 
 <dt id="arg-export-dw">export_dw<a class="anchor" aria-label="anchor" href="#arg-export-dw"></a></dt>
@@ -127,7 +141,9 @@ region, or <code>list(method = "MK", n_cores = 4)</code>). The default empty
 list preserves the 3 by 3 CMK region described by Neeti and Eastman
 (2011), as implemented in TerrSet's Kendall module;
 changing it creates a TST-inspired variant rather than an exact
-reproduction of the published workflow.</p></dd>
+reproduction of the published workflow. See <code>prewhiten_args</code>
+above for a known limitation with irregular time spacing and
+<code>TFPW_Y</code> if you pass <code>t</code> here.</p></dd>
 
 
 <dt id="arg-theil-sen">theil_sen<a class="anchor" aria-label="anchor" href="#arg-theil-sen"></a></dt>
@@ -144,7 +160,9 @@ this on for long time series.</p></dd>
 Ignored if <code>theil_sen = FALSE</code>. <code>smooth_neighbourhood</code> stays at
 <code><a href="slope_estimator.html">slope_estimator()</a></code>'s own default (<code>FALSE</code>) unless set here (e.g.
 <code>list(smooth_neighbourhood = TRUE)</code>) – see "Theil-Sen has a real
-computational cost" above for why.</p></dd>
+computational cost" above for why. See <code>prewhiten_args</code> above for
+a known limitation with irregular time spacing and <code>TFPW_Y</code> if
+you pass <code>t</code> here.</p></dd>
 
 
 <dt id="arg-alpha">alpha<a class="anchor" aria-label="anchor" href="#arg-alpha"></a></dt>
@@ -242,17 +260,22 @@ with</p>
 <code>export_dw = TRUE</code>.</p></dd>
 
 <dt>trend</dt>
-<dd><p>The output of <code><a href="trend_test.html">trend_test()</a></code>.</p></dd>
+<dd><p>The <code>$stats</code> field of <code><a href="trend_test.html">trend_test()</a></code>'s own output (a
+<code>SpatRaster</code> with the trend statistics themselves) – not the
+full <code><a href="trend_test.html">trend_test()</a></code> return value, which also includes
+<code>neighbourhood</code>/<code>window_size</code>.</p></dd>
 
 <dt>trend_summary_table</dt>
 <dd><p>The output of <code><a href="trend_summary.html">trend_summary()</a></code> (invisible
 data frame).</p></dd>
 
 <dt>theil_sen</dt>
-<dd><p>The output of <code><a href="slope_estimator.html">slope_estimator()</a></code>, or <code>NULL</code> if
-<code>theil_sen = FALSE</code>. Not smoothed by default (see the
-<code>theil_sen_args</code> note above) – check <code>theil_sen_smoothed</code> if you
-need to know whether it was (e.g. because you set it yourself).</p></dd>
+<dd><p>The <code>$slope</code> field of <code><a href="slope_estimator.html">slope_estimator()</a></code>'s own
+output (a <code>SpatRaster</code>), or <code>NULL</code> if <code>theil_sen = FALSE</code>. Not
+the full <code><a href="slope_estimator.html">slope_estimator()</a></code> return value. Not smoothed by
+default (see the <code>theil_sen_args</code> note above) – check
+<code>theil_sen_smoothed</code> if you need to know whether it was (e.g.
+because you set it yourself).</p></dd>
 
 <dt>theil_sen_smoothed</dt>
 <dd><p>Logical: whether <code>theil_sen</code> was computed
@@ -265,7 +288,7 @@ with <code>smooth_neighbourhood = TRUE</code>. <code>FALSE</code> by default; <c
 
 <dt>timing</dt>
 <dd><p>A named list of elapsed seconds per step actually run
-(<code>prewhiten</code>, <code>cmk</code>, <code>theil_sen</code>, <code>fdr</code> – only the ones that ran
+(<code>prewhiten</code>, <code>CMK</code>, <code>theil_sen</code>, <code>fdr</code> – only the ones that ran
 are present), each measured with <code><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time()</a></code> around that step's
 own function call. Coarse (whole-step, not line-by-line) and not a
 substitute for a proper profiler, but enough for noticing which

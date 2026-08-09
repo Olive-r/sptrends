@@ -5,15 +5,15 @@ the output of another function; it does not compute any new statistic.
 Not exported. Unlike the other functions internalised alongside it, this
 one has no direct single-object S3 wrapper – it takes a `direction`
 raster (from
-[`direction_map()`](https://olivergh.github.io/sptrends/reference/direction_map.md),
+[`direction_map()`](https://olive-r.github.io/sptrends/reference/direction_map.md),
 also not exported) rather than a `"trend_test"`/`"fdr"` object, so there
 is nothing for a method to dispatch on. Reachable from outside the
 package via
 `plot(tst_result, which = "direction")`/`plot(rta_result, which = "direction")`
 for
-[`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)/[`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md)
+[`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)/[`workflow_rta()`](https://olive-r.github.io/sptrends/reference/workflow_rta.md)
 results specifically; both this function and
-[`direction_map()`](https://olivergh.github.io/sptrends/reference/direction_map.md)
+[`direction_map()`](https://olive-r.github.io/sptrends/reference/direction_map.md)
 are reachable with `:::` for any other case.
 
 ## Usage
@@ -27,7 +27,7 @@ fdr_direction_plot(direction, path = NULL, main = "Binarised trend map")
 - direction:
 
   Output of
-  [`direction_map()`](https://olivergh.github.io/sptrends/reference/direction_map.md).
+  [`direction_map()`](https://olive-r.github.io/sptrends/reference/direction_map.md).
 
 - path:
 
@@ -36,7 +36,7 @@ fdr_direction_plot(direction, path = NULL, main = "Binarised trend map")
 - main:
 
   Plot title. Defaults to the generic `"Binarised trend map"`;
-  [`workflow_tst()`](https://olivergh.github.io/sptrends/reference/workflow_tst.md)/[`workflow_rta()`](https://olivergh.github.io/sptrends/reference/workflow_rta.md)
+  [`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)/[`workflow_rta()`](https://olive-r.github.io/sptrends/reference/workflow_rta.md)
   results pass their own `"TST direction map"`/`"RTA direction map"`
   instead.
 
@@ -66,16 +66,16 @@ significance is based on:
 ## See also
 
 Other FDR correction functions:
-[`fdr_bh()`](https://olivergh.github.io/sptrends/reference/fdr_bh.md),
-[`fdr_bky()`](https://olivergh.github.io/sptrends/reference/fdr_bky.md),
-[`fdr_by()`](https://olivergh.github.io/sptrends/reference/fdr_by.md),
-[`fdr_comparison_barplot()`](https://olivergh.github.io/sptrends/reference/fdr_comparison_barplot.md),
-[`fdr_correction()`](https://olivergh.github.io/sptrends/reference/fdr_correction.md),
-[`fdr_direction_summary()`](https://olivergh.github.io/sptrends/reference/fdr_direction_summary.md),
-[`fdr_pvalue_histogram()`](https://olivergh.github.io/sptrends/reference/fdr_pvalue_histogram.md),
-[`fdr_significance_maps()`](https://olivergh.github.io/sptrends/reference/fdr_significance_maps.md),
-[`fdr_summary()`](https://olivergh.github.io/sptrends/reference/fdr_summary.md),
-[`fdr_threshold_plot()`](https://olivergh.github.io/sptrends/reference/fdr_threshold_plot.md)
+[`fdr_bh()`](https://olive-r.github.io/sptrends/reference/fdr_bh.md),
+[`fdr_bky()`](https://olive-r.github.io/sptrends/reference/fdr_bky.md),
+[`fdr_by()`](https://olive-r.github.io/sptrends/reference/fdr_by.md),
+[`fdr_comparison_barplot()`](https://olive-r.github.io/sptrends/reference/fdr_comparison_barplot.md),
+[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md),
+[`fdr_direction_summary()`](https://olive-r.github.io/sptrends/reference/fdr_direction_summary.md),
+[`fdr_pvalue_histogram()`](https://olive-r.github.io/sptrends/reference/fdr_pvalue_histogram.md),
+[`fdr_significance_maps()`](https://olive-r.github.io/sptrends/reference/fdr_significance_maps.md),
+[`fdr_summary()`](https://olive-r.github.io/sptrends/reference/fdr_summary.md),
+[`fdr_threshold_plot()`](https://olive-r.github.io/sptrends/reference/fdr_threshold_plot.md)
 
 ## Examples
 

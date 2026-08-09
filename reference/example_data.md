@@ -37,13 +37,13 @@ The bundled dataset is annual mean NDVI (Normalized Difference
 Vegetation Index) – derived from the NOAA STAR Blended Vegetation Health
 Product, 1982-2023, global land 100 km Eckert IV equal-area grid, ~3.5
 MB – a folder of one GeoTIFF per year, which is exactly the layout
-[`read_ordered_stack()`](https://olivergh.github.io/sptrends/reference/read_ordered_stack.md)
+[`read_ordered_stack()`](https://olive-r.github.io/sptrends/reference/read_ordered_stack.md)
 expects. So `example_data()` doubles as a realistic example of *that*
 function's intended use (a folder of yearly rasters), not just a
 shortcut to a pre-loaded R object. NDVI trend analysis (vegetation
 "greening" and "browning") is also the motivating application of the
 True Significant Trends workflow itself – see the primary reference in
-[`?workflow_tst`](https://olivergh.github.io/sptrends/reference/workflow_tst.md).
+[`?workflow_tst`](https://olive-r.github.io/sptrends/reference/workflow_tst.md).
 
 **Function type:** **Support function** – locates package example files;
 it performs no statistical analysis.
@@ -83,9 +83,9 @@ not be treated as a replacement for the original NOAA product.
 
 Tests verify file listing, path resolution, informative failure for
 absent paths, and end-to-end compatibility of the bundled dataset with
-[`read_ordered_stack()`](https://olivergh.github.io/sptrends/reference/read_ordered_stack.md).
+[`read_ordered_stack()`](https://olive-r.github.io/sptrends/reference/read_ordered_stack.md).
 See
-[`?sptrends`](https://olivergh.github.io/sptrends/reference/sptrends-package.md)
+[`?sptrends`](https://olive-r.github.io/sptrends/reference/sptrends-package.md)
 for the package-wide release-check protocol.
 
 ## References
@@ -97,7 +97,7 @@ Vegetation Health Product (Blended-VHP).
 ## See also
 
 Other example data functions:
-[`sim_trend_stack()`](https://olivergh.github.io/sptrends/reference/sim_trend_stack.md)
+[`sim_trend_stack()`](https://olive-r.github.io/sptrends/reference/sim_trend_stack.md)
 
 ## Examples
 
