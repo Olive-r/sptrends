@@ -95,7 +95,7 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))[[1]]
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.12 s
+#> >> [read_ordered_stack()] elapsed: 0.09 s
 moran_result <- spatial_autocorrelation(r, nperm = 19, seed = 1,
                                          verbose = FALSE, report = FALSE)
 

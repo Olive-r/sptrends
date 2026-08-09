@@ -14,7 +14,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/Olive-r/sptrends/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/Olive-r/sptrends/blob/v1.4.2/inst/CITATION)
 
 Gutiérrez-Hernández, O., & García, L. V. (2026). sptrends: Statistical
 Inference for Spatiotemporal Trends in Gridded Data \[R package\].

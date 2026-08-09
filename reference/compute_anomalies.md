@@ -238,7 +238,7 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.26 s
+#> >> [read_ordered_stack()] elapsed: 0.16 s
 terra::nlyr(r)
 #> [1] 42
 # Apply compute_anomalies() only to real observations with a genuine
