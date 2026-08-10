@@ -71,7 +71,7 @@ comparison <- compare_detections(
                      CMK = trend_cmk$stats$p <= 0.05),
   ground_truth = sim$true_slope
 )
-#> >> [compare_detections()] elapsed: 0.01 s
+#> >> [compare_detections()] elapsed: 0.02 s
 
 # A grouped bar chart of the table above -- one group of bars per
 # method, one bar per metric.

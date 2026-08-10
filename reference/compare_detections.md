@@ -338,10 +338,10 @@ for (s in 1:10) {
                                 CMK = cmk_s$stats$p <= 0.05)
   truths_list[[s]] <- sim_s$true_slope
 }
-#> >> [sim_trend_stack()] elapsed: 0.12 s
+#> >> [sim_trend_stack()] elapsed: 0.13 s
 #> >> [sim_trend_stack()] elapsed: 0.06 s
 #> >> [sim_trend_stack()] elapsed: 0.07 s
-#> >> [sim_trend_stack()] elapsed: 0.07 s
+#> >> [sim_trend_stack()] elapsed: 0.08 s
 #> >> [sim_trend_stack()] elapsed: 0.06 s
 #> >> [sim_trend_stack()] elapsed: 0.06 s
 #> >> [sim_trend_stack()] elapsed: 0.06 s
