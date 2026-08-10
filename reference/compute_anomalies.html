@@ -17,7 +17,7 @@ distort the monotonic signal a trend test is looking for."><meta property="og:im
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +48,7 @@ distort the monotonic signal a trend test is looking for."><meta property="og:im
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Remove the seasonal cycle from raster time series</h1>
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v1.4.2/R/anomalies.R" class="external-link"><code>R/anomalies.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/R/anomalies.R" class="external-link"><code>R/anomalies.R</code></a></small>
       <div class="d-none name"><code>compute_anomalies.Rd</code></div>
     </div>
 
@@ -63,7 +63,14 @@ distort the monotonic signal a trend test is looking for.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">compute_anomalies</span><span class="op">(</span><span class="va">x</span>, cycle <span class="op">=</span> <span class="fl">12</span>, standardise <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">compute_anomalies</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  cycle <span class="op">=</span> <span class="fl">12</span>,</span>
+<span>  cycle_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  start_position <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  standardise <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -79,7 +86,28 @@ be based on fewer years for those positions).</p></dd>
 <dt id="arg-cycle">cycle<a class="anchor" aria-label="anchor" href="#arg-cycle"></a></dt>
 <dd><p>Integer. Length of the seasonal cycle in layers – e.g.
 <code>12</code> for monthly data with an annual cycle (the default), <code>4</code> for
-quarterly/seasonal data, <code>365</code> for daily data with an annual cycle.</p></dd>
+quarterly/seasonal data, <code>365</code> for daily data with an annual cycle.
+Ignored if <code>cycle_type</code> is supplied.</p></dd>
+
+
+<dt id="arg-cycle-type">cycle_type<a class="anchor" aria-label="anchor" href="#arg-cycle-type"></a></dt>
+<dd><p>Optional named shortcut for <code>cycle</code>, using the same
+vocabulary as <code><a href="read_ordered_stack.html">read_ordered_stack()</a></code>'s own <code>cycle_type</code> (see
+<code><a href="read_ordered_stack.html">?read_ordered_stack</a></code>, "Supported cycle types"): <code>"monthly"</code> (12),
+<code>"16-day"</code> (23), <code>"semimonthly"</code> (24), <code>"10-day"</code> (36), <code>"8-day"</code>
+(46), or <code>"weekly"</code> (52). <code>"annual"</code> and <code>"daily"</code> are deliberately
+not included – see "Methodological details" below. <code>NULL</code>
+(default) uses the numeric <code>cycle</code> instead.</p></dd>
+
+
+<dt id="arg-start-position">start_position<a class="anchor" aria-label="anchor" href="#arg-start-position"></a></dt>
+<dd><p>Integer in <code>[1, cycle]</code>. Cycle position of the
+stack's first layer. Default <code>1</code> (the first layer is the first
+position of its cycle, e.g. January for monthly data). Set this when
+a series starts mid-cycle – e.g. <code>start_position = 8</code> for monthly
+data beginning in August, so the climatology aligns layers to their
+true calendar position instead of assuming the stack starts at the
+beginning of a cycle.</p></dd>
 
 
 <dt id="arg-standardise">standardise<a class="anchor" aria-label="anchor" href="#arg-standardise"></a></dt>
@@ -189,6 +217,19 @@ climatology rather than being detected as such – this function has
 no mechanism to distinguish a regime shift from ordinary seasonal
 variability; that is a different kind of question from the one it
 answers.</p>
+<p><strong>Why <code>cycle_type</code> excludes <code>"annual"</code> and <code>"daily"</code></strong></p>
+<p><code>"annual"</code> would translate to <code>cycle = 1</code>, which this function always
+rejects immediately afterwards – an annual series has no sub-annual
+cycle to remove in the first place, so there is nothing for this
+function to do with it. <code>"daily"</code> would use a fixed <code>cycle = 365</code>
+based on cycle POSITION alone, since this function has no access to
+the real dates in <code>terra::time(x)</code> – every leap year would silently
+misalign the climatology for the rest of the series (day 366 would
+be paired with the cycle position that day 1 of the following year
+would otherwise occupy). Supply the numeric <code>cycle</code> argument directly
+for genuinely daily data instead, with that leap-year caveat in mind
+(or use <code><a href="read_ordered_stack.html">read_ordered_stack()</a></code>'s own <code>cycle_type = "daily"</code>, which
+does read real dates and is not affected by this).</p>
 <p><strong>Quality assurance</strong></p>
 <p>Tests verify monthly and arbitrary-cycle climatologies against direct
 calculations, centred and standardised anomalies, layer names,
@@ -220,6 +261,7 @@ trend inference; <code><a href="sim_trend_stack.html">sim_trend_stack()</a></cod
 <span class="r-in"><span><span class="co"># climatological cycle to remove.</span></span></span>
 <span class="r-in"><span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="read_ordered_stack.html">read_ordered_stack</a></span><span class="op">(</span><span class="fu"><a href="example_data.html">example_data</a></span><span class="op">(</span><span class="st">"vhp_ndvi"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Temporal order auto-detected with pattern '(19[0-9]{2}|20[0-9]{2})'.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Automatic mode: order detected from file names. For higher reliability -- especially if the series is not annual -- supplying 'files' explicitly (with 'time' or 'cycle_type') is recommended. See ?read_ordered_stack.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Temporal order verification (mandatory, cannot be skipped):</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  stack_position detected_number                         file</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>               1            1982 VHP_SMN_annual_ndvi_1982.tif</span>
@@ -266,7 +308,7 @@ trend inference; <code><a href="sim_trend_stack.html">sim_trend_stack()</a></cod
 <span class="r-msg co"><span class="r-pr">#&gt;</span>              42            2023 VHP_SMN_annual_ndvi_2023.tif</span>
 <span class="r-plt img"><img src="compute_anomalies-1.png" alt="" width="700" height="433"></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Stack built: 42 layers, 146 x 338 cells.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [read_ordered_stack()] elapsed: 0.16 s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [read_ordered_stack()] elapsed: 0.29 s</span>
 <span class="r-in"><span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nlyr</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 42</span>
 <span class="r-in"><span><span class="co"># Apply compute_anomalies() only to real observations with a genuine</span></span></span>

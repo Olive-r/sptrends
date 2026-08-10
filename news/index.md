@@ -1,5 +1,50 @@
 # Changelog
 
+## sptrends 1.5
+
+### New features
+
+- [`read_ordered_stack()`](https://olive-r.github.io/sptrends/reference/read_ordered_stack.md)
+  now supports explicit declaration of a series’ temporal structure
+  (`files`, `time`, `cycle_type`, `start`, `end`, `time_anchor`), as an
+  alternative to automatic detection from file names – recommended
+  whenever the series is not simply annual. Eight unambiguous calendar
+  conventions are supported: `"annual"`, `"monthly"`, `"16-day"`,
+  `"semimonthly"`, `"10-day"`, `"8-day"`, `"weekly"`, and `"daily"`, all
+  built with real calendar arithmetic (leap years included).
+- [`compute_anomalies()`](https://olive-r.github.io/sptrends/reference/compute_anomalies.md)’s
+  own `cycle_type` now uses the same vocabulary as
+  [`read_ordered_stack()`](https://olive-r.github.io/sptrends/reference/read_ordered_stack.md)’s
+  (`"monthly"`, `"16-day"`, `"semimonthly"`, `"10-day"`, `"8-day"`,
+  `"weekly"`), so a value already used to read a stack can be reused
+  directly here. `"annual"` and `"daily"` are deliberately not included
+  – see
+  [`?compute_anomalies`](https://olive-r.github.io/sptrends/reference/compute_anomalies.md)
+  for why.
+
+### Improvements
+
+- Automatic mode’s gap detection is now scoped to simple annual
+  sequences, avoiding false positives on combined numeric codes.
+- Automatic mode now recommends explicit declaration for series that may
+  not be annual.
+- [`compute_anomalies()`](https://olive-r.github.io/sptrends/reference/compute_anomalies.md)
+  now validates `cycle` fully (must be one finite integer `>= 2`),
+  instead of only checking `cycle < 2`.
+
+## sptrends 1.4.4
+
+### Improvements
+
+- `trend_test(method = "CMK")` now supports `connectivity = "rook"` as a
+  genuine, working option, alongside the default `"queen"`.
+
+## sptrends 1.4.3
+
+### Documentation
+
+- Added the CMK/`ConMK` external validation note to `README.md`.
+
 ## sptrends 1.4.2
 
 ### Documentation

@@ -137,6 +137,18 @@ validated through an external battery covering all 18 exported functions
 with correctness checks against known-truth simulations, and a
 comprehensive integral audit of code, citations and documentation.
 
+`trend_test(method = "CMK")` has additionally been cross-checked against
+an installed copy of [`ConMK`](https://github.com/antiphon/ConMK)
+(Antiphon, GitHub, not on CRAN – also available as a fork at
+[`geoporttishare/ConMK`](https://github.com/geoporttishare/ConMK)), the
+closest available external reference implementation of the contextual
+Mann-Kendall test. The base statistic matched to floating-point
+precision, and the optional `continuity = TRUE` argument reproduces
+`ConMK`’s own p-values exactly at the specific edge case where the two
+implementations would otherwise be expected to diverge. Full details in
+[`?trend_test`](https://olive-r.github.io/sptrends/reference/trend_test.md)’s
+“External validation” section.
+
 Every change is documented transparently in
 [NEWS.md](https://olive-r.github.io/sptrends/NEWS.md).
 

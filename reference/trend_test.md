@@ -20,6 +20,7 @@ trend_test(
   ties = FALSE,
   t = NULL,
   window_size = 3L,
+  connectivity = c("queen", "rook"),
   precomputed_neighbourhood = NULL,
   continuity = FALSE,
   n_cores = 1,
@@ -123,13 +124,23 @@ trend_test(
 - window_size:
 
   Odd integer greater than or equal to `3`. Width and height, in raster
-  cells, of the square queen neighbourhood used only by
-  `method = "CMK"`. The default `3L` preserves the CMK region described
-  by Neeti and Eastman (2011), as implemented in TerrSet's Kendall
-  module. Larger values such as `5L` or `7L` change the spatial scale of
-  the contextual test; choose them from the process scale and raster
-  resolution, not as automatic upgrades. A non-default value with
-  another `method` is rejected.
+  cells, of the square neighbourhood used only by `method = "CMK"` (see
+  `connectivity` below for its shape). The default `3L` preserves the
+  CMK region described by Neeti and Eastman (2011), as implemented in
+  TerrSet's Kendall module. Larger values such as `5L` or `7L` change
+  the spatial scale of the contextual test; choose them from the process
+  scale and raster resolution, not as automatic upgrades. A non-default
+  value with another `method` is rejected.
+
+- connectivity:
+
+  `"queen"` (default, 8 neighbours) or `"rook"` (4 neighbours, no
+  diagonals). Only used when `method = "CMK"`. `"queen"` preserves the
+  CMK region described by Neeti and Eastman (2011); `"rook"` is a
+  narrower neighbourhood, useful when diagonal-only adjacency is not a
+  meaningful spatial relationship for the process being tested, or to
+  check how sensitive a result is to the choice of neighbourhood shape.
+  A non-default value with another `method` is rejected.
 
 - precomputed_neighbourhood:
 
@@ -141,7 +152,7 @@ trend_test(
   the spatial adjacency structure that `method = "CMK"` needs. Only used
   when `method = "CMK"`. If `NULL` (typical single-call use), it is
   computed internally. Reuse is accepted only when matrix dimensions,
-  raster geometry, queen connectivity, `window_size`, and the
+  raster geometry, the requested connectivity, `window_size`, and the
   complete-case cell pattern all match `x`; incompatible objects produce
   an error rather than a result built from the wrong neighbours.
 
@@ -830,6 +841,7 @@ combines these stages in one configurable workflow.
 # Annual mean NDVI from the bundled environmental dataset.
 r <- read_ordered_stack(example_data("vhp_ndvi"))
 #> Temporal order auto-detected with pattern '(19[0-9]{2}|20[0-9]{2})'.
+#> Automatic mode: order detected from file names. For higher reliability -- especially if the series is not annual -- supplying 'files' explicitly (with 'time' or 'cycle_type') is recommended. See ?read_ordered_stack.
 #> Temporal order verification (mandatory, cannot be skipped):
 #>  stack_position detected_number                         file
 #>               1            1982 VHP_SMN_annual_ndvi_1982.tif
@@ -876,7 +888,7 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.09 s
+#> >> [read_ordered_stack()] elapsed: 0.12 s
 
 # Test every cell for a monotonic trend, borrowing strength from each
 # cell's spatial neighbourhood (method = "CMK", the default).

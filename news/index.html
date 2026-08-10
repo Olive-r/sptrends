@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,9 +38,41 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/Olive-r/sptrends/blob/v1.4.2/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/Olive-r/sptrends/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.5" id="sptrends-15">sptrends 1.5<a class="anchor" aria-label="anchor" href="#sptrends-15"></a></h2>
+<div class="section level3">
+<h3 id="new-features-1-5">New features<a class="anchor" aria-label="anchor" href="#new-features-1-5"></a></h3>
+<ul><li>
+<code><a href="../reference/read_ordered_stack.html">read_ordered_stack()</a></code> now supports explicit declaration of a series’ temporal structure (<code>files</code>, <code>time</code>, <code>cycle_type</code>, <code>start</code>, <code>end</code>, <code>time_anchor</code>), as an alternative to automatic detection from file names – recommended whenever the series is not simply annual. Eight unambiguous calendar conventions are supported: <code>"annual"</code>, <code>"monthly"</code>, <code>"16-day"</code>, <code>"semimonthly"</code>, <code>"10-day"</code>, <code>"8-day"</code>, <code>"weekly"</code>, and <code>"daily"</code>, all built with real calendar arithmetic (leap years included).</li>
+<li>
+<code><a href="../reference/compute_anomalies.html">compute_anomalies()</a></code>’s own <code>cycle_type</code> now uses the same vocabulary as <code><a href="../reference/read_ordered_stack.html">read_ordered_stack()</a></code>’s (<code>"monthly"</code>, <code>"16-day"</code>, <code>"semimonthly"</code>, <code>"10-day"</code>, <code>"8-day"</code>, <code>"weekly"</code>), so a value already used to read a stack can be reused directly here. <code>"annual"</code> and <code>"daily"</code> are deliberately not included – see <code><a href="../reference/compute_anomalies.html">?compute_anomalies</a></code> for why.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="improvements-1-5">Improvements<a class="anchor" aria-label="anchor" href="#improvements-1-5"></a></h3>
+<ul><li>Automatic mode’s gap detection is now scoped to simple annual sequences, avoiding false positives on combined numeric codes.</li>
+<li>Automatic mode now recommends explicit declaration for series that may not be annual.</li>
+<li>
+<code><a href="../reference/compute_anomalies.html">compute_anomalies()</a></code> now validates <code>cycle</code> fully (must be one finite integer <code>&gt;= 2</code>), instead of only checking <code>cycle &lt; 2</code>.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.4.4" id="sptrends-144">sptrends 1.4.4<a class="anchor" aria-label="anchor" href="#sptrends-144"></a></h2>
+<div class="section level3">
+<h3 id="improvements-1-4-4">Improvements<a class="anchor" aria-label="anchor" href="#improvements-1-4-4"></a></h3>
+<ul><li>
+<code>trend_test(method = "CMK")</code> now supports <code>connectivity = "rook"</code> as a genuine, working option, alongside the default <code>"queen"</code>.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.4.3" id="sptrends-143">sptrends 1.4.3<a class="anchor" aria-label="anchor" href="#sptrends-143"></a></h2>
+<div class="section level3">
+<h3 id="documentation-1-4-3">Documentation<a class="anchor" aria-label="anchor" href="#documentation-1-4-3"></a></h3>
+<ul><li>Added the CMK/<code>ConMK</code> external validation note to <code>README.md</code>.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.4.2" id="sptrends-142">sptrends 1.4.2<a class="anchor" aria-label="anchor" href="#sptrends-142"></a></h2>
 <div class="section level3">

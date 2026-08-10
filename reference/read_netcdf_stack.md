@@ -137,6 +137,7 @@ if (requireNamespace("ncdf4", quietly = TRUE)) {
   unlink(path)
 }
 #> Temporal order auto-detected with pattern '(19[0-9]{2}|20[0-9]{2})'.
+#> Automatic mode: order detected from file names. For higher reliability -- especially if the series is not annual -- supplying 'files' explicitly (with 'time' or 'cycle_type') is recommended. See ?read_ordered_stack.
 #> Temporal order verification (mandatory, cannot be skipped):
 #>  stack_position detected_number                         file
 #>               1            1982 VHP_SMN_annual_ndvi_1982.tif
@@ -183,7 +184,7 @@ if (requireNamespace("ncdf4", quietly = TRUE)) {
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.09 s
+#> >> [read_ordered_stack()] elapsed: 0.12 s
 #> Temporal order verification (mandatory, cannot be skipped):
 #>  stack_position time
 #>               1 1982
@@ -230,6 +231,6 @@ if (requireNamespace("ncdf4", quietly = TRUE)) {
 #>              42 2023
 
 #> Stack built from NetCDF: 42 layers, 146 x 338 cells.
-#> >> [read_netcdf_stack()] elapsed: 0.03 s
+#> >> [read_netcdf_stack()] elapsed: 0.04 s
 # }
 ```

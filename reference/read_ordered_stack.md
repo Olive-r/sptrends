@@ -14,14 +14,20 @@ plots a verification of the detected order.
 
 ``` r
 read_ordered_stack(
-  dir,
+  dir = NULL,
   pattern = "\\.(tif|tiff|nc|grd|img|vrt|asc)$",
   order_regex = NULL,
   candidate_regex = c("year([0-9]+)", "_A([0-9]{4})", "(19[0-9]{2}|20[0-9]{2})",
     "([0-9]{4})", "([0-9]+)"),
   var = NULL,
   report = TRUE,
-  verbose = TRUE
+  verbose = TRUE,
+  files = NULL,
+  time = NULL,
+  cycle_type = NULL,
+  start = NULL,
+  end = NULL,
+  time_anchor = "centre"
 )
 ```
 
@@ -75,15 +81,90 @@ read_ordered_stack(
 
   Logical. Print progress messages and elapsed time.
 
+- files:
+
+  Character vector of file paths, in the exact order you want them read
+  as layers – no sorting of any kind is ever applied. Use instead of
+  `dir` whenever automatic detection from file names is not reliable
+  enough, which in practice means: whenever the series is not simply
+  annual. The same numeric shape in a file name can mean genuinely
+  different things across real datasets (e.g. `"19820102"` is 2 January
+  in some daily products, but the second half of January in PKU-GIMMS'
+  own semimonthly convention) – automatic detection cannot resolve that
+  safely, only declaring it explicitly can. Exactly one of `dir` or
+  `files` must be supplied.
+
+- time:
+
+  Optional. A `Date`, `POSIXct`, or numeric vector, one value per layer,
+  in the same order as `files`. Must be strictly increasing with no
+  missing or duplicated values. The supplied file order and time vector
+  are treated as authoritative – checked for internal consistency (right
+  length, valid dates, correct order), not that you paired the right
+  date with the right file; that correspondence remains your
+  responsibility. Mutually exclusive with `cycle_type`. Requires
+  `files`.
+
+- cycle_type:
+
+  Optional. One of `"annual"`, `"monthly"`, `"16-day"`, `"semimonthly"`,
+  `"10-day"`, `"8-day"`, `"weekly"`, or `"daily"` – generates real
+  calendar dates instead of you supplying `time` yourself, for series
+  that genuinely follow one of these conventions (see "Supported cycle
+  types" above for the generative rule and real-product examples behind
+  each). If your series does not follow one of these exact conventions,
+  supply `time` explicitly instead. Requires `files` and `start`.
+
+- start:
+
+  Required with `cycle_type`. A single `Date` marking the beginning of
+  the first period. Must fall on a boundary valid for the declared
+  `cycle_type` (day 1 for `"monthly"`; day 1 or 16 for `"semimonthly"`;
+  day 1, 11 or 21 for `"10-day"`; year-day 1, 17, 33, ..., 353 for
+  `"16-day"`; year-day 1, 9, 17, ..., 361 for `"8-day"`; year-day 1, 8,
+  ..., 358 for `"weekly"`; 1 January for `"annual"`; any date for
+  `"daily"`) – this checks that your own declaration is internally
+  consistent, not that it matches your real product. If your product
+  genuinely starts elsewhere, it does not follow this `cycle_type`
+  convention – supply `files` + `time` instead.
+
+- end:
+
+  Optional, only with `cycle_type`. A single `Date`, the final inclusive
+  end of the last declared period. If omitted, the number of layers
+  found in `files` determines how many dates are generated from `start`
+  onward. If supplied, the calendar expected between `start` and `end`
+  is built first, and the number of layers found must match that
+  expected count exactly – this is what detects an incomplete series
+  (e.g. a declared full year missing one month's file), which omitting
+  `end` cannot catch on its own.
+
+- time_anchor:
+
+  One of `"start"`, `"centre"` (default), or `"end"`. Only applicable
+  with `cycle_type = "monthly"`, `"semimonthly"`, `"10-day"`,
+  `"16-day"`, `"8-day"` or `"weekly"` (a period has no start/centre/end
+  ambiguity for `"annual"` or `"daily"`). Controls which point within
+  each period's own date range is assigned as that layer's date –
+  irrelevant for MK/CMK (rank-based), but affects the numeric time
+  values OLS/MMK use directly. For a period with an even number of days,
+  `"centre"` deterministically picks the earlier of the two central
+  days.
+
 ## Value
 
 A
 [`terra::SpatRaster`](https://rspatial.github.io/terra/reference/SpatRaster-class.html)
-with one layer per input file, ordered chronologically, with layer names
-taken from the (de-duplicated) file names, and the detected order
-numbers stored as proper time metadata (`terra::time(result, "years")`)
-rather than discarded after the verification step above – used, for
-instance, as the default `t` in
+with one layer per time step, ordered chronologically – one layer per
+input file for ordinary single-layer formats (the typical case), but a
+single input file can contribute more than one layer for multi-layer
+formats (e.g. a NetCDF file with several time steps of its own; `files`
+and the explicit modes fully support this, tracking which layers came
+from which file for the verbose order-check table). Layer names are
+taken from the (de-duplicated) file names, and temporal order is stored
+as proper time metadata (`terra::time(result)`) rather than discarded
+after the verification step above – used, for instance, as the default
+`t` in
 [`inspect_ts_cell()`](https://olive-r.github.io/sptrends/reference/inspect_ts_cell.md),
 and by any future function in this package requiring explicit time
 coordinates.
@@ -149,6 +230,89 @@ Ordering is derived from explicit numeric labels in file names, never
 from alphabetical order. Ambiguous, duplicated, or incomplete labels
 stop the import rather than trigger an undocumented fallback.
 
+**Explicit declaration (`files`, `time`, `cycle_type`)**
+
+Automatic detection above only extracts one ordering number per file
+name, which is reliable for genuinely annual series but not for finer
+cadences: the same numeric shape in a file name can mean genuinely
+different things across real datasets – `"19820102"` is 2 January in
+some daily products, but the second half of January under PKU-GIMMS
+NDVI's own semimonthly convention. `files` (an explicit, already
+correctly ordered vector) sidesteps this by never interpreting file
+names at all; combined with `time` (fully explicit dates) or
+`cycle_type` (a named calendar convention) it is recommended whenever
+the series is not simply annual.
+
+**Supported cycle types**
+
+Eight unambiguous calendar conventions, all built with genuine calendar
+arithmetic (leap years included) rather than naive interval division.
+Fixed compositing intervals that do not follow one of these exact
+conventions (e.g. a genuinely continuous 8-day or 16-day interval) are
+out of scope for `cycle_type` – supply `time` explicitly instead.
+
+- `"annual"`:
+
+  One date per year, 1 January. 1 sample/year. E.g. the bundled
+  `example_data("vhp_ndvi")` dataset itself.
+
+- `"monthly"`:
+
+  One date per calendar month, the 1st. 12 samples/year. E.g. CRU TS,
+  TerraClimate, ERA5 monthly means.
+
+- `"16-day"`:
+
+  23 fixed periods per year, resetting every 1 January (never continuing
+  across a year boundary), starting on year-day 1, 17, 33, ..., 353 –
+  the last period of the year is shorter (13 or 14 days) to fit within
+  the calendar year. Matches MODIS' own 16-day compositing convention
+  (e.g. MOD13Q1), verified directly against real product file names.
+
+- `"semimonthly"`:
+
+  Two dates per calendar month, the 1st and the 16th. 24 samples/year.
+  Matches PKU-GIMMS NDVI's own "half-month" convention – not the same
+  cadence as a continuous 14-day interval.
+
+- `"10-day"`:
+
+  Three calendar periods per month, starting on the 1st, 11th and 21st
+  (the last one running to the end of the month, so its own length
+  varies: 8 to 11 days). 36 samples/year. The standard "dekad"
+  convention, e.g. SPOT-VEGETATION and several FEWS NET agricultural
+  products – not a continuous 10-day interval, which would not align
+  with month boundaries and would give a different total (37, not 36).
+
+- `"8-day"`:
+
+  46 fixed periods per year, resetting every 1 January, starting on
+  year-day 1, 9, 17, ..., 361 – the last period of the year is shorter,
+  capturing the remainder. Matches MODIS' own 8-day compositing
+  convention (e.g. MCD15A2H, the LAI/FPAR product).
+
+- `"weekly"`:
+
+  52 fixed, complete 7-day periods per year (Earth Trends Modeler's own
+  number), starting on year-day 1, 8, ..., 358 – unlike
+  `"8-day"`/`"16-day"`, the last day of the year belongs to no period
+  and is skipped straight into next year's first period, rather than
+  forming a shorter final period.
+
+- `"daily"`:
+
+  One date per real calendar day, including 29 February in leap years.
+  365 or 366 samples/year – the only one of these eight where the yearly
+  total itself changes with leap years (the other seven keep a fixed
+  count per year; only the exact date of late-period boundaries shifts).
+  E.g. ERA5, CHIRPS daily precipitation.
+
+`"weekly"`'s own remainder-discarding convention (unlike the other
+fixed-interval types here) is not this function's own inconsistency – it
+follows Earth Trends Modeler's own table exactly for each named type
+individually, and that table is not internally consistent on this
+specific point across its own listed conventions.
+
 **Monthly or seasonal data**
 
 This function only orders layers chronologically – it does not know or
@@ -166,9 +330,11 @@ deseasonalisation solve different problems.
 **Limitations**
 
 Files must share compatible raster geometry and each file must represent
-one time step. The function deliberately does not attempt to infer
-arbitrary calendar formats that are not captured by the supplied or
-candidate regular expressions.
+one time step. Automatic detection deliberately does not attempt to
+infer arbitrary calendar formats that are not captured by the supplied
+or candidate regular expressions – use `files` with `time` or
+`cycle_type` for those cases instead of expecting automatic detection to
+guess correctly.
 
 **Quality assurance**
 
@@ -191,6 +357,7 @@ Other Data import functions:
 # The bundled dataset contains one real NDVI GeoTIFF per year.
 s <- read_ordered_stack(example_data("vhp_ndvi"))
 #> Temporal order auto-detected with pattern '(19[0-9]{2}|20[0-9]{2})'.
+#> Automatic mode: order detected from file names. For higher reliability -- especially if the series is not annual -- supplying 'files' explicitly (with 'time' or 'cycle_type') is recommended. See ?read_ordered_stack.
 #> Temporal order verification (mandatory, cannot be skipped):
 #>  stack_position detected_number                         file
 #>               1            1982 VHP_SMN_annual_ndvi_1982.tif
@@ -237,7 +404,7 @@ s <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.09 s
+#> >> [read_ordered_stack()] elapsed: 0.12 s
 terra::nlyr(s)
 #> [1] 42
 terra::time(s, "years")

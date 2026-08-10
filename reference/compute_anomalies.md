@@ -10,7 +10,14 @@ monotonic signal a trend test is looking for.
 ## Usage
 
 ``` r
-compute_anomalies(x, cycle = 12, standardise = FALSE, verbose = TRUE)
+compute_anomalies(
+  x,
+  cycle = 12,
+  cycle_type = NULL,
+  start_position = 1,
+  standardise = FALSE,
+  verbose = TRUE
+)
 ```
 
 ## Arguments
@@ -28,6 +35,28 @@ compute_anomalies(x, cycle = 12, standardise = FALSE, verbose = TRUE)
   Integer. Length of the seasonal cycle in layers – e.g. `12` for
   monthly data with an annual cycle (the default), `4` for
   quarterly/seasonal data, `365` for daily data with an annual cycle.
+  Ignored if `cycle_type` is supplied.
+
+- cycle_type:
+
+  Optional named shortcut for `cycle`, using the same vocabulary as
+  [`read_ordered_stack()`](https://olive-r.github.io/sptrends/reference/read_ordered_stack.md)'s
+  own `cycle_type` (see
+  [`?read_ordered_stack`](https://olive-r.github.io/sptrends/reference/read_ordered_stack.md),
+  "Supported cycle types"): `"monthly"` (12), `"16-day"` (23),
+  `"semimonthly"` (24), `"10-day"` (36), `"8-day"` (46), or `"weekly"`
+  (52). `"annual"` and `"daily"` are deliberately not included – see
+  "Methodological details" below. `NULL` (default) uses the numeric
+  `cycle` instead.
+
+- start_position:
+
+  Integer in `[1, cycle]`. Cycle position of the stack's first layer.
+  Default `1` (the first layer is the first position of its cycle, e.g.
+  January for monthly data). Set this when a series starts mid-cycle –
+  e.g. `start_position = 8` for monthly data beginning in August, so the
+  climatology aligns layers to their true calendar position instead of
+  assuming the stack starts at the beginning of a cycle.
 
 - standardise:
 
@@ -151,6 +180,22 @@ being detected as such – this function has no mechanism to distinguish a
 regime shift from ordinary seasonal variability; that is a different
 kind of question from the one it answers.
 
+**Why `cycle_type` excludes `"annual"` and `"daily"`**
+
+`"annual"` would translate to `cycle = 1`, which this function always
+rejects immediately afterwards – an annual series has no sub-annual
+cycle to remove in the first place, so there is nothing for this
+function to do with it. `"daily"` would use a fixed `cycle = 365` based
+on cycle POSITION alone, since this function has no access to the real
+dates in `terra::time(x)` – every leap year would silently misalign the
+climatology for the rest of the series (day 366 would be paired with the
+cycle position that day 1 of the following year would otherwise occupy).
+Supply the numeric `cycle` argument directly for genuinely daily data
+instead, with that leap-year caveat in mind (or use
+[`read_ordered_stack()`](https://olive-r.github.io/sptrends/reference/read_ordered_stack.md)'s
+own `cycle_type = "daily"`, which does read real dates and is not
+affected by this).
+
 **Quality assurance**
 
 Tests verify monthly and arbitrary-cycle climatologies against direct
@@ -192,6 +237,7 @@ for controlled example data.
 # climatological cycle to remove.
 r <- read_ordered_stack(example_data("vhp_ndvi"))
 #> Temporal order auto-detected with pattern '(19[0-9]{2}|20[0-9]{2})'.
+#> Automatic mode: order detected from file names. For higher reliability -- especially if the series is not annual -- supplying 'files' explicitly (with 'time' or 'cycle_type') is recommended. See ?read_ordered_stack.
 #> Temporal order verification (mandatory, cannot be skipped):
 #>  stack_position detected_number                         file
 #>               1            1982 VHP_SMN_annual_ndvi_1982.tif
@@ -238,7 +284,7 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.16 s
+#> >> [read_ordered_stack()] elapsed: 0.29 s
 terra::nlyr(r)
 #> [1] 42
 # Apply compute_anomalies() only to real observations with a genuine

@@ -23,7 +23,7 @@
 
     <a class="navbar-brand me-2" href="index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -152,6 +152,7 @@
 </h2>
 <p>sptrends maintains 100% test coverage across every R source file, verified with <code>covr::package_coverage()</code>, and passes <code>R CMD check</code> with 0 errors, 0 warnings and 0 notes on multiple platforms (local, and win-builder R-devel/release/oldrelease) – confirmed on every release. Style, spelling and link integrity are checked periodically with <code>lintr</code>, <code>goodpractice</code>, <code>spelling</code> and <code>urlchecker</code>.</p>
 <p>Beyond the automated <code>tests/testthat/</code> suite, the package has been validated through an external battery covering all 18 exported functions with correctness checks against known-truth simulations, and a comprehensive integral audit of code, citations and documentation.</p>
+<p><code>trend_test(method = "CMK")</code> has additionally been cross-checked against an installed copy of <a href="https://github.com/antiphon/ConMK" class="external-link"><code>ConMK</code></a> (Antiphon, GitHub, not on CRAN – also available as a fork at <a href="https://github.com/geoporttishare/ConMK" class="external-link"><code>geoporttishare/ConMK</code></a>), the closest available external reference implementation of the contextual Mann-Kendall test. The base statistic matched to floating-point precision, and the optional <code>continuity = TRUE</code> argument reproduces <code>ConMK</code>’s own p-values exactly at the specific edge case where the two implementations would otherwise be expected to diverge. Full details in <code><a href="reference/trend_test.html">?trend_test</a></code>’s “External validation” section.</p>
 <p>Every change is documented transparently in <a href="NEWS.html">NEWS.md</a>.</p>
 </div>
 <div class="section level2">
