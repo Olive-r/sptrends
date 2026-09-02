@@ -24,6 +24,9 @@ Install the source package from a local archive or directory:
 
 ```r
 remotes::install_local("path/to/sptrends")
+
+# or from github:
+pak::pak('Olive-r/sptrends')
 ```
 
 ## Quick start
