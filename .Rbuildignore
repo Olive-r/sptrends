@@ -1,0 +1,15 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^README\.Rmd$
+^\.github$
+^data-raw$
+^_pkgdown\.yml$
+^pkgdown$
+^CITATION\.cff$
+^\.lintr$
+^cran-comments\.md$
+^goodpractice-.*\.txt$
+^manual-pdf-error-.*\.txt$
+^.*_results$
+\.lnk$
+^LICENSE$
