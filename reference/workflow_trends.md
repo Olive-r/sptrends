@@ -402,8 +402,13 @@ Other pipeline functions:
 
 ``` r
 # \donttest{
-# Annual mean NDVI from the bundled environmental dataset.
-r <- read_ordered_stack(example_data("vhp_ndvi"))
+# Annual mean NDVI from the bundled environmental dataset -- reduced
+# to a small window around a cell confirmed to have a complete
+# series (found here programmatically, rather than assumed by
+# coordinates, which risks landing on a region with no valid
+# coverage at all) purely to keep this example fast; the full
+# dataset works identically, just with more cells.
+r_full <- read_ordered_stack(example_data("vhp_ndvi"))
 #> Temporal order auto-detected with pattern '(19[0-9]{2}|20[0-9]{2})'.
 #> Automatic mode: order detected from file names. For higher reliability -- especially if the series is not annual -- supplying 'files' explicitly (with 'time' or 'cycle_type') is recommended. See ?read_ordered_stack.
 #> Temporal order verification (mandatory, cannot be skipped):
@@ -452,7 +457,16 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.12 s
+#> >> [read_ordered_stack()] elapsed: 0.10 s
+ok <- stats::complete.cases(terra::values(r_full, mat = TRUE))
+rc <- terra::rowColFromCell(r_full, which(ok)[1])
+row_lo <- max(1, rc[1] - 10)
+row_hi <- min(terra::nrow(r_full), rc[1] + 10)
+col_lo <- max(1, rc[2] - 10)
+col_hi <- min(terra::ncol(r_full), rc[2] + 10)
+r <- terra::crop(r_full, terra::ext(
+  terra::xFromCol(r_full, col_lo), terra::xFromCol(r_full, col_hi),
+  terra::yFromRow(r_full, row_hi), terra::yFromRow(r_full, row_lo)))
 
 # A combination neither TST nor RTA offers on its own: Yue-Pilon
 # prewhitening, classic Mann-Kendall, OLS slope, standard (BH) FDR.
@@ -462,10 +476,10 @@ result <- workflow_trends(r, prewhiten_method = "TFPW_Y",
                             report = FALSE, verbose = FALSE)
 result
 #> <workflow_trends result>
-#> Prewhitening (TFPW_Y): all 15675 valid cells
-#> Trend test: 15675 cells (S statistic)
-#> Slope: median 0.0002806 (range -0.01009 to 0.008984)
-#> Significant after FDR-BH: 8656 (55.2%)
+#> Prewhitening (TFPW_Y): all 180 valid cells
+#> Trend test: 180 cells (S statistic)
+#> Slope: median 0.0001328 (range -0.0009393 to 0.001151)
+#> Significant after FDR-BH: 57 (31.7%)
 #> Use summary() for details, plot() for a map.
 plot(result, which = "significance")
 

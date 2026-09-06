@@ -129,13 +129,12 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.12 s
+#> >> [read_ordered_stack()] elapsed: 0.14 s
 trend <- trend_test(r, report = FALSE, verbose = FALSE)
 fdr_result <- fdr_correction(trend$stats$p, report = FALSE, verbose = FALSE)
-direction <- sptrends:::direction_map(trend$stats, fdr_result)
-#> Binarised trend map (BH) [direction from Sm] -- increase: 6428 | decrease: 1537 | not significant: 7710
-
-# Draws the map computed above.
-sptrends:::fdr_direction_plot(direction)
-
+# direction_map() and fdr_direction_plot() are used together
+# internally by workflow_tst()/workflow_trends() (see their own
+# source) to draw the "TST/RTA direction map" panel automatically
+# when report = TRUE (the default) -- there is no standalone public
+# wrapper for this specific combination outside those workflows.
 ```

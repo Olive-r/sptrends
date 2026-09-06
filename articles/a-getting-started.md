@@ -112,7 +112,7 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 ![](a-getting-started_files/figure-html/unnamed-chunk-2-1.png)
 
     #> Stack built: 42 layers, 146 x 338 cells.
-    #> >> [read_ordered_stack()] elapsed: 3.07 s
+    #> >> [read_ordered_stack()] elapsed: 2.32 s
     r
     #> class       : SpatRaster
     #> size        : 146, 338, 42  (nrow, ncol, nlyr)
@@ -172,6 +172,43 @@ terra::animate(
 ```
 
 ## Understanding the results
+
+### Declaring seasonal input
+
+For seasonal data, supply files in their known chronological order. A
+file may contain several layers; `time` must contain one value per
+layer.
+
+``` r
+
+# ordered_files is your chronological vector of file paths.
+monthly <- read_ordered_stack(
+  files = ordered_files, cycle_type = "monthly",
+  start = as.Date("2001-08-01"), report = FALSE
+)
+seasonal <- compute_anomalies(monthly, cycle_type = "monthly",
+                              start_position = 8)
+result <- workflow_trends(seasonal$anomalies, report = FALSE)
+```
+
+`start` is the beginning of the first period. Monthly and composite
+periods use their centre as the default assigned date; annual layers
+always use 1 January. Optional `end` must be the inclusive end of the
+last period and checks the expected layer count. For other calendars,
+use `read_ordered_stack(files = ordered_files, time = layer_dates)`.
+
+[`compute_anomalies()`](https://olive-r.github.io/sptrends/reference/compute_anomalies.md)
+uses positions, not date metadata. Supply the cycle length and the first
+position correctly: August is position 8 in a monthly annual cycle. Its
+`climatology` and optional `climatology_sd` are ordered from position 1
+to `cycle`; `$anomalies` retains the input layer order. Daily input with
+leap days does not have a fixed 365-position annual cycle.
+
+The anomaly result is a plain list of rasters. Pass `$anomalies` to the
+next analytical step or inspect a component with
+[`terra::plot()`](https://rspatial.github.io/terra/reference/plot.html).
+
+### Analytical outputs
 
 So far you have only looked at the raw data. Once an analytical function
 has actually been run – in any of the vignettes that follow – its output

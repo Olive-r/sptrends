@@ -19,14 +19,7 @@ fdr_bh(p, q = 0.05)
 
 - q:
 
-  Numeric. Target FDR level. It is not a renamed or adjusted `alpha`:
-  `alpha` is a per-test Type I error threshold, whereas `q` bounds the
-  expected proportion of false discoveries among all discoveries – a
-  property of the complete rejection set, not of any one test. A `q` of
-  `0.05` means that, over repeated applications under the procedure's
-  assumptions, the expected false-discovery proportion is controlled at
-  5%; it is not a guarantee that every realised set contains at most 5%
-  false discoveries.
+  Numeric. Target FDR level.
 
 ## Value
 
@@ -37,8 +30,11 @@ A list with `q_value` (BH-adjusted p-values) and `reject` (logical).
 **Function type:** **Support function** – computes the BH procedure used
 internally by
 [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md).
-It is not exported; call `fdr_correction(p, method = "BH")` for a
-BH-only result.
+Exported as a standalone convenience for callers who only need a plain
+vector of p-values corrected, without a raster or the rest of
+[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)'s
+own output structure; call `fdr_correction(p, method = "BH")` instead
+for the full result (rasters, when `p` is one, plus the other methods).
 
 ## Typical use
 
@@ -149,7 +145,7 @@ Other FDR correction functions:
 ``` r
 # Five p-values, ranked from most to least significant -- fdr_bh()
 # tells you how many survive correction at q = 0.05 (the default).
-sptrends:::fdr_bh(c(0.001, 0.01, 0.02, 0.5, 0.8))
+fdr_bh(c(0.001, 0.01, 0.02, 0.5, 0.8))
 #> $q_value
 #> [1] 0.00500000 0.02500000 0.03333333 0.62500000 0.80000000
 #> 

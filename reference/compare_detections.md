@@ -130,7 +130,8 @@ compare_detections(
 (`(TP + TN) / (TP + FP + TN + FN)` – included because it is widely
 expected, though it can be misleading whenever true trends are rare
 relative to the whole raster, which is common in these simulations),
-`F1` (harmonic mean of precision and sensitivity), `MCC` (Matthews
+`F1` (`2 * TP / (2 * TP + FP + FN)`, zero when there are errors but no
+true positives, and `NA` when its denominator is zero), `MCC` (Matthews
 correlation coefficient – a single balanced summary of all four
 confusion-matrix cells at once, generally preferred over `Accuracy` or
 `F1` under the class imbalance a low `trend_fraction` produces), and
@@ -298,7 +299,7 @@ Other validation functions:
 # data has no equivalent "true" answer to compare a detection against.
 # \donttest{
 sim <- sim_trend_stack(nrow = 15, ncol = 15, n_time = 15, seed = 1)
-#> >> [sim_trend_stack()] elapsed: 0.07 s
+#> >> [sim_trend_stack()] elapsed: 0.04 s
 
 # Two variants of the same test: classic Mann-Kendall (no
 # neighbourhood averaging) vs. the Contextual version.
@@ -338,16 +339,16 @@ for (s in 1:10) {
                                 CMK = cmk_s$stats$p <= 0.05)
   truths_list[[s]] <- sim_s$true_slope
 }
-#> >> [sim_trend_stack()] elapsed: 0.13 s
+#> >> [sim_trend_stack()] elapsed: 0.12 s
+#> >> [sim_trend_stack()] elapsed: 0.04 s
+#> >> [sim_trend_stack()] elapsed: 0.05 s
 #> >> [sim_trend_stack()] elapsed: 0.06 s
-#> >> [sim_trend_stack()] elapsed: 0.07 s
-#> >> [sim_trend_stack()] elapsed: 0.08 s
-#> >> [sim_trend_stack()] elapsed: 0.06 s
-#> >> [sim_trend_stack()] elapsed: 0.06 s
-#> >> [sim_trend_stack()] elapsed: 0.06 s
-#> >> [sim_trend_stack()] elapsed: 0.06 s
-#> >> [sim_trend_stack()] elapsed: 0.07 s
-#> >> [sim_trend_stack()] elapsed: 0.06 s
+#> >> [sim_trend_stack()] elapsed: 0.04 s
+#> >> [sim_trend_stack()] elapsed: 0.04 s
+#> >> [sim_trend_stack()] elapsed: 0.05 s
+#> >> [sim_trend_stack()] elapsed: 0.04 s
+#> >> [sim_trend_stack()] elapsed: 0.04 s
+#> >> [sim_trend_stack()] elapsed: 0.04 s
 compare_detections(detections_list, truths_list, replicates = TRUE,
                    verbose = FALSE)
 #>   Method n_replicates TP_mean     TP_sd FP_mean    FP_sd TN_mean    TN_sd

@@ -96,19 +96,21 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))[[1]]
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.12 s
+#> >> [read_ordered_stack()] elapsed: 0.09 s
 moran_result <- spatial_autocorrelation(r, nperm = 19, seed = 1,
                                          verbose = FALSE, report = FALSE)
 
 # A plain-language readout of the test above: observed I, its
 # classification, and whether it is significantly different from
-# what random spatial arrangement would give.
-sptrends:::spatial_autocorrelation_summary(moran_result)
+# what random spatial arrangement would give. Called internally by
+# summary() on a spatial_autocorrelation() result -- the public
+# entry point is:
+summary(moran_result)
 #> N (valid cells): 15692
 #> Observed I: 0.9087 (sign: positive)
 #> Category (this package's own descriptive convention, not a recognised disciplinary standard): strong
 #> Null distribution (19 permutations): min=-0.0083, mean=-0.0001, sd=0.0037, max=0.0056
 #> p-value (greater, nperm=19): 0.0500
 #> Empirical Z ((I - null mean) / null sd): 243.51
-#> Note: p is at the mathematical floor for nperm=19 (1/(nperm+1)=0.0500).
+#> Note: p is at the mathematical floor for nperm=19 (0.0500).
 ```

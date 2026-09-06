@@ -19,7 +19,7 @@ represents."><meta property="og:image" content="https://olive-r.github.io/sptren
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.6.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,7 +50,7 @@ represents."><meta property="og:image" content="https://olive-r.github.io/sptren
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Plot a sptrends result</h1>
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v1.5/R/sptrends-methods.R" class="external-link"><code>R/sptrends-methods.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/R/sptrends-methods.R" class="external-link"><code>R/sptrends-methods.R</code></a></small>
       <div class="d-none name"><code>plot.sptrends.Rd</code></div>
     </div>
 
@@ -137,7 +137,7 @@ final result to report:</p><table class="table table"><tr><td><code>which</code>
 <code>pvalue_significance</code> uses <code>alpha</code> (default <code>0.05</code>), uncorrected
 for multiple testing.</p>
 <p><code>method</code>: <code>"BKY"</code> (default, matching <code><a href="workflow_tst.html">workflow_tst()</a></code>'s default
-<code>fdr_method</code>) or <code>"BH"</code> – which correction to use for
+<code>fdr_method</code>), <code>"BH"</code> or <code>"BY"</code> – which correction to use for
 <code>which = "direction"</code> or <code>which = "slope"</code>. Ignored otherwise. If
 <code>x</code> only has the other one (e.g. <code><a href="workflow_tst.html">workflow_tst()</a></code> was called with
 <code>fdr_method = "BH"</code>), set <code>method</code> to match.
@@ -290,7 +290,7 @@ their admissible range from zero to one.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>              42            2023 VHP_SMN_annual_ndvi_2023.tif</span>
 <span class="r-plt img"><img src="plot.sptrends-1.png" alt="" width="700" height="433"></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Stack built: 42 layers, 146 x 338 cells.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [read_ordered_stack()] elapsed: 0.12 s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [read_ordered_stack()] elapsed: 0.09 s</span>
 <span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="workflow_tst.html">workflow_tst</a></span><span class="op">(</span><span class="va">r</span>, report <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Default map: direction of change (greening/browning/no change),</span></span></span>

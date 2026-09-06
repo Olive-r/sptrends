@@ -47,14 +47,13 @@ signature used to reject unsafe reuse.
 
 **Function type:** **Support function** – computes something real, but
 is not one of the core building blocks of TST or RTA (used internally
-by, or as a standalone diagnostic alongside, the core functions). Not
-exported – called internally by
+by, or as a standalone diagnostic alongside, the core functions). Called
+internally by
 [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)
-whenever `precomputed_neighbourhood` isn't supplied; reachable from
-outside the package with `:::` for the repeated-call optimisation
-described above, since there is no single-object S3 method this folds
-into (it takes a raw geometry and a logical vector, not a classed
-result).
+whenever `precomputed_neighbourhood` isn't supplied; exported directly
+for the repeated-call optimisation described above, since there is no
+single-object S3 method this folds into (it takes a raw geometry and a
+logical vector, not a classed result).
 
 ## References
 
@@ -122,7 +121,7 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.12 s
+#> >> [read_ordered_stack()] elapsed: 0.09 s
 
 # A matrix with one row per cell and one column per time step, and a
 # logical vector marking which cells have a complete (no-NA) series --
@@ -134,7 +133,7 @@ ok <- stats::complete.cases(X)
 # so it can be reused across repeated calls instead of recomputed
 # every time -- see the precomputed_neighbourhood argument of
 # trend_test().
-nb <- sptrends:::prepare_cmk_neighbourhood(r, ok, window_size = 3)
+nb <- prepare_cmk_neighbourhood(r, ok, window_size = 3)
 names(nb)
 #> [1] "W"         "nb_count"  "signature"
 ```

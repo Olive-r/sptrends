@@ -15,7 +15,7 @@ outside the package via summary()."><meta property="og:image" content="https://o
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.6.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,7 +46,7 @@ outside the package via summary()."><meta property="og:image" content="https://o
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Summary of a spatial_autocorrelation() result</h1>
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v1.5/R/spatial_autocorrelation.R" class="external-link"><code>R/spatial_autocorrelation.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/R/spatial_autocorrelation.R" class="external-link"><code>R/spatial_autocorrelation.R</code></a></small>
       <div class="d-none name"><code>spatial_autocorrelation_summary.Rd</code></div>
     </div>
 
@@ -148,21 +148,23 @@ Use of Distance Statistics. Geographical Analysis, 24(3), 189-206.
 <span class="r-msg co"><span class="r-pr">#&gt;</span>              42            2023 VHP_SMN_annual_ndvi_2023.tif</span>
 <span class="r-plt img"><img src="spatial_autocorrelation_summary-1.png" alt="" width="700" height="433"></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Stack built: 42 layers, 146 x 338 cells.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [read_ordered_stack()] elapsed: 0.12 s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [read_ordered_stack()] elapsed: 0.09 s</span>
 <span class="r-in"><span><span class="va">moran_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="spatial_autocorrelation.html">spatial_autocorrelation</a></span><span class="op">(</span><span class="va">r</span>, nperm <span class="op">=</span> <span class="fl">19</span>, seed <span class="op">=</span> <span class="fl">1</span>,</span></span>
 <span class="r-in"><span>                                         verbose <span class="op">=</span> <span class="cn">FALSE</span>, report <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># A plain-language readout of the test above: observed I, its</span></span></span>
 <span class="r-in"><span><span class="co"># classification, and whether it is significantly different from</span></span></span>
-<span class="r-in"><span><span class="co"># what random spatial arrangement would give.</span></span></span>
-<span class="r-in"><span><span class="fu">sptrends</span><span class="fu">:::</span><span class="fu">spatial_autocorrelation_summary</span><span class="op">(</span><span class="va">moran_result</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># what random spatial arrangement would give. Called internally by</span></span></span>
+<span class="r-in"><span><span class="co"># summary() on a spatial_autocorrelation() result -- the public</span></span></span>
+<span class="r-in"><span><span class="co"># entry point is:</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">moran_result</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> N (valid cells): 15692</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Observed I: 0.9087 (sign: positive)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Category (this package's own descriptive convention, not a recognised disciplinary standard): strong</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Null distribution (19 permutations): min=-0.0083, mean=-0.0001, sd=0.0037, max=0.0056</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> p-value (greater, nperm=19): 0.0500</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Empirical Z ((I - null mean) / null sd): 243.51</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Note: p is at the mathematical floor for nperm=19 (1/(nperm+1)=0.0500).</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Note: p is at the mathematical floor for nperm=19 (0.0500).</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

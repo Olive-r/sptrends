@@ -124,13 +124,14 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.13 s
+#> >> [read_ordered_stack()] elapsed: 0.10 s
 trend <- trend_test(r, report = FALSE, verbose = FALSE)
 
 # A table with one row per alpha threshold, plus a printed one-line
 # summary at the "reference" threshold (0.05 by default -- see the
-# alpha argument above).
-sptrends:::trend_summary(trend$stats)
+# alpha argument above). Called internally by summary() on a
+# trend_test() result -- the public entry point is:
+summary(trend)
 #> Cells with complete time series: 15675
 #> At alpha=0.05 -- increase: 7167 (45.7%) | decrease: 1837 (11.7%) | no change: 6671 (42.6%)
 ```

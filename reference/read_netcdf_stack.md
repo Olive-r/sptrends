@@ -184,7 +184,7 @@ if (requireNamespace("ncdf4", quietly = TRUE)) {
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.12 s
+#> >> [read_ordered_stack()] elapsed: 0.10 s
 #> Temporal order verification (mandatory, cannot be skipped):
 #>  stack_position time
 #>               1 1982
@@ -231,6 +231,6 @@ if (requireNamespace("ncdf4", quietly = TRUE)) {
 #>              42 2023
 
 #> Stack built from NetCDF: 42 layers, 146 x 338 cells.
-#> >> [read_netcdf_stack()] elapsed: 0.04 s
+#> >> [read_netcdf_stack()] elapsed: 0.03 s
 # }
 ```

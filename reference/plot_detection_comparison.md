@@ -61,7 +61,7 @@ Other validation functions:
 
 ``` r
 sim <- sim_trend_stack(nrow = 12, ncol = 12, n_time = 12, seed = 1)
-#> >> [sim_trend_stack()] elapsed: 0.06 s
+#> >> [sim_trend_stack()] elapsed: 0.05 s
 trend_mk  <- trend_test(sim$series, method = "MK",
                          report = FALSE, verbose = FALSE)
 trend_cmk <- trend_test(sim$series, method = "CMK",
@@ -71,10 +71,10 @@ comparison <- compare_detections(
                      CMK = trend_cmk$stats$p <= 0.05),
   ground_truth = sim$true_slope
 )
-#> >> [compare_detections()] elapsed: 0.02 s
+#> >> [compare_detections()] elapsed: 0.01 s
 
 # A grouped bar chart of the table above -- one group of bars per
 # method, one bar per metric.
-sptrends:::plot_detection_comparison(comparison)
+plot_detection_comparison(comparison)
 
 ```

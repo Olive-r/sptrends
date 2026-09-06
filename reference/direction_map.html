@@ -15,7 +15,7 @@ opposed to trend_maps(), which uses the uncorrected p-value."><meta property="og
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.6.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,7 +46,7 @@ opposed to trend_maps(), which uses the uncorrected p-value."><meta property="og
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Binarised trend map after multiple-testing correction</h1>
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v1.5/R/direction.R" class="external-link"><code>R/direction.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/R/direction.R" class="external-link"><code>R/direction.R</code></a></small>
       <div class="d-none name"><code>direction_map.Rd</code></div>
     </div>
 
@@ -191,14 +191,17 @@ Statistics, 29(4), 1165-1188. <a href="https://doi.org/10.1214/aos/1013699998" c
 <span class="r-msg co"><span class="r-pr">#&gt;</span>              42            2023 VHP_SMN_annual_ndvi_2023.tif</span>
 <span class="r-plt img"><img src="direction_map-1.png" alt="" width="700" height="433"></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Stack built: 42 layers, 146 x 338 cells.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [read_ordered_stack()] elapsed: 0.15 s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [read_ordered_stack()] elapsed: 0.12 s</span>
 <span class="r-in"><span><span class="va">trend</span> <span class="op">&lt;-</span> <span class="fu"><a href="trend_test.html">trend_test</a></span><span class="op">(</span><span class="va">r</span>, report <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">fdr_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="fdr_correction.html">fdr_correction</a></span><span class="op">(</span><span class="va">trend</span><span class="op">$</span><span class="va">stats</span><span class="op">$</span><span class="va">p</span>, report <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Combines "is it significant" (from fdr_result) with "which way is</span></span></span>
-<span class="r-in"><span><span class="co"># it going" (from trend) into a single binarised trend map.</span></span></span>
-<span class="r-in"><span><span class="va">direction</span> <span class="op">&lt;-</span> <span class="fu">sptrends</span><span class="fu">:::</span><span class="fu">direction_map</span><span class="op">(</span><span class="va">trend</span><span class="op">$</span><span class="va">stats</span>, <span class="va">fdr_result</span>, method <span class="op">=</span> <span class="st">"BH"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Binarised trend map (BH) [direction from Sm] -- increase: 6428 | decrease: 1537 | not significant: 7710</span>
+<span class="r-in"><span><span class="co"># it going" (from trend) into a single binarised trend map. Called</span></span></span>
+<span class="r-in"><span><span class="co"># internally by workflow_tst()/workflow_trends() to build the "TST/</span></span></span>
+<span class="r-in"><span><span class="co"># RTA direction map" panel automatically when report = TRUE (the</span></span></span>
+<span class="r-in"><span><span class="co"># default) -- there is no standalone public wrapper for this</span></span></span>
+<span class="r-in"><span><span class="co"># specific combination outside those workflows.</span></span></span>
+<span class="r-in"><span><span class="co"># direction &lt;- direction_map(trend$stats, fdr_result, method = "BH")</span></span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

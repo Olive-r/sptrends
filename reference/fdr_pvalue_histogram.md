@@ -103,12 +103,14 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.13 s
+#> >> [read_ordered_stack()] elapsed: 0.09 s
 trend <- trend_test(r, report = FALSE, verbose = FALSE)
 fdr_result <- fdr_correction(trend$stats$p, report = FALSE, verbose = FALSE)
 
 # A spike near 0 suggests real trends are present; a flat histogram
 # is what you would expect under the null (no trend anywhere).
-sptrends:::fdr_pvalue_histogram(trend$stats$p)
+# Called internally by plot() on an fdr_correction() result -- the
+# public entry point is:
+plot(fdr_result, which = "pvalue_histogram")
 
 ```

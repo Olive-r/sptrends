@@ -18,6 +18,10 @@ Install the source package from a local archive or directory:
 remotes::install_local("path/to/sptrends")
 ```
 
+When starting from a development source directory, regenerate its help
+files first with `roxygen2::roxygenise("path/to/sptrends")`. This step
+is not needed for a built source tarball.
+
 ## Quick start
 
 A bundled annual NDVI dataset is available for reproducible examples:
@@ -48,6 +52,29 @@ plot(result)
 ```
 
 ## Workflows
+
+For seasonal data, declare the temporal structure and remove the cycle
+before running a trend workflow. For example, for consecutive monthly
+layers beginning in August:
+
+``` r
+
+# Supply your files in chronological order; files may contain multiple layers.
+monthly <- read_ordered_stack(
+  files = ordered_files, cycle_type = "monthly",
+  start = as.Date("2001-08-01"), report = FALSE
+)
+anomalies <- compute_anomalies(monthly, cycle_type = "monthly",
+                               start_position = 8)
+result <- workflow_tst(anomalies$anomalies, report = FALSE)
+```
+
+`start` is the first period’s beginning; the default assigned date for a
+monthly layer is its centre. Annual layers use 1 January. Anomalies
+group layers by position, not by their date metadata; the user supplies
+the correct cycle and starting position. `files` plus `time` also
+supports an explicit date for every layer. See the [loading
+guide](https://olive-r.github.io/sptrends/articles/a-getting-started.html).
 
 - [`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)
   implements True Significant Trends: selective prewhitening, Contextual
@@ -125,17 +152,22 @@ browseVignettes("sptrends")
 
 ## Quality assurance
 
-sptrends maintains 100% test coverage across every R source file,
-verified with `covr::package_coverage()`, and passes `R CMD check` with
-0 errors, 0 warnings and 0 notes on multiple platforms (local, and
-win-builder R-devel/release/oldrelease) – confirmed on every release.
-Style, spelling and link integrity are checked periodically with
-`lintr`, `goodpractice`, `spelling` and `urlchecker`.
+The recorded 1.5.9 local check completed in under 10 minutes with 0
+errors, 0 warnings and 0 notes. Coverage was 100% across every R source
+file with `SPTRENDS_TEST_PARALLEL=true`. The recorded win-builder checks
+for 1.5.8 had 0 errors and 0 warnings, with submission and terminology
+notes. These are historical results; see `cran-comments.md` for the
+validation status of the current changes. The 19 parallel-execution
+tests remain optional to keep routine checks within CRAN’s time limit.
+Website building is a separate step. Style, spelling and link integrity
+are checked periodically with `lintr`, `goodpractice`, `spelling` and
+`urlchecker`.
 
 Beyond the automated `tests/testthat/` suite, the package has been
-validated through an external battery covering all 18 exported functions
-with correctness checks against known-truth simulations, and a
-comprehensive integral audit of code, citations and documentation.
+validated through an external battery covering the then-current 18
+exported functions with correctness checks against known-truth
+simulations, and a comprehensive integral audit of code, citations and
+documentation.
 
 `trend_test(method = "CMK")` has additionally been cross-checked against
 an installed copy of [`ConMK`](https://github.com/antiphon/ConMK)

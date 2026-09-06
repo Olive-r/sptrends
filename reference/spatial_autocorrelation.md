@@ -478,7 +478,7 @@ series <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.12 s
+#> >> [read_ordered_stack()] elapsed: 0.09 s
 complete <- which(stats::complete.cases(
   terra::values(series, mat = TRUE)
 ))
@@ -621,7 +621,7 @@ plot(local_fdr)
 # underneath -- computing it once and reusing it across both calls
 # (rather than letting each recompute it independently) matters for
 # large rasters specifically, where that step is the expensive part.
-nb <- sptrends:::prepare_cmk_neighbourhood(series, ok)
+nb <- prepare_cmk_neighbourhood(series, ok)
 spatial_autocorrelation(r, precomputed_neighbourhood = nb,
                          nperm = 19, seed = 1,
                          report = FALSE, verbose = FALSE)

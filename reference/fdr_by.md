@@ -33,8 +33,9 @@ A list with `q_value` (BY-adjusted p-values) and `reject` (logical).
 **Function type:** **Support function** – computes the BY safeguard used
 internally by
 [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md).
-It is not exported; call `fdr_correction(p, method = "BY")` for a
-BY-only result.
+Exported as a standalone convenience for callers who only need a plain
+vector of p-values corrected; call `fdr_correction(p, method = "BY")`
+instead for the full result.
 
 ## Typical use
 
@@ -98,7 +99,7 @@ Other FDR correction functions:
 ``` r
 # The same five p-values fdr_bh()'s own example uses -- compare the
 # two directly on identical data.
-sptrends:::fdr_by(c(0.001, 0.01, 0.02, 0.5, 0.8))
+fdr_by(c(0.001, 0.01, 0.02, 0.5, 0.8))
 #> $q_value
 #> [1] 0.01141667 0.05708333 0.07611111 1.00000000 1.00000000
 #> 

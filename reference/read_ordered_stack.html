@@ -23,7 +23,7 @@ of the detected order.'><meta property="og:image" content="https://olive-r.githu
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.6.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,7 +54,7 @@ of the detected order.'><meta property="og:image" content="https://olive-r.githu
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Read and chronologically order a folder of raster files</h1>
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v1.5/R/read_stack.R" class="external-link"><code>R/read_stack.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/R/read_stack.R" class="external-link"><code>R/read_stack.R</code></a></small>
       <div class="d-none name"><code>read_ordered_stack.Rd</code></div>
     </div>
 
@@ -207,8 +207,9 @@ omitting <code>end</code> cannot catch on its own.</p></dd>
 <dt id="arg-time-anchor">time_anchor<a class="anchor" aria-label="anchor" href="#arg-time-anchor"></a></dt>
 <dd><p>One of <code>"start"</code>, <code>"centre"</code> (default), or <code>"end"</code>.
 Only applicable with <code>cycle_type = "monthly"</code>, <code>"semimonthly"</code>,
-<code>"10-day"</code>, <code>"16-day"</code>, <code>"8-day"</code> or <code>"weekly"</code> (a period
-has no start/centre/end ambiguity for <code>"annual"</code> or <code>"daily"</code>).
+<code>"10-day"</code>, <code>"16-day"</code>, <code>"8-day"</code> or <code>"weekly"</code>.
+Annual layers are always dated 1 January; daily layers use their
+own date. Do not supply <code>time_anchor</code> for these two conventions.
 Controls which point within
 each period's own date
 range is assigned as that layer's date – irrelevant for MK/CMK
@@ -310,7 +311,7 @@ out of scope for <code>cycle_type</code> – supply <code>time</code> explicitly
 E.g. the bundled <code>example_data("vhp_ndvi")</code> dataset itself.</p></dd>
 
 <dt><code>"monthly"</code></dt>
-<dd><p>One date per calendar month, the 1st.
+<dd><p>One period per calendar month, beginning on the 1st.
 12 samples/year. E.g. CRU TS, TerraClimate, ERA5 monthly means.</p></dd>
 
 <dt><code>"16-day"</code></dt>
@@ -322,7 +323,7 @@ Matches MODIS' own 16-day compositing convention (e.g.
 MOD13Q1), verified directly against real product file names.</p></dd>
 
 <dt><code>"semimonthly"</code></dt>
-<dd><p>Two dates per calendar month, the 1st and
+<dd><p>Two periods per calendar month, beginning on the 1st and
 the 16th. 24 samples/year. Matches PKU-GIMMS NDVI's own
 "half-month" convention – not the same cadence as a continuous
 14-day interval.</p></dd>
@@ -346,8 +347,8 @@ MCD15A2H, the LAI/FPAR product).</p></dd>
 <dt><code>"weekly"</code></dt>
 <dd><p>52 fixed, complete 7-day periods per year
 (Earth Trends Modeler's own number), starting on year-day 1, 8,
-..., 358 – unlike <code>"8-day"</code>/<code>"16-day"</code>, the last day
-of the year belongs to no period and is skipped straight into
+..., 358 – unlike <code>"8-day"</code>/<code>"16-day"</code>, the final one or two days
+of the year belong to no period and are skipped straight into
 next year's first period, rather than forming a shorter final
 period.</p></dd>
 
@@ -448,7 +449,7 @@ package-wide release-check protocol.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>              42            2023 VHP_SMN_annual_ndvi_2023.tif</span>
 <span class="r-plt img"><img src="read_ordered_stack-1.png" alt="" width="700" height="433"></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Stack built: 42 layers, 146 x 338 cells.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [read_ordered_stack()] elapsed: 0.12 s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [read_ordered_stack()] elapsed: 0.09 s</span>
 <span class="r-in"><span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nlyr</a></span><span class="op">(</span><span class="va">s</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 42</span>
 <span class="r-in"><span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/time.html" class="external-link">time</a></span><span class="op">(</span><span class="va">s</span>, <span class="st">"years"</span><span class="op">)</span></span></span>

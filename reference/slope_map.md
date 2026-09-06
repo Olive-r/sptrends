@@ -107,8 +107,10 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.12 s
-slope <- slope_estimator(r, report = FALSE, verbose = FALSE)$slope
-sptrends:::slope_map(slope)
+#> >> [read_ordered_stack()] elapsed: 0.10 s
+slope_result <- slope_estimator(r, report = FALSE, verbose = FALSE)
+# Called internally by plot() on a slope_estimator() result -- the
+# public entry point is:
+plot(slope_result, which = "map")
 
 ```

@@ -11,7 +11,7 @@ correction gets stricter."><meta property="og:image" content="https://olive-r.gi
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.6.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,7 +42,7 @@ correction gets stricter."><meta property="og:image" content="https://olive-r.gi
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Compare direction of change across raw, FDR-BH, and FDR-BKY</h1>
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v1.5/R/fdr.R" class="external-link"><code>R/fdr.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/R/fdr.R" class="external-link"><code>R/fdr.R</code></a></small>
       <div class="d-none name"><code>fdr_direction_summary.Rd</code></div>
     </div>
 
@@ -194,20 +194,17 @@ tabulation is the closest standalone alternative.</p></li>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>              42            2023 VHP_SMN_annual_ndvi_2023.tif</span>
 <span class="r-plt img"><img src="fdr_direction_summary-1.png" alt="" width="700" height="433"></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Stack built: 42 layers, 146 x 338 cells.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [read_ordered_stack()] elapsed: 0.13 s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [read_ordered_stack()] elapsed: 0.09 s</span>
 <span class="r-in"><span><span class="va">trend</span> <span class="op">&lt;-</span> <span class="fu"><a href="trend_test.html">trend_test</a></span><span class="op">(</span><span class="va">r</span>, report <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">fdr_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="fdr_correction.html">fdr_correction</a></span><span class="op">(</span><span class="va">trend</span><span class="op">$</span><span class="va">stats</span><span class="op">$</span><span class="va">p</span>, report <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># A table version of direction_map(): cell counts and percentages</span></span></span>
 <span class="r-in"><span><span class="co"># for increase/decrease/not-significant results, raw and the selected FDR</span></span></span>
 <span class="r-in"><span><span class="co"># methods side by side (BH and BKY by default; BY when explicitly</span></span></span>
-<span class="r-in"><span><span class="co"># requested).</span></span></span>
-<span class="r-in"><span><span class="fu">sptrends</span><span class="fu">:::</span><span class="fu">fdr_direction_summary</span><span class="op">(</span><span class="va">trend</span><span class="op">$</span><span class="va">stats</span>, <span class="va">fdr_result</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Skipping (not present in fdr_result): BY</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  method n_increase n_decrease n_not_significant pct_increase pct_decrease</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     raw       7167       1837              6671        45.72        11.72</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>      BH       6428       1537              7710        41.01         9.81</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     BKY       7368       1929              6378        47.00        12.31</span>
+<span class="r-in"><span><span class="co"># requested). This is a standalone internal helper with no public</span></span></span>
+<span class="r-in"><span><span class="co"># summary()/plot() wrapper of its own -- see the source of</span></span></span>
+<span class="r-in"><span><span class="co"># workflow_tst()/workflow_trends() for how the package itself</span></span></span>
+<span class="r-in"><span><span class="co"># composes this kind of table.</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

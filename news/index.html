@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.6.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,9 +38,88 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/Olive-r/sptrends/blob/v1.5/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/Olive-r/sptrends/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.6.1" id="sptrends-161">sptrends 1.6.1<a class="anchor" aria-label="anchor" href="#sptrends-161"></a></h2>
+<p>Full audit: functions, docs, website config, NEWS style, cran-comments.</p>
+<ul><li>Removed 4 dead duplicate validation checks in <code>benchmark.R</code>/ <code>validation.R</code> left over from the 1.6 audit integration.</li>
+<li>Added <code>_pkgdown.yml</code> entries for 5 functions exported in 1.5.3.</li>
+<li>Condensed NEWS from 1.5.4 onward to match the project’s usual telegraphic style.</li>
+<li>Updated <code>cran-comments.md</code> to reflect confirmed 1.6 results.</li>
+<li>Cross-checked <code>MK</code>/Theil-Sen against 5 external packages (Kendall, trend, modifiedmk, robslopes, zyp); no real discrepancies found.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.6" id="sptrends-16">sptrends 1.6<a class="anchor" aria-label="anchor" href="#sptrends-16"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-1-6">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-6"></a></h3>
+<ul><li>Fixed <code><a href="../reference/compute_anomalies.html">compute_anomalies()</a></code> climatology/standardisation alignment when <code>start_position</code> is not 1.</li>
+<li>Fixed <code><a href="../reference/read_ordered_stack.html">read_ordered_stack()</a></code> annual dates to use 1 January.</li>
+<li>Preserved constant residuals in Yue-Pilon prewhitening; skipped unavailable DW plots for Zhang’s method.</li>
+<li>Propagated worker counts in TST/RTA; honoured supplied clusters.</li>
+<li>Matched original-BKY plotting thresholds to its own decisions.</li>
+<li>Fixed zero F1 scores; benchmarks now apply <code>evaluation_mask</code>.</li>
+<li>Handled one-permutation summaries; rejected undefined General G inputs with fewer than two positive cells.</li>
+<li>Fixed missing-neighbour panels, single-cell histograms, and TST direction plots with BY or no slope estimate.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="documentation-1-6">Documentation<a class="anchor" aria-label="anchor" href="#documentation-1-6"></a></h3>
+<ul><li>Clarified cycle ordering, daily-data limits, calendar anchors.</li>
+<li>Updated website sources; synchronised exports with 1.5.3.</li>
+<li>Corrected estimator labels and MMK identification.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.5.9" id="sptrends-159">sptrends 1.5.9<a class="anchor" aria-label="anchor" href="#sptrends-159"></a></h2>
+<ul><li>Confirmed 100% coverage holds with <code>SPTRENDS_TEST_PARALLEL=true</code> set. No code changes.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.5.8" id="sptrends-158">sptrends 1.5.8<a class="anchor" aria-label="anchor" href="#sptrends-158"></a></h2>
+<ul><li>Fixed <code><a href="../reference/workflow_trends.html">workflow_trends()</a></code>’s example again: finds a valid cell programmatically, keeping real (not synthetic) data.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.5.7" id="sptrends-157">sptrends 1.5.7<a class="anchor" aria-label="anchor" href="#sptrends-157"></a></h2>
+<ul><li>Replaced the 1.5.5 example crop (had no valid cells) with synthetic data.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.5.6" id="sptrends-156">sptrends 1.5.6<a class="anchor" aria-label="anchor" href="#sptrends-156"></a></h2>
+<ul><li>Skipped 19 parallel-cluster tests by default (<code>SPTRENDS_TEST_PARALLEL=true</code> to run) to cut check time.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.5.5" id="sptrends-155">sptrends 1.5.5<a class="anchor" aria-label="anchor" href="#sptrends-155"></a></h2>
+<ul><li>Cropped <code><a href="../reference/workflow_trends.html">workflow_trends()</a></code>’s example to a small region to further cut check time.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.5.4" id="sptrends-154">sptrends 1.5.4<a class="anchor" aria-label="anchor" href="#sptrends-154"></a></h2>
+<ul><li>Used a null device for three <code>report = TRUE</code> tests to cut check time.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.5.3" id="sptrends-153">sptrends 1.5.3<a class="anchor" aria-label="anchor" href="#sptrends-153"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-1-5-3">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-5-3"></a></h3>
+<p>CRAN-requested fixes (submission feedback on 1.5.2):</p>
+<ul><li>No longer modifies <code>.GlobalEnv</code>; uses <code>withr</code> for seed handling.</li>
+<li>Exported <code><a href="../reference/fdr_bh.html">fdr_bh()</a></code>, <code><a href="../reference/fdr_by.html">fdr_by()</a></code>, <code><a href="../reference/fdr_bky.html">fdr_bky()</a></code>, <code><a href="../reference/prepare_cmk_neighbourhood.html">prepare_cmk_neighbourhood()</a></code>, and <code><a href="../reference/plot_detection_comparison.html">plot_detection_comparison()</a></code>.</li>
+<li>Removed internal (<code>:::</code>) calls from all examples.</li>
+<li>Replaced an interactive example’s <code>\dontrun{}</code> with <code>if (interactive())</code>.</li>
+<li>Added method references to the DESCRIPTION field.</li>
+</ul><p>Found while fixing the above:</p>
+<ul><li>Fixed a conflicting <code>@inheritParams</code>/duplicate <code>@return</code> in <code><a href="../reference/fdr_bky.html">fdr_bky()</a></code> that corrupted the installed help database.</li>
+<li>Updated 4 stale tests asserting the newly-exported functions were still internal.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.5.2" id="sptrends-152">sptrends 1.5.2<a class="anchor" aria-label="anchor" href="#sptrends-152"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-1-5-2">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-5-2"></a></h3>
+<ul><li>Fixed all <code>path=</code>-based PNG-saving functions (<code><a href="../reference/trend_histograms.html">trend_histograms()</a></code>, <code><a href="../reference/trend_maps.html">trend_maps()</a></code>, <code><a href="../reference/fdr_pvalue_histogram.html">fdr_pvalue_histogram()</a></code>, <code><a href="../reference/fdr_significance_maps.html">fdr_significance_maps()</a></code>, <code><a href="../reference/fdr_comparison_barplot.html">fdr_comparison_barplot()</a></code>, <code><a href="../reference/fdr_threshold_plot.html">fdr_threshold_plot()</a></code>, <code><a href="../reference/fdr_direction_plot.html">fdr_direction_plot()</a></code>, <code><a href="../reference/prewhiten_histograms.html">prewhiten_histograms()</a></code>, <code><a href="../reference/prewhiten_maps.html">prewhiten_maps()</a></code>, <code><a href="../reference/slope_map.html">slope_map()</a></code>, <code><a href="../reference/spatial_autocorrelation.html">spatial_autocorrelation()</a></code>’s own plotting helpers, <code><a href="../reference/plot_detection_comparison.html">plot_detection_comparison()</a></code>, and the <code>sptrends_simulation</code>/ <code>sptrends_benchmark</code> <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> methods), which silently produced no file at all on Debian/Linux (though not on Windows) – the internal helper relied on <code><a href="https://rdrr.io/r/grDevices/dev2.html" class="external-link">grDevices::dev.copy()</a></code>, which snapshots whatever device happens to already be active, and produces nothing in headless/batch environments with no active device. Now opens its own PNG device first and draws directly into it, which works identically regardless of platform or interactivity.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.5.1" id="sptrends-151">sptrends 1.5.1<a class="anchor" aria-label="anchor" href="#sptrends-151"></a></h2>
+<p>Resubmission of 1.5 to CRAN, with no code changes – version bump required to avoid a filename collision on CRAN’s own incoming server from an earlier submission attempt.</p>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.5" id="sptrends-15">sptrends 1.5<a class="anchor" aria-label="anchor" href="#sptrends-15"></a></h2>
 <div class="section level3">

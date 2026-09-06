@@ -9,7 +9,7 @@ already implements this correctly, so it is not reimplemented.'><meta property="
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.6.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,7 +40,7 @@ already implements this correctly, so it is not reimplemented.'><meta property="
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Benjamini-Hochberg (1995) false discovery rate correction</h1>
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v1.5/R/fdr.R" class="external-link"><code>R/fdr.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/R/fdr.R" class="external-link"><code>R/fdr.R</code></a></small>
       <div class="d-none name"><code>fdr_bh.Rd</code></div>
     </div>
 
@@ -63,14 +63,7 @@ already implements this correctly, so it is not reimplemented.</p>
 
 
 <dt id="arg-q">q<a class="anchor" aria-label="anchor" href="#arg-q"></a></dt>
-<dd><p>Numeric. Target FDR level. It is not a renamed or adjusted
-<code>alpha</code>: <code>alpha</code> is a per-test Type I error threshold, whereas <code>q</code>
-bounds the expected proportion of false discoveries among all
-discoveries – a property of the complete rejection set, not of any
-one test. A <code>q</code> of <code>0.05</code> means that, over repeated applications under
-the procedure's assumptions, the expected false-discovery proportion
-is controlled at 5%; it is not a guarantee that every realised set
-contains at most 5% false discoveries.</p></dd>
+<dd><p>Numeric. Target FDR level.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -81,8 +74,11 @@ contains at most 5% false discoveries.</p></dd>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p><strong>Function type:</strong> <strong>Support function</strong> – computes the BH procedure
-used internally by <code><a href="fdr_correction.html">fdr_correction()</a></code>. It is not exported; call
-<code>fdr_correction(p, method = "BH")</code> for a BH-only result.</p>
+used internally by <code><a href="fdr_correction.html">fdr_correction()</a></code>. Exported as a standalone
+convenience for callers who only need a plain vector of p-values
+corrected, without a raster or the rest of <code><a href="fdr_correction.html">fdr_correction()</a></code>'s own
+output structure; call <code>fdr_correction(p, method = "BH")</code> instead for
+the full result (rasters, when <code>p</code> is one, plus the other methods).</p>
     </div>
     <div class="section level2">
     <h2 id="typical-use">Typical use<a class="anchor" aria-label="anchor" href="#typical-use"></a></h2>
@@ -162,7 +158,7 @@ Decline. Remote Sensing, 16(20), 3886. <a href="https://doi.org/10.3390/rs162038
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Five p-values, ranked from most to least significant -- fdr_bh()</span></span></span>
 <span class="r-in"><span><span class="co"># tells you how many survive correction at q = 0.05 (the default).</span></span></span>
-<span class="r-in"><span><span class="fu">sptrends</span><span class="fu">:::</span><span class="fu">fdr_bh</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="fl">0.02</span>, <span class="fl">0.5</span>, <span class="fl">0.8</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">fdr_bh</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="fl">0.02</span>, <span class="fl">0.5</span>, <span class="fl">0.8</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $q_value</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.00500000 0.02500000 0.03333333 0.62500000 0.80000000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

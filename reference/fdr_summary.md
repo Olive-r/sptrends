@@ -105,13 +105,15 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.13 s
+#> >> [read_ordered_stack()] elapsed: 0.09 s
 trend <- trend_test(r, report = FALSE, verbose = FALSE)
 fdr_result <- fdr_correction(trend$stats$p, report = FALSE, verbose = FALSE)
 
 # A table comparing raw and the selected FDR methods: how many
-# cells each one calls significant, side by side.
-sptrends:::fdr_summary(fdr_result)
+# cells each one calls significant, side by side. Called internally
+# by summary() on an fdr_correction() result -- the public entry
+# point is:
+summary(fdr_result)
 #> Valid cells (m): 15675 | target q: 0.05
 #> BKY -- pi0_hat: 0.497416 | m0_hat: 7797.0 | r1 (stage 1): 7878
 ```

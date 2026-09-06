@@ -160,7 +160,7 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.12 s
+#> >> [read_ordered_stack()] elapsed: 0.10 s
 result <- workflow_tst(r, report = FALSE, verbose = FALSE)
 summary(result)  # dispatches to the "tst" case above
 #> === FDR correction (the actual TST result) ===

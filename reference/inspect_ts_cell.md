@@ -309,7 +309,7 @@ for raster-wide magnitude estimation.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
+if (interactive()) {
 # Interactive -- run this yourself, requires clicking on a plot.
 
 # Annual mean NDVI from the bundled environmental dataset.
@@ -346,5 +346,5 @@ inspect_ts_cell(r, slope_method = "RM")
 
 # All three estimators at once, as three lines with no intervals.
 inspect_ts_cell(r, compare_slopes = TRUE)
-} # }
+}
 ```

@@ -56,11 +56,10 @@ Other Spatial autocorrelation diagnostic functions:
 ## Examples
 
 ``` r
-# A moderately positive Moran's I -- classify_moran() gives it a
-# plain-language label (see the "Warning" message this function
-# prints about that label not being a disciplinary standard).
-sptrends:::classify_moran(0.32)
-#> Warning: descriptive category of this package's own convention -- not backed
-#> by a recognised disciplinary standard.
-#> |I| = 0.3200 -> category (own convention): strong
+# A moderately positive Moran's I would be labelled by this
+# function's own convention as follows (see the "Warning" message it
+# prints about that label not being a disciplinary standard) --
+# called internally wherever a categorical Moran's I label is
+# shown, e.g. spatial_autocorrelation()'s own summary output:
+# classify_moran(0.32)
 ```

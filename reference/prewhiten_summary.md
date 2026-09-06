@@ -97,8 +97,9 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 pw <- prewhiten(r, report = FALSE, verbose = FALSE)
 
 # How many cells needed correcting, and by how much (Durbin-Watson
-# before/after, estimated AR(1) coefficient rho).
-sptrends:::prewhiten_summary(pw$diagnostics)
+# before/after, estimated AR(1) coefficient rho). Called internally
+# by summary() on a prewhiten() result -- the public entry point is:
+summary(pw)
 #> Valid cells: 15675
 #> Prewhitened: 5987 (38.2%)
 #> Mean rho among prewhitened cells: 0.4493

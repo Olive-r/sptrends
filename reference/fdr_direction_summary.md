@@ -157,18 +157,15 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.13 s
+#> >> [read_ordered_stack()] elapsed: 0.09 s
 trend <- trend_test(r, report = FALSE, verbose = FALSE)
 fdr_result <- fdr_correction(trend$stats$p, report = FALSE, verbose = FALSE)
 
 # A table version of direction_map(): cell counts and percentages
 # for increase/decrease/not-significant results, raw and the selected FDR
 # methods side by side (BH and BKY by default; BY when explicitly
-# requested).
-sptrends:::fdr_direction_summary(trend$stats, fdr_result)
-#> Skipping (not present in fdr_result): BY
-#>  method n_increase n_decrease n_not_significant pct_increase pct_decrease
-#>     raw       7167       1837              6671        45.72        11.72
-#>      BH       6428       1537              7710        41.01         9.81
-#>     BKY       7368       1929              6378        47.00        12.31
+# requested). This is a standalone internal helper with no public
+# summary()/plot() wrapper of its own -- see the source of
+# workflow_tst()/workflow_trends() for how the package itself
+# composes this kind of table.
 ```

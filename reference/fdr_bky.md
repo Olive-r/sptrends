@@ -27,14 +27,7 @@ fdr_bky(p, q = 0.05, implementation = c("multtest", "original"))
 
 - q:
 
-  Numeric. Target FDR level. It is not a renamed or adjusted `alpha`:
-  `alpha` is a per-test Type I error threshold, whereas `q` bounds the
-  expected proportion of false discoveries among all discoveries – a
-  property of the complete rejection set, not of any one test. A `q` of
-  `0.05` means that, over repeated applications under the procedure's
-  assumptions, the expected false-discovery proportion is controlled at
-  5%; it is not a guarantee that every realised set contains at most 5%
-  false discoveries.
+  Numeric. Target FDR level.
 
 - implementation:
 
@@ -57,19 +50,24 @@ fdr_bky(p, q = 0.05, implementation = c("multtest", "original"))
 
 ## Value
 
-A list with `q_value` (or `NA` under `implementation = "original"`),
-`reject`, `pi0_hat` (estimated proportion of true null hypotheses),
-`m0_hat`, `m`, `r1` (Stage 1 figures), and `p_sorted`, `thresh_bh`,
-`thresh_bky` (for
-[`fdr_threshold_plot()`](https://olive-r.github.io/sptrends/reference/fdr_threshold_plot.md)).
+A list with `q_value` (adjusted p-values, `NA` for cells excluded by
+`NA` input, and also `NA` throughout under
+`implementation = "original"`, which is a reject/do-not-reject decision
+rather than a monotone-adjusted p-value); `reject` (logical); `pi0_hat`
+(the estimated proportion of true nulls); `m0_hat` (`pi0_hat * m`); `m`
+(the number of non-`NA` p-values); `r1` (rejections at Stage 1);
+`p_sorted` (the non-`NA` p-values, sorted); `thresh_bh`/`thresh_bky`
+(the BH and adaptive-BKY rejection thresholds at each rank, for
+diagnostic plotting); and `implementation`, echoing the argument used.
 
 ## Details
 
 **Function type:** **Support function** – computes the adaptive BKY
 procedure used internally by
 [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md).
-It is not exported; call `fdr_correction(p, method = "BKY")` for a
-BKY-only result.
+Exported as a standalone convenience for callers who only need a plain
+vector of p-values corrected; call `fdr_correction(p, method = "BKY")`
+instead for the full result.
 
 ## Typical use
 
@@ -191,7 +189,7 @@ Other FDR correction functions:
 # assumptions.
 p <- c(0.0001, 0.0004, 0.0019, 0.0095, 0.0201, 0.0278, 0.0298, 0.0344,
        0.0459, 0.3240, 0.4262, 0.5719, 0.6528, 0.7590, 1.0000)
-sptrends:::fdr_bky(p, q = 0.05)
+fdr_bky(p, q = 0.05)
 #> $q_value
 #>  [1] 0.001100000 0.002200000 0.006966667 0.026125000 0.044220000 0.046828571
 #>  [7] 0.046828571 0.047300000 0.056100000 0.356400000 0.426200000 0.524241667
@@ -234,7 +232,7 @@ sptrends:::fdr_bky(p, q = 0.05)
 # The original-paper implementation can differ (it is never more
 # permissive than the default "multtest" implementation, only ever
 # equal or stricter).
-sptrends:::fdr_bky(p, q = 0.05, implementation = "original")
+fdr_bky(p, q = 0.05, implementation = "original")
 #> $q_value
 #>  [1] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
 #> 
@@ -264,9 +262,9 @@ sptrends:::fdr_bky(p, q = 0.05, implementation = "original")
 #> [13] 0.043333333 0.046666667 0.050000000
 #> 
 #> $thresh_bky
-#>  [1] 0.004545455 0.009090909 0.013636364 0.018181818 0.022727273 0.027272727
-#>  [7] 0.031818182 0.036363636 0.040909091 0.045454545 0.050000000 0.054545455
-#> [13] 0.059090909 0.063636364 0.068181818
+#>  [1] 0.004329004 0.008658009 0.012987013 0.017316017 0.021645022 0.025974026
+#>  [7] 0.030303030 0.034632035 0.038961039 0.043290043 0.047619048 0.051948052
+#> [13] 0.056277056 0.060606061 0.064935065
 #> 
 #> $implementation
 #> [1] "original"

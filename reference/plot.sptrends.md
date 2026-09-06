@@ -116,7 +116,7 @@ multiple testing.
 
 `method`: `"BKY"` (default, matching
 [`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)'s
-default `fdr_method`) or `"BH"` – which correction to use for
+default `fdr_method`), `"BH"` or `"BY"` – which correction to use for
 `which = "direction"` or `which = "slope"`. Ignored otherwise. If `x`
 only has the other one (e.g.
 [`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)
@@ -281,7 +281,7 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.12 s
+#> >> [read_ordered_stack()] elapsed: 0.09 s
 result <- workflow_tst(r, report = FALSE, verbose = FALSE)
 
 # Default map: direction of change (greening/browning/no change),

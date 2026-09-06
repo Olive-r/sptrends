@@ -50,9 +50,15 @@ Steps applied to the raw raster time series *before* trend estimation or
 significance testing – removing serial autocorrelation or seasonality
 that would otherwise distort the steps that come after. Neither is one
 of the core trend-analysis pillars itself; both prepare the input for
-them. Both also return an object
+them.
+[`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md)
+returns a classed result with
 [`print()`](https://rdrr.io/r/base/print.html)/[`summary()`](https://rdrr.io/r/base/summary.html)/[`plot()`](https://rdrr.io/r/graphics/plot.default.html)
-recognise – see “Published workflows” above.
+methods.
+[`compute_anomalies()`](https://olive-r.github.io/sptrends/reference/compute_anomalies.md)
+returns a plain list: pass `$anomalies` to the next stage and inspect
+its rasters with
+[`terra::plot()`](https://rspatial.github.io/terra/reference/plot.html).
 
 - [`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md)
   : AR(1) prewhitening of raster time series
@@ -66,17 +72,27 @@ published workflow above is built from – every one of them usable
 standalone, not only as a step inside
 [`workflow_tst()`](https://olive-r.github.io/sptrends/reference/workflow_tst.md)/[`workflow_rta()`](https://olive-r.github.io/sptrends/reference/workflow_rta.md).
 Each function’s own help page traces it back to its original
-publication. All four also return an object
-[`print()`](https://rdrr.io/r/base/print.html)/[`summary()`](https://rdrr.io/r/base/summary.html)/
-[`plot()`](https://rdrr.io/r/graphics/plot.default.html) recognise – see
-“Published workflows” above.
+publication. The four raster analysis functions return classed results
+with
+[`print()`](https://rdrr.io/r/base/print.html)/[`summary()`](https://rdrr.io/r/base/summary.html)/[`plot()`](https://rdrr.io/r/graphics/plot.default.html)
+methods. The vector FDR helpers and neighbourhood builder return lists
+described in their respective help pages.
 
 - [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)
   : Trend tests for raster time series
+- [`prepare_cmk_neighbourhood()`](https://olive-r.github.io/sptrends/reference/prepare_cmk_neighbourhood.md)
+  : Precompute a CMK spatial neighbourhood
 - [`slope_estimator()`](https://olive-r.github.io/sptrends/reference/slope_estimator.md)
   : Slope estimators for raster time series
 - [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
   : Apply false discovery rate (FDR) correction to multiple p-values
+- [`fdr_bh()`](https://olive-r.github.io/sptrends/reference/fdr_bh.md) :
+  Benjamini-Hochberg (1995) false discovery rate correction
+- [`fdr_by()`](https://olive-r.github.io/sptrends/reference/fdr_by.md) :
+  Benjamini-Yekutieli (2001) false discovery rate correction
+- [`fdr_bky()`](https://olive-r.github.io/sptrends/reference/fdr_bky.md)
+  : Benjamini-Krieger-Yekutieli (2006) adaptive two-stage FDR correction
+  ("TSBH")
 - [`spatial_autocorrelation()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation.md)
   : Permutation-based spatial autocorrelation tests
 
@@ -118,6 +134,8 @@ work).
   : Path to sptrends' bundled example dataset
 - [`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md)
   : Compare detection methods against a known ground truth
+- [`plot_detection_comparison()`](https://olive-r.github.io/sptrends/reference/plot_detection_comparison.md)
+  : Bar plot of a compare_detections() comparison
 - [`benchmark_methods()`](https://olive-r.github.io/sptrends/reference/benchmark_methods.md)
   : Benchmark statistical methods across known-truth simulation
   scenarios

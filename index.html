@@ -11,8 +11,8 @@
 <script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Statistical Inference for Spatiotemporal Trends in Gridded Data">
-<meta name="description" content="Provides a unified and reproducible framework for statistical inference of spatiotemporal trends in gridded environmental data. The framework addresses the interconnected challenges of serial correlation, spatial dependence and multiple testing that commonly arise when analysing gridded environmental time series. Its core methods support serial-correlation treatment through trend-preserving prewhitening, pixel-wise and spatially explicit trend inference, slope estimation and multiple-testing correction. These methods may be applied independently or integrated within configurable analytical workflows. Dedicated workflows are also provided to reproduce methodologies published in the scientific literature. Supporting utilities facilitate raster data import and inspection, anomaly calculation, spatial autocorrelation diagnostics, simulation studies, benchmarking, visualisation, mapping, and reporting.">
-<meta property="og:description" content="Provides a unified and reproducible framework for statistical inference of spatiotemporal trends in gridded environmental data. The framework addresses the interconnected challenges of serial correlation, spatial dependence and multiple testing that commonly arise when analysing gridded environmental time series. Its core methods support serial-correlation treatment through trend-preserving prewhitening, pixel-wise and spatially explicit trend inference, slope estimation and multiple-testing correction. These methods may be applied independently or integrated within configurable analytical workflows. Dedicated workflows are also provided to reproduce methodologies published in the scientific literature. Supporting utilities facilitate raster data import and inspection, anomaly calculation, spatial autocorrelation diagnostics, simulation studies, benchmarking, visualisation, mapping, and reporting.">
+<meta name="description" content="Provides a unified and reproducible framework for statistical inference of spatiotemporal trends in gridded environmental data. The framework addresses the interconnected challenges of serial correlation, spatial dependence and multiple testing that commonly arise when analysing gridded environmental time series. Its core methods support serial-correlation treatment through trend-preserving prewhitening, pixel-wise and spatially explicit trend inference, slope estimation and multiple-testing correction. These methods may be applied independently or integrated within configurable analytical workflows. Dedicated workflows are also provided to reproduce methodologies published in the scientific literature: Gutiérrez-Hernández and García (2025) &lt;doi:10.1016/j.rsase.2024.101377&gt; for the True Significant Trends workflow, Gutiérrez-Hernández and García (2024) &lt;doi:10.3390/rs16203886&gt; for the Robust Trend Analysis workflow, and Gutiérrez-Hernández and García (2025) &lt;doi:10.3390/math13223630&gt; for the adaptive false discovery rate procedure. Supporting utilities facilitate raster data import and inspection, anomaly calculation, spatial autocorrelation diagnostics, simulation studies, benchmarking, visualisation, mapping, and reporting.">
+<meta property="og:description" content="Provides a unified and reproducible framework for statistical inference of spatiotemporal trends in gridded environmental data. The framework addresses the interconnected challenges of serial correlation, spatial dependence and multiple testing that commonly arise when analysing gridded environmental time series. Its core methods support serial-correlation treatment through trend-preserving prewhitening, pixel-wise and spatially explicit trend inference, slope estimation and multiple-testing correction. These methods may be applied independently or integrated within configurable analytical workflows. Dedicated workflows are also provided to reproduce methodologies published in the scientific literature: Gutiérrez-Hernández and García (2025) &lt;doi:10.1016/j.rsase.2024.101377&gt; for the True Significant Trends workflow, Gutiérrez-Hernández and García (2024) &lt;doi:10.3390/rs16203886&gt; for the Robust Trend Analysis workflow, and Gutiérrez-Hernández and García (2025) &lt;doi:10.3390/math13223630&gt; for the adaptive false discovery rate procedure. Supporting utilities facilitate raster data import and inspection, anomaly calculation, spatial autocorrelation diagnostics, simulation studies, benchmarking, visualisation, mapping, and reporting.">
 <meta property="og:image" content="https://olive-r.github.io/sptrends/logo.png">
 </head>
 <body>
@@ -23,7 +23,7 @@
 
     <a class="navbar-brand me-2" href="index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.6.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,6 +74,7 @@
 <p>Install the source package from a local archive or directory:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_local</span><span class="op">(</span><span class="st">"path/to/sptrends"</span><span class="op">)</span></span></code></pre></div>
+<p>When starting from a development source directory, regenerate its help files first with <code>roxygen2::roxygenise("path/to/sptrends")</code>. This step is not needed for a built source tarball.</p>
 </div>
 <div class="section level2">
 <h2 id="quick-start">Quick start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
@@ -101,6 +102,17 @@
 <div class="section level2">
 <h2 id="workflows">Workflows<a class="anchor" aria-label="anchor" href="#workflows"></a>
 </h2>
+<p>For seasonal data, declare the temporal structure and remove the cycle before running a trend workflow. For example, for consecutive monthly layers beginning in August:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Supply your files in chronological order; files may contain multiple layers.</span></span>
+<span><span class="va">monthly</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_ordered_stack.html">read_ordered_stack</a></span><span class="op">(</span></span>
+<span>  files <span class="op">=</span> <span class="va">ordered_files</span>, cycle_type <span class="op">=</span> <span class="st">"monthly"</span>,</span>
+<span>  start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2001-08-01"</span><span class="op">)</span>, report <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">anomalies</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/compute_anomalies.html">compute_anomalies</a></span><span class="op">(</span><span class="va">monthly</span>, cycle_type <span class="op">=</span> <span class="st">"monthly"</span>,</span>
+<span>                               start_position <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/workflow_tst.html">workflow_tst</a></span><span class="op">(</span><span class="va">anomalies</span><span class="op">$</span><span class="va">anomalies</span>, report <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<p><code>start</code> is the first period’s beginning; the default assigned date for a monthly layer is its centre. Annual layers use 1 January. Anomalies group layers by position, not by their date metadata; the user supplies the correct cycle and starting position. <code>files</code> plus <code>time</code> also supports an explicit date for every layer. See the <a href="https://olive-r.github.io/sptrends/articles/a-getting-started.html">loading guide</a>.</p>
 <ul>
 <li>
 <code><a href="reference/workflow_tst.html">workflow_tst()</a></code> implements True Significant Trends: selective prewhitening, Contextual Mann-Kendall, Theil-Sen and adaptive FDR (<a href="https://doi.org/10.1016/j.rsase.2024.101377" class="external-link">Gutiérrez-Hernández and García, 2025</a>).</li>
@@ -110,7 +122,7 @@
 <code><a href="reference/workflow_trends.html">workflow_trends()</a></code> combines user-selected preprocessing, trend, slope and FDR modules through the same validated interfaces.</li>
 </ul>
 <p>Each analytical stage is also available independently:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pw</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/prewhiten.html">prewhiten</a></span><span class="op">(</span><span class="va">r</span>, method <span class="op">=</span> <span class="st">"TFPW_WS"</span><span class="op">)</span></span>
 <span><span class="va">trend</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/trend_test.html">trend_test</a></span><span class="op">(</span><span class="va">pw</span><span class="op">$</span><span class="va">series</span>, method <span class="op">=</span> <span class="st">"CMK"</span><span class="op">)</span></span>
 <span><span class="va">slope</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/slope_estimator.html">slope_estimator</a></span><span class="op">(</span><span class="va">pw</span><span class="op">$</span><span class="va">series</span>, method <span class="op">=</span> <span class="st">"TS"</span><span class="op">)</span></span>
@@ -144,14 +156,14 @@
 <h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
 </h2>
 <p>The function help pages describe assumptions, alternatives, computational trade-offs, references and method-specific quality assurance. The vignettes provide concise guides to preprocessing, trend tests, slope estimation, FDR correction and complete workflows:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/browseVignettes.html" class="external-link">browseVignettes</a></span><span class="op">(</span><span class="st">"sptrends"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="quality-assurance">Quality assurance<a class="anchor" aria-label="anchor" href="#quality-assurance"></a>
 </h2>
-<p>sptrends maintains 100% test coverage across every R source file, verified with <code>covr::package_coverage()</code>, and passes <code>R CMD check</code> with 0 errors, 0 warnings and 0 notes on multiple platforms (local, and win-builder R-devel/release/oldrelease) – confirmed on every release. Style, spelling and link integrity are checked periodically with <code>lintr</code>, <code>goodpractice</code>, <code>spelling</code> and <code>urlchecker</code>.</p>
-<p>Beyond the automated <code>tests/testthat/</code> suite, the package has been validated through an external battery covering all 18 exported functions with correctness checks against known-truth simulations, and a comprehensive integral audit of code, citations and documentation.</p>
+<p>The recorded 1.5.9 local check completed in under 10 minutes with 0 errors, 0 warnings and 0 notes. Coverage was 100% across every R source file with <code>SPTRENDS_TEST_PARALLEL=true</code>. The recorded win-builder checks for 1.5.8 had 0 errors and 0 warnings, with submission and terminology notes. These are historical results; see <code>cran-comments.md</code> for the validation status of the current changes. The 19 parallel-execution tests remain optional to keep routine checks within CRAN’s time limit. Website building is a separate step. Style, spelling and link integrity are checked periodically with <code>lintr</code>, <code>goodpractice</code>, <code>spelling</code> and <code>urlchecker</code>.</p>
+<p>Beyond the automated <code>tests/testthat/</code> suite, the package has been validated through an external battery covering the then-current 18 exported functions with correctness checks against known-truth simulations, and a comprehensive integral audit of code, citations and documentation.</p>
 <p><code>trend_test(method = "CMK")</code> has additionally been cross-checked against an installed copy of <a href="https://github.com/antiphon/ConMK" class="external-link"><code>ConMK</code></a> (Antiphon, GitHub, not on CRAN – also available as a fork at <a href="https://github.com/geoporttishare/ConMK" class="external-link"><code>geoporttishare/ConMK</code></a>), the closest available external reference implementation of the contextual Mann-Kendall test. The base statistic matched to floating-point precision, and the optional <code>continuity = TRUE</code> argument reproduces <code>ConMK</code>’s own p-values exactly at the specific edge case where the two implementations would otherwise be expected to diverge. Full details in <code><a href="reference/trend_test.html">?trend_test</a></code>’s “External validation” section.</p>
 <p>Every change is documented transparently in <a href="NEWS.html">NEWS.md</a>.</p>
 </div>
@@ -163,7 +175,7 @@
 <p>Gutiérrez-Hernández, O., &amp; García, L. V. (2026). sptrends: Statistical Inference for Spatiotemporal Trends in Gridded Data [R package]. Zenodo. <a href="https://doi.org/10.5281/zenodo.21822842" class="external-link uri">https://doi.org/10.5281/zenodo.21822842</a></p>
 </blockquote>
 <p>Or, from R:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"sptrends"</span><span class="op">)</span></span></code></pre></div>
 <p>Published workflows:</p>
 <ul>

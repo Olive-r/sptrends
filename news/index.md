@@ -1,5 +1,137 @@
 # Changelog
 
+## sptrends 1.6.1
+
+Full audit: functions, docs, website config, NEWS style, cran-comments.
+
+- Removed 4 dead duplicate validation checks in `benchmark.R`/
+  `validation.R` left over from the 1.6 audit integration.
+- Added `_pkgdown.yml` entries for 5 functions exported in 1.5.3.
+- Condensed NEWS from 1.5.4 onward to match the project’s usual
+  telegraphic style.
+- Updated `cran-comments.md` to reflect confirmed 1.6 results.
+- Cross-checked `MK`/Theil-Sen against 5 external packages (Kendall,
+  trend, modifiedmk, robslopes, zyp); no real discrepancies found.
+
+## sptrends 1.6
+
+### Bug fixes
+
+- Fixed
+  [`compute_anomalies()`](https://olive-r.github.io/sptrends/reference/compute_anomalies.md)
+  climatology/standardisation alignment when `start_position` is not 1.
+- Fixed
+  [`read_ordered_stack()`](https://olive-r.github.io/sptrends/reference/read_ordered_stack.md)
+  annual dates to use 1 January.
+- Preserved constant residuals in Yue-Pilon prewhitening; skipped
+  unavailable DW plots for Zhang’s method.
+- Propagated worker counts in TST/RTA; honoured supplied clusters.
+- Matched original-BKY plotting thresholds to its own decisions.
+- Fixed zero F1 scores; benchmarks now apply `evaluation_mask`.
+- Handled one-permutation summaries; rejected undefined General G inputs
+  with fewer than two positive cells.
+- Fixed missing-neighbour panels, single-cell histograms, and TST
+  direction plots with BY or no slope estimate.
+
+### Documentation
+
+- Clarified cycle ordering, daily-data limits, calendar anchors.
+- Updated website sources; synchronised exports with 1.5.3.
+- Corrected estimator labels and MMK identification.
+
+## sptrends 1.5.9
+
+- Confirmed 100% coverage holds with `SPTRENDS_TEST_PARALLEL=true` set.
+  No code changes.
+
+## sptrends 1.5.8
+
+- Fixed
+  [`workflow_trends()`](https://olive-r.github.io/sptrends/reference/workflow_trends.md)’s
+  example again: finds a valid cell programmatically, keeping real (not
+  synthetic) data.
+
+## sptrends 1.5.7
+
+- Replaced the 1.5.5 example crop (had no valid cells) with synthetic
+  data.
+
+## sptrends 1.5.6
+
+- Skipped 19 parallel-cluster tests by default
+  (`SPTRENDS_TEST_PARALLEL=true` to run) to cut check time.
+
+## sptrends 1.5.5
+
+- Cropped
+  [`workflow_trends()`](https://olive-r.github.io/sptrends/reference/workflow_trends.md)’s
+  example to a small region to further cut check time.
+
+## sptrends 1.5.4
+
+- Used a null device for three `report = TRUE` tests to cut check time.
+
+## sptrends 1.5.3
+
+### Bug fixes
+
+CRAN-requested fixes (submission feedback on 1.5.2):
+
+- No longer modifies `.GlobalEnv`; uses `withr` for seed handling.
+- Exported
+  [`fdr_bh()`](https://olive-r.github.io/sptrends/reference/fdr_bh.md),
+  [`fdr_by()`](https://olive-r.github.io/sptrends/reference/fdr_by.md),
+  [`fdr_bky()`](https://olive-r.github.io/sptrends/reference/fdr_bky.md),
+  [`prepare_cmk_neighbourhood()`](https://olive-r.github.io/sptrends/reference/prepare_cmk_neighbourhood.md),
+  and
+  [`plot_detection_comparison()`](https://olive-r.github.io/sptrends/reference/plot_detection_comparison.md).
+- Removed internal (`:::`) calls from all examples.
+- Replaced an interactive example’s `\dontrun{}` with
+  `if (interactive())`.
+- Added method references to the DESCRIPTION field.
+
+Found while fixing the above:
+
+- Fixed a conflicting `@inheritParams`/duplicate `@return` in
+  [`fdr_bky()`](https://olive-r.github.io/sptrends/reference/fdr_bky.md)
+  that corrupted the installed help database.
+- Updated 4 stale tests asserting the newly-exported functions were
+  still internal.
+
+## sptrends 1.5.2
+
+### Bug fixes
+
+- Fixed all `path=`-based PNG-saving functions
+  ([`trend_histograms()`](https://olive-r.github.io/sptrends/reference/trend_histograms.md),
+  [`trend_maps()`](https://olive-r.github.io/sptrends/reference/trend_maps.md),
+  [`fdr_pvalue_histogram()`](https://olive-r.github.io/sptrends/reference/fdr_pvalue_histogram.md),
+  [`fdr_significance_maps()`](https://olive-r.github.io/sptrends/reference/fdr_significance_maps.md),
+  [`fdr_comparison_barplot()`](https://olive-r.github.io/sptrends/reference/fdr_comparison_barplot.md),
+  [`fdr_threshold_plot()`](https://olive-r.github.io/sptrends/reference/fdr_threshold_plot.md),
+  [`fdr_direction_plot()`](https://olive-r.github.io/sptrends/reference/fdr_direction_plot.md),
+  [`prewhiten_histograms()`](https://olive-r.github.io/sptrends/reference/prewhiten_histograms.md),
+  [`prewhiten_maps()`](https://olive-r.github.io/sptrends/reference/prewhiten_maps.md),
+  [`slope_map()`](https://olive-r.github.io/sptrends/reference/slope_map.md),
+  [`spatial_autocorrelation()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation.md)’s
+  own plotting helpers,
+  [`plot_detection_comparison()`](https://olive-r.github.io/sptrends/reference/plot_detection_comparison.md),
+  and the `sptrends_simulation`/ `sptrends_benchmark`
+  [`plot()`](https://rdrr.io/r/graphics/plot.default.html) methods),
+  which silently produced no file at all on Debian/Linux (though not on
+  Windows) – the internal helper relied on
+  [`grDevices::dev.copy()`](https://rdrr.io/r/grDevices/dev2.html),
+  which snapshots whatever device happens to already be active, and
+  produces nothing in headless/batch environments with no active device.
+  Now opens its own PNG device first and draws directly into it, which
+  works identically regardless of platform or interactivity.
+
+## sptrends 1.5.1
+
+Resubmission of 1.5 to CRAN, with no code changes – version bump
+required to avoid a filename collision on CRAN’s own incoming server
+from an earlier submission attempt.
+
 ## sptrends 1.5
 
 ### New features

@@ -106,11 +106,13 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.12 s
+#> >> [read_ordered_stack()] elapsed: 0.09 s
 trend <- trend_test(r, report = FALSE, verbose = FALSE)
 fdr_result <- fdr_correction(trend$stats$p, report = FALSE, verbose = FALSE)
 
 # Side-by-side maps: which cells are significant under BH vs. BKY.
-sptrends:::fdr_significance_maps(fdr_result)
+# Called internally by plot() on an fdr_correction() result -- the
+# public entry point is:
+plot(fdr_result, which = "significance")
 
 ```

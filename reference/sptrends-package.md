@@ -168,14 +168,14 @@ including
 `replicates = TRUE` mode for aggregating scores across several simulated
 runs, folded in rather than kept as a separate function).
 [`fdr_bh()`](https://olive-r.github.io/sptrends/reference/fdr_bh.md),
+[`fdr_by()`](https://olive-r.github.io/sptrends/reference/fdr_by.md),
 [`fdr_bky()`](https://olive-r.github.io/sptrends/reference/fdr_bky.md),
 and
 [`prepare_cmk_neighbourhood()`](https://olive-r.github.io/sptrends/reference/prepare_cmk_neighbourhood.md)
-also belong here conceptually, but are not exported – see
-[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)'s
-`method` argument (computes both by default) and
+are also exported: the FDR helpers operate on vectors, and the
+neighbourhood builder prepares reusable input for
 [`trend_test()`](https://olive-r.github.io/sptrends/reference/trend_test.md)'s
-`precomputed_neighbourhood` argument respectively.
+`precomputed_neighbourhood` argument.
 [`example_data()`](https://olive-r.github.io/sptrends/reference/example_data.md)
 gives the path to the package's bundled real-world example dataset.
 
@@ -195,8 +195,10 @@ their own
 methods:
 [`inspect_ts_cell()`](https://olive-r.github.io/sptrends/reference/inspect_ts_cell.md)
 (an interactive, click-to-inspect single-cell/ polygon time series
-viewer). `.moran_category()` (an internal helper, distinct from the
-separate, still-`:::`-reachable
+viewer) and
+[`plot_detection_comparison()`](https://olive-r.github.io/sptrends/reference/plot_detection_comparison.md)
+(a plot of detection-comparison metrics). `.moran_category()` (an
+internal helper, distinct from the separate, still-`:::`-reachable
 [`classify_moran()`](https://olive-r.github.io/sptrends/reference/classify_moran.md)
 diagnostic) and
 [`direction_map()`](https://olive-r.github.io/sptrends/reference/direction_map.md)

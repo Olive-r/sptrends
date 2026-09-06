@@ -143,13 +143,13 @@ read_ordered_stack(
 
   One of `"start"`, `"centre"` (default), or `"end"`. Only applicable
   with `cycle_type = "monthly"`, `"semimonthly"`, `"10-day"`,
-  `"16-day"`, `"8-day"` or `"weekly"` (a period has no start/centre/end
-  ambiguity for `"annual"` or `"daily"`). Controls which point within
-  each period's own date range is assigned as that layer's date –
-  irrelevant for MK/CMK (rank-based), but affects the numeric time
-  values OLS/MMK use directly. For a period with an even number of days,
-  `"centre"` deterministically picks the earlier of the two central
-  days.
+  `"16-day"`, `"8-day"` or `"weekly"`. Annual layers are always dated 1
+  January; daily layers use their own date. Do not supply `time_anchor`
+  for these two conventions. Controls which point within each period's
+  own date range is assigned as that layer's date – irrelevant for
+  MK/CMK (rank-based), but affects the numeric time values OLS/MMK use
+  directly. For a period with an even number of days, `"centre"`
+  deterministically picks the earlier of the two central days.
 
 ## Value
 
@@ -258,8 +258,8 @@ out of scope for `cycle_type` – supply `time` explicitly instead.
 
 - `"monthly"`:
 
-  One date per calendar month, the 1st. 12 samples/year. E.g. CRU TS,
-  TerraClimate, ERA5 monthly means.
+  One period per calendar month, beginning on the 1st. 12 samples/year.
+  E.g. CRU TS, TerraClimate, ERA5 monthly means.
 
 - `"16-day"`:
 
@@ -271,9 +271,9 @@ out of scope for `cycle_type` – supply `time` explicitly instead.
 
 - `"semimonthly"`:
 
-  Two dates per calendar month, the 1st and the 16th. 24 samples/year.
-  Matches PKU-GIMMS NDVI's own "half-month" convention – not the same
-  cadence as a continuous 14-day interval.
+  Two periods per calendar month, beginning on the 1st and the 16th. 24
+  samples/year. Matches PKU-GIMMS NDVI's own "half-month" convention –
+  not the same cadence as a continuous 14-day interval.
 
 - `"10-day"`:
 
@@ -295,9 +295,9 @@ out of scope for `cycle_type` – supply `time` explicitly instead.
 
   52 fixed, complete 7-day periods per year (Earth Trends Modeler's own
   number), starting on year-day 1, 8, ..., 358 – unlike
-  `"8-day"`/`"16-day"`, the last day of the year belongs to no period
-  and is skipped straight into next year's first period, rather than
-  forming a shorter final period.
+  `"8-day"`/`"16-day"`, the final one or two days of the year belong to
+  no period and are skipped straight into next year's first period,
+  rather than forming a shorter final period.
 
 - `"daily"`:
 
@@ -404,7 +404,7 @@ s <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.12 s
+#> >> [read_ordered_stack()] elapsed: 0.09 s
 terra::nlyr(s)
 #> [1] 42
 terra::time(s, "years")

@@ -17,7 +17,7 @@ distort the monotonic signal a trend test is looking for."><meta property="og:im
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.6.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +48,7 @@ distort the monotonic signal a trend test is looking for."><meta property="og:im
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Remove the seasonal cycle from raster time series</h1>
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v1.5/R/anomalies.R" class="external-link"><code>R/anomalies.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/R/anomalies.R" class="external-link"><code>R/anomalies.R</code></a></small>
       <div class="d-none name"><code>compute_anomalies.Rd</code></div>
     </div>
 
@@ -86,7 +86,8 @@ be based on fewer years for those positions).</p></dd>
 <dt id="arg-cycle">cycle<a class="anchor" aria-label="anchor" href="#arg-cycle"></a></dt>
 <dd><p>Integer. Length of the seasonal cycle in layers – e.g.
 <code>12</code> for monthly data with an annual cycle (the default), <code>4</code> for
-quarterly/seasonal data, <code>365</code> for daily data with an annual cycle.
+quarterly/seasonal data. A daily annual cycle requires a consistent
+calendar with the same positions in every year.
 Ignored if <code>cycle_type</code> is supplied.</p></dd>
 
 
@@ -138,12 +139,13 @@ or standardised depending on <code>standardise</code>.</p></dd>
 
 <dt>climatology</dt>
 <dd><p>A <code>SpatRaster</code> with <code>cycle</code> layers (the mean field
-for each position in the cycle).</p></dd>
+for each position in the cycle), ordered from position 1 to
+<code>cycle</code>, regardless of <code>start_position</code>.</p></dd>
 
 <dt>climatology_sd</dt>
 <dd><p>Only if <code>standardise = TRUE</code>: a <code>SpatRaster</code>
 with <code>cycle</code> layers (the standard deviation field for each position
-in the cycle).</p></dd>
+in the cycle), in the same order as <code>climatology</code>.</p></dd>
 
 </dl><p>A plain list, not a classed <code>"sptrends"</code> object – unlike
 <code><a href="prewhiten.html">prewhiten()</a></code> or <code><a href="trend_test.html">trend_test()</a></code>, this function's output is
@@ -222,18 +224,18 @@ answers.</p>
 rejects immediately afterwards – an annual series has no sub-annual
 cycle to remove in the first place, so there is nothing for this
 function to do with it. <code>"daily"</code> would use a fixed <code>cycle = 365</code>
-based on cycle POSITION alone, since this function has no access to
-the real dates in <code>terra::time(x)</code> – every leap year would silently
+based on cycle position alone; this function does not use
+the dates in <code>terra::time(x)</code>. Keeping leap days would
 misalign the climatology for the rest of the series (day 366 would
 be paired with the cycle position that day 1 of the following year
-would otherwise occupy). Supply the numeric <code>cycle</code> argument directly
-for genuinely daily data instead, with that leap-year caveat in mind
-(or use <code><a href="read_ordered_stack.html">read_ordered_stack()</a></code>'s own <code>cycle_type = "daily"</code>, which
-does read real dates and is not affected by this).</p>
+would otherwise occupy). Use a numeric <code>cycle</code> only when each cycle
+has the same number of comparable positions. Reading daily dates with
+<code><a href="read_ordered_stack.html">read_ordered_stack()</a></code> does not change this positional grouping rule.</p>
 <p><strong>Quality assurance</strong></p>
 <p>Tests verify monthly and arbitrary-cycle climatologies against direct
 calculations, centred and standardised anomalies, layer names,
-retained geometry, missing values, zero-variance cycles, and invalid
+retained geometry, missing values, zero-variance cycles, non-default
+starting positions (including partial cycles), and invalid
 inputs. Workflow tests confirm that anomaly outputs remain compatible
 with later preprocessing and trend stages. See <code><a href="sptrends-package.html">?sptrends</a></code> for the
 common release-check protocol.</p>

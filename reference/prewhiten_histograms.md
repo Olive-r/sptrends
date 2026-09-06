@@ -93,12 +93,13 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.12 s
+#> >> [read_ordered_stack()] elapsed: 0.10 s
 pw <- prewhiten(r, report = FALSE, verbose = FALSE)
 
 # Distributions of the Durbin-Watson statistic and the estimated rho
-# across all cells, before vs. after prewhitening.
-sptrends:::prewhiten_histograms(pw$diagnostics)
+# across all cells, before vs. after prewhitening. Called internally
+# by plot() on a prewhiten() result -- the public entry point is:
+plot(pw, which = "histograms")
 
 
 ```

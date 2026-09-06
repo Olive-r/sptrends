@@ -63,8 +63,9 @@ p <- c(0.001, 0.008, 0.02, 0.04, 0.3, 0.8)
 fdr_result <- fdr_correction(p, report = FALSE, verbose = FALSE)
 
 # A bar chart version of fdr_summary()'s table -- raw vs. BH vs. BKY,
-# visually.
-sptrends:::fdr_comparison_barplot(fdr_result)
+# visually. Called internally by plot() on an fdr_correction()
+# result -- the public entry point is:
+plot(fdr_result, which = "comparison")
 
 
 

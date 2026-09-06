@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.6.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,7 +103,7 @@
       </dl></div><div class="section level2">
       <h2 id="preprocessing">Preprocessing<a class="anchor" aria-label="anchor" href="#preprocessing"></a></h2>
 
-      <div class="section-desc"><p>Steps applied to the raw raster time series <em>before</em> trend estimation or significance testing – removing serial autocorrelation or seasonality that would otherwise distort the steps that come after. Neither is one of the core trend-analysis pillars itself; both prepare the input for them. Both also return an object <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>/<code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>/<code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> recognise – see “Published workflows” above.</p></div>
+      <div class="section-desc"><p>Steps applied to the raw raster time series <em>before</em> trend estimation or significance testing – removing serial autocorrelation or seasonality that would otherwise distort the steps that come after. Neither is one of the core trend-analysis pillars itself; both prepare the input for them. <code><a href="../reference/prewhiten.html">prewhiten()</a></code> returns a classed result with <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>/<code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>/<code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> methods. <code><a href="../reference/compute_anomalies.html">compute_anomalies()</a></code> returns a plain list: pass <code>$anomalies</code> to the next stage and inspect its rasters with <code><a href="https://rspatial.github.io/terra/reference/plot.html" class="external-link">terra::plot()</a></code>.</p></div>
 
       <dl></dl></div><div class="section level2">
 
@@ -126,7 +126,7 @@
       </dl></div><div class="section level2">
       <h2 id="core-methods">Core methods<a class="anchor" aria-label="anchor" href="#core-methods"></a></h2>
 
-      <div class="section-desc"><p>The classical, individually citable statistical techniques each published workflow above is built from – every one of them usable standalone, not only as a step inside <code><a href="../reference/workflow_tst.html">workflow_tst()</a></code>/<code><a href="../reference/workflow_rta.html">workflow_rta()</a></code>. Each function’s own help page traces it back to its original publication. All four also return an object <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>/<code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>/ <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> recognise – see “Published workflows” above.</p></div>
+      <div class="section-desc"><p>The classical, individually citable statistical techniques each published workflow above is built from – every one of them usable standalone, not only as a step inside <code><a href="../reference/workflow_tst.html">workflow_tst()</a></code>/<code><a href="../reference/workflow_rta.html">workflow_rta()</a></code>. Each function’s own help page traces it back to its original publication. The four raster analysis functions return classed results with <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>/<code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>/<code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> methods. The vector FDR helpers and neighbourhood builder return lists described in their respective help pages.</p></div>
 
       <dl></dl></div><div class="section level2">
 
@@ -142,6 +142,13 @@
 
         <dt>
 
+          <code><a href="prepare_cmk_neighbourhood.html">prepare_cmk_neighbourhood()</a></code>
+
+        </dt>
+        <dd>Precompute a CMK spatial neighbourhood</dd>
+
+        <dt>
+
           <code><a href="slope_estimator.html">slope_estimator()</a></code>
 
         </dt>
@@ -153,6 +160,27 @@
 
         </dt>
         <dd>Apply false discovery rate (FDR) correction to multiple p-values</dd>
+
+        <dt>
+
+          <code><a href="fdr_bh.html">fdr_bh()</a></code>
+
+        </dt>
+        <dd>Benjamini-Hochberg (1995) false discovery rate correction</dd>
+
+        <dt>
+
+          <code><a href="fdr_by.html">fdr_by()</a></code>
+
+        </dt>
+        <dd>Benjamini-Yekutieli (2001) false discovery rate correction</dd>
+
+        <dt>
+
+          <code><a href="fdr_bky.html">fdr_bky()</a></code>
+
+        </dt>
+        <dd>Benjamini-Krieger-Yekutieli (2006) adaptive two-stage FDR correction ("TSBH")</dd>
 
         <dt>
 
@@ -227,6 +255,13 @@
 
         </dt>
         <dd>Compare detection methods against a known ground truth</dd>
+
+        <dt>
+
+          <code><a href="plot_detection_comparison.html">plot_detection_comparison()</a></code>
+
+        </dt>
+        <dd>Bar plot of a compare_detections() comparison</dd>
 
         <dt>
 

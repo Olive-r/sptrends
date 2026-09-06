@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.6.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,7 +64,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>0. Loading and exploring spatiotemporal data</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v1.5/vignettes/a-getting-started.Rmd" class="external-link"><code>vignettes/a-getting-started.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/vignettes/a-getting-started.Rmd" class="external-link"><code>vignettes/a-getting-started.Rmd</code></a></small>
       <div class="d-none name"><code>a-getting-started.Rmd</code></div>
     </div>
 
@@ -171,7 +171,7 @@ summaries.</p>
 <span><span class="co">#&gt;              42            2023 VHP_SMN_annual_ndvi_2023.tif</span></span></code></pre></div>
 <p><img src="a-getting-started_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" alt="" width="576"></p>
 <pre><code><span><span class="co">#&gt; Stack built: 42 layers, 146 x 338 cells.</span></span>
-<span><span class="co">#&gt; &gt;&gt; [read_ordered_stack()] elapsed: 3.07 s</span></span>
+<span><span class="co">#&gt; &gt;&gt; [read_ordered_stack()] elapsed: 2.32 s</span></span>
 <span><span class="va">r</span></span>
 <span><span class="co">#&gt; class       : SpatRaster</span></span>
 <span><span class="co">#&gt; size        : 146, 338, 42  (nrow, ncol, nlyr)</span></span>
@@ -221,6 +221,41 @@ To reproduce it interactively from the original raster series, run:</p>
 <div class="section level2">
 <h2 id="understanding-the-results">Understanding the results<a class="anchor" aria-label="anchor" href="#understanding-the-results"></a>
 </h2>
+<div class="section level3">
+<h3 id="declaring-seasonal-input">Declaring seasonal input<a class="anchor" aria-label="anchor" href="#declaring-seasonal-input"></a>
+</h3>
+<p>For seasonal data, supply files in their known chronological order. A
+file may contain several layers; <code>time</code> must contain one
+value per layer.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># ordered_files is your chronological vector of file paths.</span></span>
+<span><span class="va">monthly</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_ordered_stack.html">read_ordered_stack</a></span><span class="op">(</span></span>
+<span>  files <span class="op">=</span> <span class="va">ordered_files</span>, cycle_type <span class="op">=</span> <span class="st">"monthly"</span>,</span>
+<span>  start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2001-08-01"</span><span class="op">)</span>, report <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">seasonal</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compute_anomalies.html">compute_anomalies</a></span><span class="op">(</span><span class="va">monthly</span>, cycle_type <span class="op">=</span> <span class="st">"monthly"</span>,</span>
+<span>                              start_position <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/workflow_trends.html">workflow_trends</a></span><span class="op">(</span><span class="va">seasonal</span><span class="op">$</span><span class="va">anomalies</span>, report <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<p><code>start</code> is the beginning of the first period. Monthly and
+composite periods use their centre as the default assigned date; annual
+layers always use 1 January. Optional <code>end</code> must be the
+inclusive end of the last period and checks the expected layer count.
+For other calendars, use
+<code>read_ordered_stack(files = ordered_files, time = layer_dates)</code>.</p>
+<p><code><a href="../reference/compute_anomalies.html">compute_anomalies()</a></code> uses positions, not date metadata.
+Supply the cycle length and the first position correctly: August is
+position 8 in a monthly annual cycle. Its <code>climatology</code> and
+optional <code>climatology_sd</code> are ordered from position 1 to
+<code>cycle</code>; <code>$anomalies</code> retains the input layer
+order. Daily input with leap days does not have a fixed 365-position
+annual cycle.</p>
+<p>The anomaly result is a plain list of rasters. Pass
+<code>$anomalies</code> to the next analytical step or inspect a
+component with <code><a href="https://rspatial.github.io/terra/reference/plot.html" class="external-link">terra::plot()</a></code>.</p>
+</div>
+<div class="section level3">
+<h3 id="analytical-outputs">Analytical outputs<a class="anchor" aria-label="anchor" href="#analytical-outputs"></a>
+</h3>
 <p>So far you have only looked at the raw data. Once an analytical
 function has actually been run – in any of the vignettes that follow –
 its output presents itself the same way throughout the package:
@@ -229,6 +264,7 @@ analytical functions return structured objects with familiar
 methods. Complete workflows retain their intermediate results, so users
 can examine every analytical stage rather than treating the workflow as
 a black box.</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="choosing-the-main-options">Choosing the main options<a class="anchor" aria-label="anchor" href="#choosing-the-main-options"></a>

@@ -252,6 +252,14 @@ Returns a list of class `c("trend_test", "sptrends")`, with:
 
   The odd CMK neighbourhood size used, or `NULL` for non-CMK methods.
 
+- method:
+
+  The requested trend-test method.
+
+- connectivity:
+
+  For CMK, the selected queen or rook connectivity.
+
 Use
 [`print()`](https://rdrr.io/r/base/print.html)/[`summary()`](https://rdrr.io/r/base/summary.html)/[`plot()`](https://rdrr.io/r/graphics/plot.default.html)
 – see
@@ -888,7 +896,7 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.13 s
+#> >> [read_ordered_stack()] elapsed: 0.09 s
 
 # Test every cell for a monotonic trend, borrowing strength from each
 # cell's spatial neighbourhood (method = "CMK", the default).

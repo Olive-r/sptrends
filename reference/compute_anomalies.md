@@ -34,8 +34,9 @@ compute_anomalies(
 
   Integer. Length of the seasonal cycle in layers – e.g. `12` for
   monthly data with an annual cycle (the default), `4` for
-  quarterly/seasonal data, `365` for daily data with an annual cycle.
-  Ignored if `cycle_type` is supplied.
+  quarterly/seasonal data. A daily annual cycle requires a consistent
+  calendar with the same positions in every year. Ignored if
+  `cycle_type` is supplied.
 
 - cycle_type:
 
@@ -89,12 +90,14 @@ Returns a list with:
 - climatology:
 
   A `SpatRaster` with `cycle` layers (the mean field for each position
-  in the cycle).
+  in the cycle), ordered from position 1 to `cycle`, regardless of
+  `start_position`.
 
 - climatology_sd:
 
   Only if `standardise = TRUE`: a `SpatRaster` with `cycle` layers (the
-  standard deviation field for each position in the cycle).
+  standard deviation field for each position in the cycle), in the same
+  order as `climatology`.
 
 A plain list, not a classed `"sptrends"` object – unlike
 [`prewhiten()`](https://olive-r.github.io/sptrends/reference/prewhiten.md)
@@ -186,23 +189,23 @@ kind of question from the one it answers.
 rejects immediately afterwards – an annual series has no sub-annual
 cycle to remove in the first place, so there is nothing for this
 function to do with it. `"daily"` would use a fixed `cycle = 365` based
-on cycle POSITION alone, since this function has no access to the real
-dates in `terra::time(x)` – every leap year would silently misalign the
-climatology for the rest of the series (day 366 would be paired with the
-cycle position that day 1 of the following year would otherwise occupy).
-Supply the numeric `cycle` argument directly for genuinely daily data
-instead, with that leap-year caveat in mind (or use
-[`read_ordered_stack()`](https://olive-r.github.io/sptrends/reference/read_ordered_stack.md)'s
-own `cycle_type = "daily"`, which does read real dates and is not
-affected by this).
+on cycle position alone; this function does not use the dates in
+`terra::time(x)`. Keeping leap days would misalign the climatology for
+the rest of the series (day 366 would be paired with the cycle position
+that day 1 of the following year would otherwise occupy). Use a numeric
+`cycle` only when each cycle has the same number of comparable
+positions. Reading daily dates with
+[`read_ordered_stack()`](https://olive-r.github.io/sptrends/reference/read_ordered_stack.md)
+does not change this positional grouping rule.
 
 **Quality assurance**
 
 Tests verify monthly and arbitrary-cycle climatologies against direct
 calculations, centred and standardised anomalies, layer names, retained
-geometry, missing values, zero-variance cycles, and invalid inputs.
-Workflow tests confirm that anomaly outputs remain compatible with later
-preprocessing and trend stages. See
+geometry, missing values, zero-variance cycles, non-default starting
+positions (including partial cycles), and invalid inputs. Workflow tests
+confirm that anomaly outputs remain compatible with later preprocessing
+and trend stages. See
 [`?sptrends`](https://olive-r.github.io/sptrends/reference/sptrends-package.md)
 for the common release-check protocol.
 

@@ -94,12 +94,14 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.14 s
+#> >> [read_ordered_stack()] elapsed: 0.10 s
 trend <- trend_test(r, report = FALSE, verbose = FALSE)
 
 # Histograms of the trend statistic and p-value across all cells --
 # a quick look at the overall distribution, not any one cell.
-sptrends:::trend_histograms(trend$stats)
+# Called internally by plot() on a trend_test() result -- the
+# public entry point is:
+plot(trend, which = "histograms")
 
 
 ```

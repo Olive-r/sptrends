@@ -15,7 +15,7 @@ from outside the package via summary()."><meta property="og:image" content="http
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.6.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,7 +46,7 @@ from outside the package via summary()."><meta property="og:image" content="http
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Summarise a prewhitening diagnostics raster</h1>
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v1.5/R/prewhiten.R" class="external-link"><code>R/prewhiten.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/R/prewhiten.R" class="external-link"><code>R/prewhiten.R</code></a></small>
       <div class="d-none name"><code>prewhiten_summary.Rd</code></div>
     </div>
 
@@ -151,8 +151,9 @@ Regimes. Journal of Climate, 14(10), 2204-2221.</p></li>
 <span class="r-in"><span><span class="va">pw</span> <span class="op">&lt;-</span> <span class="fu"><a href="prewhiten.html">prewhiten</a></span><span class="op">(</span><span class="va">r</span>, report <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># How many cells needed correcting, and by how much (Durbin-Watson</span></span></span>
-<span class="r-in"><span><span class="co"># before/after, estimated AR(1) coefficient rho).</span></span></span>
-<span class="r-in"><span><span class="fu">sptrends</span><span class="fu">:::</span><span class="fu">prewhiten_summary</span><span class="op">(</span><span class="va">pw</span><span class="op">$</span><span class="va">diagnostics</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># before/after, estimated AR(1) coefficient rho). Called internally</span></span></span>
+<span class="r-in"><span><span class="co"># by summary() on a prewhiten() result -- the public entry point is:</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pw</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Valid cells: 15675</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Prewhitened: 5987 (38.2%)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Mean rho among prewhitened cells: 0.4493</span>

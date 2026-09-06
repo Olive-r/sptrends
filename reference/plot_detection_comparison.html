@@ -9,7 +9,7 @@ result (either a single run, or the mean columns of a replicates = TRUE aggregat
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.6.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,7 +40,7 @@ result (either a single run, or the mean columns of a replicates = TRUE aggregat
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Bar plot of a compare_detections() comparison</h1>
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v1.5/R/validation.R" class="external-link"><code>R/validation.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/R/validation.R" class="external-link"><code>R/validation.R</code></a></small>
       <div class="d-none name"><code>plot_detection_comparison.Rd</code></div>
     </div>
 
@@ -103,7 +103,7 @@ exported – reachable from outside the package via <code><a href="https://rdrr.
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="sim_trend_stack.html">sim_trend_stack</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">12</span>, ncol <span class="op">=</span> <span class="fl">12</span>, n_time <span class="op">=</span> <span class="fl">12</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [sim_trend_stack()] elapsed: 0.06 s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [sim_trend_stack()] elapsed: 0.05 s</span>
 <span class="r-in"><span><span class="va">trend_mk</span>  <span class="op">&lt;-</span> <span class="fu"><a href="trend_test.html">trend_test</a></span><span class="op">(</span><span class="va">sim</span><span class="op">$</span><span class="va">series</span>, method <span class="op">=</span> <span class="st">"MK"</span>,</span></span>
 <span class="r-in"><span>                         report <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">trend_cmk</span> <span class="op">&lt;-</span> <span class="fu"><a href="trend_test.html">trend_test</a></span><span class="op">(</span><span class="va">sim</span><span class="op">$</span><span class="va">series</span>, method <span class="op">=</span> <span class="st">"CMK"</span>,</span></span>
@@ -113,11 +113,11 @@ exported – reachable from outside the package via <code><a href="https://rdrr.
 <span class="r-in"><span>                     CMK <span class="op">=</span> <span class="va">trend_cmk</span><span class="op">$</span><span class="va">stats</span><span class="op">$</span><span class="va">p</span> <span class="op">&lt;=</span> <span class="fl">0.05</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  ground_truth <span class="op">=</span> <span class="va">sim</span><span class="op">$</span><span class="va">true_slope</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [compare_detections()] elapsed: 0.02 s</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; [compare_detections()] elapsed: 0.01 s</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># A grouped bar chart of the table above -- one group of bars per</span></span></span>
 <span class="r-in"><span><span class="co"># method, one bar per metric.</span></span></span>
-<span class="r-in"><span><span class="fu">sptrends</span><span class="fu">:::</span><span class="fu">plot_detection_comparison</span><span class="op">(</span><span class="va">comparison</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">plot_detection_comparison</span><span class="op">(</span><span class="va">comparison</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_detection_comparison-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

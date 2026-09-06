@@ -27,7 +27,7 @@ comparing and applying methods for spatiotemporal trend analysis."><meta propert
 
     <a class="navbar-brand me-2" href="../index.html">sptrends</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.6.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,7 +58,7 @@ comparing and applying methods for spatiotemporal trend analysis."><meta propert
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>sptrends: Statistical Inference for Spatiotemporal Trends in Gridded Data</h1>
-      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/v1.5/R/sptrends-package.R" class="external-link"><code>R/sptrends-package.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Olive-r/sptrends/blob/main/R/sptrends-package.R" class="external-link"><code>R/sptrends-package.R</code></a></small>
       <div class="d-none name"><code>sptrends-package.Rd</code></div>
     </div>
 
@@ -181,12 +181,11 @@ BH, BKY or BY multiple-testing control,
 data frames underneath – including <code><a href="compare_detections.html">compare_detections()</a></code>'s
 <code>replicates = TRUE</code> mode for
 aggregating scores across several simulated runs, folded in rather
-than kept as a separate function). <code><a href="fdr_bh.html">fdr_bh()</a></code>,
-<code><a href="fdr_bky.html">fdr_bky()</a></code>, and <code><a href="prepare_cmk_neighbourhood.html">prepare_cmk_neighbourhood()</a></code> also belong here
-conceptually, but are not exported – see <code><a href="fdr_correction.html">fdr_correction()</a></code>'s
-<code>method</code> argument (computes both by default) and
-<code><a href="trend_test.html">trend_test()</a></code>'s <code>precomputed_neighbourhood</code> argument
-respectively. <code><a href="example_data.html">example_data()</a></code> gives the path to the package's
+than kept as a separate function). <code><a href="fdr_bh.html">fdr_bh()</a></code>, <code><a href="fdr_by.html">fdr_by()</a></code>,
+<code><a href="fdr_bky.html">fdr_bky()</a></code>, and <code><a href="prepare_cmk_neighbourhood.html">prepare_cmk_neighbourhood()</a></code> are also exported:
+the FDR helpers operate on vectors, and the neighbourhood builder
+prepares reusable input for <code><a href="trend_test.html">trend_test()</a></code>'s
+<code>precomputed_neighbourhood</code> argument. <code><a href="example_data.html">example_data()</a></code> gives the path to the package's
 bundled real-world example dataset.</p>
 <p><strong>Reporting/derived</strong> – what remains standalone after the redesign
 above gave <code><a href="workflow_tst.html">workflow_tst()</a></code>, <code><a href="workflow_rta.html">workflow_rta()</a></code>, <code><a href="trend_test.html">trend_test()</a></code>,
@@ -194,7 +193,8 @@ above gave <code><a href="workflow_tst.html">workflow_tst()</a></code>, <code><a
 <code><a href="spatial_autocorrelation.html">spatial_autocorrelation()</a></code>, and <code><a href="compare_detections.html">compare_detections()</a></code> their own
 <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>/<code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>/<code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> methods:
 <code><a href="inspect_ts_cell.html">inspect_ts_cell()</a></code> (an interactive, click-to-inspect single-cell/
-polygon time series viewer). <code>.moran_category()</code> (an internal
+polygon time series viewer) and <code><a href="plot_detection_comparison.html">plot_detection_comparison()</a></code>
+(a plot of detection-comparison metrics). <code>.moran_category()</code> (an internal
 helper, distinct from the separate, still-<code>:::</code>-reachable
 <code><a href="classify_moran.html">classify_moran()</a></code> diagnostic) and
 <code><a href="direction_map.html">direction_map()</a></code> also belong here conceptually, but are not
