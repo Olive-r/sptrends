@@ -1,0 +1,59 @@
+Package: sptrends
+Title: Statistical Inference for Spatiotemporal Trends in Gridded Data
+Version: 1.6.1
+Language: en-GB
+Authors@R: c(
+    person("Oliver", "Gutiérrez-Hernández", , "olivergh@uma.es", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0003-2580-5465", affiliation = "Department of Geography, University of Málaga, Málaga, Spain")),
+    person("Luis V.", "García", role = "aut",
+           comment = c(ORCID = "0000-0002-5514-2941", affiliation = "Institute of Natural Resources and Agrobiology of Seville (IRNAS), Spanish National Research Council (CSIC), Seville, Spain")))
+Description: Provides a unified and reproducible framework for statistical
+    inference of spatiotemporal trends in gridded environmental data. The
+    framework addresses the interconnected challenges of serial correlation,
+    spatial dependence and multiple testing that commonly arise when analysing
+    gridded environmental time series. Its core methods support
+    serial-correlation treatment through trend-preserving prewhitening,
+    pixel-wise and spatially explicit trend inference, slope estimation and
+    multiple-testing correction. These methods may be applied independently or
+    integrated within configurable analytical workflows. Dedicated workflows
+    are also provided to reproduce methodologies published in the scientific
+    literature: Gutiérrez-Hernández and García (2025)
+    <doi:10.1016/j.rsase.2024.101377> for the True Significant Trends
+    workflow, Gutiérrez-Hernández and García (2024)
+    <doi:10.3390/rs16203886> for the Robust Trend Analysis workflow, and
+    Gutiérrez-Hernández and García (2025) <doi:10.3390/math13223630> for
+    the adaptive false discovery rate procedure. Supporting utilities
+    facilitate raster data import and
+    inspection, anomaly calculation, spatial autocorrelation diagnostics,
+    simulation studies, benchmarking, visualisation, mapping, and reporting.
+License: GPL (>= 3)
+URL: https://github.com/Olive-r/sptrends, https://olive-r.github.io/sptrends/
+BugReports: https://github.com/Olive-r/sptrends/issues
+Depends:
+    R (>= 4.1)
+Imports:
+    terra (>= 1.7-0),
+    Matrix,
+    parallel,
+    stats,
+    utils,
+    graphics,
+    grDevices,
+    withr (>= 2.2.0)
+Suggests:
+    fields,
+    testthat (>= 3.2.0),
+    knitr,
+    rmarkdown,
+    ncdf4,
+    Kendall,
+    modifiedmk,
+    rkt,
+    robslopes,
+    trend,
+    zyp
+VignetteBuilder: knitr
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+Config/testthat/edition: 3
+Config/roxygen2/version: 8.0.0
