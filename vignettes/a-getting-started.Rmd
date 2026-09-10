@@ -1,0 +1,191 @@
+---
+title: "0. Loading and exploring spatiotemporal data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{0. Loading and exploring spatiotemporal data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>",
+                      fig.width = 6, fig.height = 4.5)
+```
+
+```{r setup}
+library(sptrends)
+```
+
+## Why this matters
+
+sptrends analyses spatiotemporal trends in gridded environmental data. These
+datasets commonly exhibit serial correlation and spatial dependence, while
+analysing many cells simultaneously creates a large-scale multiple-testing
+problem. Because these challenges interact to affect statistical inference,
+sptrends keeps the main analytical stages explicit and separate:
+serial-correlation assessment and treatment, trend testing, slope estimation
+and multiple-testing correction. These stages may be used independently or
+combined within complete analytical workflows.
+
+This is not simply a sequence of steps assembled for convenience. True
+Significant Trends (TST), introduced by [Gutiérrez-Hernández and García
+(2025)](https://doi.org/10.1016/j.rsase.2024.101377), is the methodological
+origin of this design: it identified these three challenges as
+interconnected facets of the same underlying problem, not as separate
+issues to be patched independently, and sptrends inherits that
+understanding rather than just its pipeline.
+
+This vignette shows how to recognise, inspect and visualise the input,
+and how the main analytical stages fit together. Later vignettes explain
+each methodological decision.
+
+## What `read_ordered_stack()` and `read_netcdf_stack()` do
+
+The usual analytical input is a `terra::SpatRaster` with one layer per time
+step, ordered from earliest to latest. It can be created from chronologically
+ordered raster files with `read_ordered_stack()` or imported from NetCDF
+datasets with `read_netcdf_stack()`. Across these layers, each valid raster
+cell defines an individual time series embedded within a spatially structured
+dataset. Analytical results are returned as structured `sptrends` objects with
+familiar `print()`, `summary()` and `plot()` methods.
+
+## Basic workflow
+
+The bundled example is an annual NDVI series derived from the [NOAA STAR
+Blended Vegetation Health Product
+(Blended-VHP)](https://www.star.nesdis.noaa.gov/smcd/emb/vci/VH/vh_ftp.php).
+The data were spatially resampled to a coarser 100 km resolution to enable
+faster execution of the examples and reprojected to an
+[Eckert IV](https://map-projections.net/compare.php?p1=eckert-4&p2=equalearth&w=1&sm=1&d=1)
+equal-area grid so that every raster cell represents the same surface area.
+An equal-area projection is not required by sptrends, but this consideration
+is often overlooked and becomes important when interpreting cell counts,
+spatial proportions or area-based summaries.
+
+```{r}
+r <- read_ordered_stack(example_data("vhp_ndvi"))
+r
+terra::nlyr(r)
+terra::time(r)
+```
+
+The imported object contains 42 annual observations spanning 1982--2023.
+Before beginning any trend analysis, it is good practice to verify that the
+temporal ordering has been detected correctly and that the raster series
+matches the expected study period.
+
+Start by viewing the complete series and checking the temporal order:
+
+```{r, fig.width = 10, fig.height = 11, fig.alt = "Mosaic of all annual mean NDVI layers in temporal order"}
+ndvi_col <- rev(grDevices::hcl.colors(50, "Greens 3"))
+terra::plot(
+  r, col = ndvi_col, colNA = "transparent", nc = 6,
+  maxnl = terra::nlyr(r)
+)
+```
+
+The same layers can be displayed sequentially in an interactive R session:
+
+![Annual mean NDVI, 1982--2023](figures/ndvi-annual-animation.gif)
+
+The embedded animation uses the same 42 layers shown in the mosaic. To
+reproduce it interactively from the original raster series, run:
+
+```{r, eval = FALSE}
+terra::animate(
+  r,
+  pause = 0.2,
+  main = as.character(terra::time(r)),
+  col = ndvi_col,
+  colNA = "transparent"
+)
+```
+
+## Understanding the results
+
+### Declaring seasonal input
+
+For seasonal data, supply files in their known chronological order. A file
+may contain several layers; `time` must contain one value per layer.
+
+```{r explicit-input, eval = FALSE}
+# ordered_files is your chronological vector of file paths.
+monthly <- read_ordered_stack(
+  files = ordered_files, cycle_type = "monthly",
+  start = as.Date("2001-08-01"), report = FALSE
+)
+seasonal <- compute_anomalies(monthly, cycle_type = "monthly",
+                              start_position = 8)
+result <- workflow_trends(seasonal$anomalies, report = FALSE)
+```
+
+`start` is the beginning of the first period. Monthly and composite periods
+use their centre as the default assigned date; annual layers always use
+1 January. Optional `end` must be the inclusive end of the last period and
+checks the expected layer count. For other calendars, use
+`read_ordered_stack(files = ordered_files, time = layer_dates)`.
+
+`compute_anomalies()` uses positions, not date metadata. Supply the cycle
+length and the first position correctly: August is position 8 in a monthly
+annual cycle. Its `climatology` and optional `climatology_sd` are ordered
+from position 1 to `cycle`; `$anomalies` retains the input layer order.
+Daily input with leap days does not have a fixed 365-position annual cycle.
+
+The anomaly result is a plain list of rasters. Pass `$anomalies` to the
+next analytical step or inspect a component with `terra::plot()`.
+
+### Analytical outputs
+
+So far you have only looked at the raw data. Once an analytical function has
+actually been run -- in any of the vignettes that follow -- its output
+presents itself the same way throughout the package: analytical functions
+return structured objects with familiar `print()`, `summary()` and `plot()`
+methods. Complete workflows retain their intermediate results, so users can
+examine every analytical stage rather than treating the workflow as a black
+box.
+
+## Choosing the main options
+
+| Your question | Where to continue |
+| --- | --- |
+| Is temporal dependence a problem? | [Prewhitening vignette](b-prewhitening.html) |
+| Is there evidence of a trend? | [Trend-test vignette](c-trend-test.html) |
+| How large is the change? | [Slope-estimation vignette](d-slope-estimation.html) |
+| Which findings survive multiple testing? | [Multiple-testing vignette](e-fdr-correction.html) |
+| How do I combine the stages? | [Trend-workflows vignette](g-workflow-trends.html) |
+
+## Common mistakes
+
+- Do not assume layers are in chronological order; confirm it
+  directly before analysis.
+- Do not treat missing-value codes as valid observations.
+- Do not interpret raster-cell counts or proportions as surface area
+  without considering the projection and cell size; use an equal-area
+  grid when area-based comparisons or summaries are required.
+- Do not assume that observations are independent, whether across time
+  (serial correlation, see [prewhitening
+  vignette](b-prewhitening.html)) or across neighbouring cells
+  (spatial dependence, see [trend-test
+  vignette](c-trend-test.html)); both are common in gridded
+  environmental time series and affect inference.
+- Do not treat cell-wise tests as isolated analyses; testing many
+  raster cells simultaneously creates a large-scale multiple-testing
+  problem (see [multiple-testing vignette](e-fdr-correction.html)).
+
+## Next steps
+
+Continue to [`vignette("b-prewhitening")`](b-prewhitening.html), or go directly
+to [`vignette("c-trend-test")`](c-trend-test.html) if temporal preprocessing
+is unnecessary.
+
+## Further details
+
+See `?sptrends` for the function index and quality-assurance protocol,
+`?read_ordered_stack` and `?read_netcdf_stack` for data import, and
+`?inspect_ts_cell` for interactive exploration.
+
+## References
+
+- Gutiérrez-Hernández, O. and García, L.V. (2025) Uncovering True
+  Significant Trends in Global Greening. *Remote Sensing Applications*,
+  101377. https://doi.org/10.1016/j.rsase.2024.101377
