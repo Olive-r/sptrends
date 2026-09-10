@@ -1,5 +1,15 @@
 # Changelog
 
+## sptrends 1.6.2
+
+- Reverted
+  [`fdr_bh()`](https://olive-r.github.io/sptrends/reference/fdr_bh.md),
+  [`fdr_by()`](https://olive-r.github.io/sptrends/reference/fdr_by.md),
+  [`fdr_bky()`](https://olive-r.github.io/sptrends/reference/fdr_bky.md)
+  and
+  [`plot_detection_comparison()`](https://olive-r.github.io/sptrends/reference/plot_detection_comparison.md)
+  to internal.
+
 ## sptrends 1.6.1
 
 Full audit: functions, docs, website config, NEWS style, cran-comments.

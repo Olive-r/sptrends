@@ -190,5 +190,5 @@ result <- benchmark_methods(scenarios, methods, n_replicates = 2,
 result
 #> <sptrends benchmark>
 #> Stage: trend_test | scenarios: 1 | methods: 1 | replicates: 2
-#> Rows: 2 | elapsed method time: 0.062 s
+#> Rows: 2 | elapsed method time: 0.057 s
 ```

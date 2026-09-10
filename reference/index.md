@@ -86,13 +86,6 @@ described in their respective help pages.
   : Slope estimators for raster time series
 - [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)
   : Apply false discovery rate (FDR) correction to multiple p-values
-- [`fdr_bh()`](https://olive-r.github.io/sptrends/reference/fdr_bh.md) :
-  Benjamini-Hochberg (1995) false discovery rate correction
-- [`fdr_by()`](https://olive-r.github.io/sptrends/reference/fdr_by.md) :
-  Benjamini-Yekutieli (2001) false discovery rate correction
-- [`fdr_bky()`](https://olive-r.github.io/sptrends/reference/fdr_bky.md)
-  : Benjamini-Krieger-Yekutieli (2006) adaptive two-stage FDR correction
-  ("TSBH")
 - [`spatial_autocorrelation()`](https://olive-r.github.io/sptrends/reference/spatial_autocorrelation.md)
   : Permutation-based spatial autocorrelation tests
 
@@ -134,8 +127,6 @@ work).
   : Path to sptrends' bundled example dataset
 - [`compare_detections()`](https://olive-r.github.io/sptrends/reference/compare_detections.md)
   : Compare detection methods against a known ground truth
-- [`plot_detection_comparison()`](https://olive-r.github.io/sptrends/reference/plot_detection_comparison.md)
-  : Bar plot of a compare_detections() comparison
 - [`benchmark_methods()`](https://olive-r.github.io/sptrends/reference/benchmark_methods.md)
   : Benchmark statistical methods across known-truth simulation
   scenarios

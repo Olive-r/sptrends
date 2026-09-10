@@ -561,7 +561,7 @@ spatial_autocorrelation(r1, nperm = 99, seed = 1, verbose = FALSE,
 # standard deviation -- for comparing a rank-based method against OLS.
 sim_heavy <- sim_trend_stack(nrow = 10, ncol = 10, n_time = 10,
                               noise_dist = "t", t_df = 3, seed = 1)
-#> >> [sim_trend_stack()] elapsed: 0.04 s
+#> >> [sim_trend_stack()] elapsed: 0.03 s
 terra::nlyr(sim_heavy$series)
 #> [1] 10
 ```

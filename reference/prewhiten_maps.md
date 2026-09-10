@@ -94,7 +94,7 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.10 s
+#> >> [read_ordered_stack()] elapsed: 0.11 s
 pw <- prewhiten(r, report = FALSE, verbose = FALSE)
 
 # Where, spatially, cells were modified by prewhitening. Called

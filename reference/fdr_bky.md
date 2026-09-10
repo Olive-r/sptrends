@@ -65,9 +65,8 @@ diagnostic plotting); and `implementation`, echoing the argument used.
 **Function type:** **Support function** – computes the adaptive BKY
 procedure used internally by
 [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md).
-Exported as a standalone convenience for callers who only need a plain
-vector of p-values corrected; call `fdr_correction(p, method = "BKY")`
-instead for the full result.
+Not exported; call `fdr_correction(p, method = "BKY")` for a BKY-only
+result.
 
 ## Typical use
 
@@ -183,90 +182,10 @@ Other FDR correction functions:
 ## Examples
 
 ``` r
-# 15 p-values, most already close to 0 (a case where several cells
-# likely have a real trend) -- the adaptive BKY threshold can reject
-# more hypotheses than BH while targeting FDR control under its
-# assumptions.
-p <- c(0.0001, 0.0004, 0.0019, 0.0095, 0.0201, 0.0278, 0.0298, 0.0344,
-       0.0459, 0.3240, 0.4262, 0.5719, 0.6528, 0.7590, 1.0000)
-fdr_bky(p, q = 0.05)
-#> $q_value
-#>  [1] 0.001100000 0.002200000 0.006966667 0.026125000 0.044220000 0.046828571
-#>  [7] 0.046828571 0.047300000 0.056100000 0.356400000 0.426200000 0.524241667
-#> [13] 0.552369231 0.596357143 0.733333333
-#> 
-#> $reject
-#>  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE
-#> [13] FALSE FALSE FALSE
-#> 
-#> $pi0_hat
-#> [1] 0.7333333
-#> 
-#> $m0_hat
-#> [1] 11
-#> 
-#> $m
-#> [1] 15
-#> 
-#> $r1
-#> [1] 4
-#> 
-#> $p_sorted
-#>  [1] 0.0001 0.0004 0.0019 0.0095 0.0201 0.0278 0.0298 0.0344 0.0459 0.3240
-#> [11] 0.4262 0.5719 0.6528 0.7590 1.0000
-#> 
-#> $thresh_bh
-#>  [1] 0.003333333 0.006666667 0.010000000 0.013333333 0.016666667 0.020000000
-#>  [7] 0.023333333 0.026666667 0.030000000 0.033333333 0.036666667 0.040000000
-#> [13] 0.043333333 0.046666667 0.050000000
-#> 
-#> $thresh_bky
-#>  [1] 0.004545455 0.009090909 0.013636364 0.018181818 0.022727273 0.027272727
-#>  [7] 0.031818182 0.036363636 0.040909091 0.045454545 0.050000000 0.054545455
-#> [13] 0.059090909 0.063636364 0.068181818
-#> 
-#> $implementation
-#> [1] "multtest"
-#> 
-
-# The original-paper implementation can differ (it is never more
-# permissive than the default "multtest" implementation, only ever
-# equal or stricter).
-fdr_bky(p, q = 0.05, implementation = "original")
-#> $q_value
-#>  [1] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
-#> 
-#> $reject
-#>  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE
-#> [13] FALSE FALSE FALSE
-#> 
-#> $pi0_hat
-#> [1] 0.7333333
-#> 
-#> $m0_hat
-#> [1] 11
-#> 
-#> $m
-#> [1] 15
-#> 
-#> $r1
-#> [1] 4
-#> 
-#> $p_sorted
-#>  [1] 0.0001 0.0004 0.0019 0.0095 0.0201 0.0278 0.0298 0.0344 0.0459 0.3240
-#> [11] 0.4262 0.5719 0.6528 0.7590 1.0000
-#> 
-#> $thresh_bh
-#>  [1] 0.003333333 0.006666667 0.010000000 0.013333333 0.016666667 0.020000000
-#>  [7] 0.023333333 0.026666667 0.030000000 0.033333333 0.036666667 0.040000000
-#> [13] 0.043333333 0.046666667 0.050000000
-#> 
-#> $thresh_bky
-#>  [1] 0.004329004 0.008658009 0.012987013 0.017316017 0.021645022 0.025974026
-#>  [7] 0.030303030 0.034632035 0.038961039 0.043290043 0.047619048 0.051948052
-#> [13] 0.056277056 0.060606061 0.064935065
-#> 
-#> $implementation
-#> [1] "original"
-#> 
+# 15 p-values, most already close to 0. Called internally by
+# fdr_correction() -- the public entry point is:
+# p <- c(0.0001, 0.0004, 0.0019, 0.0095, 0.0201, 0.0278, 0.0298,
+#        0.0344, 0.0459, 0.3240, 0.4262, 0.5719, 0.6528, 0.7590, 1)
+# fdr_correction(p, method = "BKY")
+# fdr_correction(p, method = "BKY", bky_implementation = "original")
 ```

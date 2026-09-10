@@ -74,7 +74,8 @@ comparison <- compare_detections(
 #> >> [compare_detections()] elapsed: 0.01 s
 
 # A grouped bar chart of the table above -- one group of bars per
-# method, one bar per metric.
-plot_detection_comparison(comparison)
+# method, one bar per metric. Called internally by plot() on a
+# compare_detections() result -- the public entry point is:
+plot(comparison)
 
 ```

@@ -30,11 +30,8 @@ A list with `q_value` (BH-adjusted p-values) and `reject` (logical).
 **Function type:** **Support function** – computes the BH procedure used
 internally by
 [`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md).
-Exported as a standalone convenience for callers who only need a plain
-vector of p-values corrected, without a raster or the rest of
-[`fdr_correction()`](https://olive-r.github.io/sptrends/reference/fdr_correction.md)'s
-own output structure; call `fdr_correction(p, method = "BH")` instead
-for the full result (rasters, when `p` is one, plus the other methods).
+Not exported; call `fdr_correction(p, method = "BH")` for a BH-only
+result.
 
 ## Typical use
 
@@ -143,13 +140,7 @@ Other FDR correction functions:
 ## Examples
 
 ``` r
-# Five p-values, ranked from most to least significant -- fdr_bh()
-# tells you how many survive correction at q = 0.05 (the default).
-fdr_bh(c(0.001, 0.01, 0.02, 0.5, 0.8))
-#> $q_value
-#> [1] 0.00500000 0.02500000 0.03333333 0.62500000 0.80000000
-#> 
-#> $reject
-#> [1]  TRUE  TRUE  TRUE FALSE FALSE
-#> 
+# Five p-values, ranked from most to least significant. Called
+# internally by fdr_correction() -- the public entry point is:
+# fdr_correction(c(0.001, 0.01, 0.02, 0.5, 0.8), method = "BH")
 ```
