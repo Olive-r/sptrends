@@ -1,5 +1,18 @@
 # Changelog
 
+## sptrends 1.6.3
+
+CRAN release: 2026-09-22
+
+CRAN-requested fix (submission feedback on 1.5.8): addressed.
+
+- Removed literal calls to
+  [`classify_moran()`](https://olive-r.github.io/sptrends/reference/classify_moran.md)
+  and
+  [`direction_map()`](https://olive-r.github.io/sptrends/reference/direction_map.md)
+  from example text (CRAN flags unexported-function calls even when
+  commented out).
+
 ## sptrends 1.6.2
 
 - Reverted

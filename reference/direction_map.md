@@ -152,7 +152,7 @@ r <- read_ordered_stack(example_data("vhp_ndvi"))
 #>              42            2023 VHP_SMN_annual_ndvi_2023.tif
 
 #> Stack built: 42 layers, 146 x 338 cells.
-#> >> [read_ordered_stack()] elapsed: 0.13 s
+#> >> [read_ordered_stack()] elapsed: 0.15 s
 trend <- trend_test(r, report = FALSE, verbose = FALSE)
 fdr_result <- fdr_correction(trend$stats$p, report = FALSE, verbose = FALSE)
 
@@ -162,6 +162,5 @@ fdr_result <- fdr_correction(trend$stats$p, report = FALSE, verbose = FALSE)
 # RTA direction map" panel automatically when report = TRUE (the
 # default) -- there is no standalone public wrapper for this
 # specific combination outside those workflows.
-# direction <- direction_map(trend$stats, fdr_result, method = "BH")
 # }
 ```
