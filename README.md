@@ -5,6 +5,7 @@
 <!-- badges: start -->
 [![R](https://img.shields.io/badge/R-%3E%3D4.1-blue?logo=r)](https://www.r-project.org/)
 [![CRAN status](https://www.r-pkg.org/badges/version/sptrends)](https://CRAN.R-project.org/package=sptrends)
+[![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/sptrends)](https://CRAN.R-project.org/package=sptrends)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21822842.svg)](https://doi.org/10.5281/zenodo.21822842)
